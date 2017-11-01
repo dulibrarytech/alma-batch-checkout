@@ -1,6 +1,6 @@
 'use strict';
 
-var database = require('../config/database');
+var database = require('../../../config/database');
 var collection;
 
 database.connect(function(db) {

@@ -1,9 +1,9 @@
 'use strict';
 
 var async = require('async'),
-    config = require('../config/config'),
-    Service = require('./service.js'),
-    Model = require('./model.js');
+    config = require('../../../config/configuration'),
+    Service = require('./SetService'),
+    Model = require('./SetModel.js');
 
 exports.renderCheckoutView = function(req, res) {		// sets/all
 	var data = {

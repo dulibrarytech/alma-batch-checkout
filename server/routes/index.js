@@ -1,5 +1,7 @@
 'use strict'
 
+var SetController = require("../modules/set/SetController");
+
 module.exports = function (app) {
 	app.get('/', function(req, res) {
 	    res.render('index.html');

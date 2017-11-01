@@ -1,7 +1,7 @@
 'use strict'
 
-var config = require('../config/config'),
-    Alma = require('../libs/Alma.js');
+var config = require('../../../config/configuration'),
+    Alma = require('../../libs/Alma.js');
 
 exports.createSetDataList = function(sets) {
 
