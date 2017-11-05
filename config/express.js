@@ -9,7 +9,8 @@ var express = require('express'),
 module.exports = function () {
 	var app = express();
 	var server = http.createServer(app);
-	var router = require('../server/routes/index')(app);
+	
+	require('../server/routes/index')(app);
 
 	var allowCrossDomain = function(req, res, next) {
 	    res.header('Access-Control-Allow-Origin', '*');

@@ -5,7 +5,7 @@ var async = require('async'),
     Service = require('./SetService'),
     Model = require('./SetModel.js');
 
-exports.renderCheckoutView = function(req, res) {		// sets/all
+exports.setAll = function(req, res) {
 	var data = {
 		sets: [],
 		clickCheck: null
@@ -26,9 +26,9 @@ exports.renderCheckoutView = function(req, res) {		// sets/all
 				index.status = "Available";
 			}
 		}
-		data.sets = setList;
 
-		return res.render('index', data);
+		data.sets = setList;
+		res.send(JSON.stringify(data));
 	});
-};
+}
 
