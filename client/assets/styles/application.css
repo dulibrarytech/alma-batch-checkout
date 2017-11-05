@@ -1,3 +1,110 @@
-* {
-    position: relative;
+body {
+	background-color: #f7f7f7;
+	font-size: 16px;
+	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+	color: #404040;
+}
+
+/* Header styles */
+
+header#du-header {
+	width: 100%;
+	background-color: #8b2332;
+}
+
+div#du-red-header-inner {
+	background-color: #8b2332;
+	height: 50px;
+	margin: auto;
+	width: 99.5%;
+}
+
+span#du-logo {
+	margin-top: 5px;
+}
+
+span#du-logo a img {
+	height: 38px;
+	width: 133px;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+header#du-header {
+	width: 100%;
+	background-color: #8b2332;
+}
+
+/* Main body styles */
+
+div#banner {
+	/*min-height: 60px;*/
+	height: 45px;
+	background-color: darkgrey;
+	margin-top: 6em;
+}
+
+ul.menu {
+	list-style: none;
+    padding-top: 0.75em;
+    padding-left: 1.5em;
+    margin-bottom: 0px;
+    display: inline-flex;
+}
+
+ul.menu li:not(:first-child) {
+    margin-left: 2em;
+}
+
+ul.menu a {
+	color: #404040;
+	font-weight: bold;
+	cursor: pointer;
+	text-decoration: none;
+	font-size: 18px;
+	margin-left: 0.18em;
+}
+
+
+ul.menu li i.fa {
+	color: #404040;
+	padding-right: 4px;
+}
+
+div#main {
+	margin: 1em auto;
+    max-width: 65%;
+}
+
+div#content {
+    background-color: white;
+    min-height: 600px;
+    padding: 3em;
+}
+
+div#set-list {
+	width: 65%;
+	margin-top: 2em;
+	overflow-y: scroll;
+    min-height: 300px;
+}
+
+table#set-list {
+	width: 65%;
+	margin-top: 2em;
+	overflow-y: scroll;
+    min-height: 300px;
+}
+
+div.ui-section {
+	border-style: solid;
+    border-width: 1px;
+    border-color: darkgrey;
+    border-radius: 4px;
+}
+
+table.table > tbody > tr > td {
+	border-top: none;
+	font-size: 13px;
+
 }

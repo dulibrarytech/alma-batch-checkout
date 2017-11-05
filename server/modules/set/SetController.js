@@ -14,20 +14,7 @@ exports.setAll = function(req, res) {
 	// Get all sets from the database
 	Model.fetchAllSets(function(err, sets) {
 			
-		// Create the view model data object (does not contain list)
-		var setList = Service.createSetDataList(sets);
-
-		// Update data for view display
-		for(var index of setList) {
-			if(index.status == "ON_LOAN") {
-				index.status = "On Loan";
-			}
-			else if(index.status == "AVAILABLE") {
-				index.status = "Available";
-			}
-		}
-
-		data.sets = setList;
+		data.sets = Service.createSetDataList(sets);;
 		res.send(JSON.stringify(data));
 	});
 }
