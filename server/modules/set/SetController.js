@@ -8,13 +8,20 @@ var async = require('async'),
 exports.setAll = function(req, res) {
 	var data = {
 		sets: [],
-		clickCheck: null
+		error: null
 	};
 
 	// Get all sets from the database
 	Model.fetchAllSets(function(err, sets) {
 			
-		data.sets = Service.createSetDataList(sets);;
+		if(err) {
+			console.log("Error:", err);
+			data.error = err;
+		}
+		else {
+			data.sets = Service.createSetDataList(sets);
+		}
+
 		res.send(JSON.stringify(data));
 	});
 }

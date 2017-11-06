@@ -12,7 +12,10 @@ exports.fetchAllSets = function(callback) {
 	try {
 		var cursor = collection.find({});
         cursor.each(function(err, set) {
-        	if(set != null) {
+        	if(err) {
+        		callback(err, null);
+        	}
+        	else if(set != null) {
         		sets.push(set);
         	}
         	else {
@@ -21,7 +24,7 @@ exports.fetchAllSets = function(callback) {
         });
 	}
 	catch (e) {
-		callback("Error: " + e, null);
+		callback(e, null);
 	}
 };
 

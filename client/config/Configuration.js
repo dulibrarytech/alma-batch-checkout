@@ -6,10 +6,14 @@
 export class Configuration {  
 	constructor(){
 
-		this.serverUrl = "localhost:9000";
+		// Service URL, no trailing slash
+		this.serverUrl = "http://localhost:9000";
 
-		this.clientIDHEader = "abc-client";
+		// App settings
+		this.clientIDHeader = "abc-client";
+		this.mainContentDiv = "content";
 
+		// Runtime objects (Do not change these values)
 		this.session = {
 			data: null,
 			token: null
