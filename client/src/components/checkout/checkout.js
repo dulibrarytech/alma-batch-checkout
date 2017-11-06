@@ -9,7 +9,7 @@ export class Checkout {
 
     this.setList = [];
     this.activeSet = {
-      title: "",
+      name: "",
       creator: "",
       createDate: "",
       setID: "",
@@ -36,11 +36,10 @@ export class Checkout {
           console.log("Server error:", response.error);
         }
         else {
-
           for(var index in response.sets) {
 
             this.setList.push({
-              title: response.sets[index].title,
+              name: response.sets[index].title,
               creator: response.sets[index].createdBy,
               createDate: response.sets[index].date.substring(0,10),
               setID: response.sets[index].id,
@@ -49,7 +48,7 @@ export class Checkout {
             });
           }
         }
-          console.log("SetList:", this.setList);
+          console.log("DEV: SetList:", this.setList);
     });
   }
 

@@ -11,7 +11,13 @@
 
 	<div id="main">
 
-		<nav-bar router.bind="router"></nav-bar>
+		<nav id="navbar">
+	        <ul>
+	            <li repeat.for = "row of router.navigation">
+	                <a href.bind = "row.href">${row.title}</a>
+	            </li>
+	        </ul>
+	    </nav>
 
 		<div class="page-host">
 			<router-view></router-view>

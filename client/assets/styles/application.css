@@ -37,6 +37,30 @@ header#du-header {
 
 /* Main body styles */
 
+nav#navbar {
+	background-color: #e5e3e1;
+    height: 50px;
+}
+
+nav#navbar ul {
+	padding-left: 1.4em;
+}
+
+nav#navbar ul li {
+	padding-top: 1em;
+	list-style: none;
+}
+
+nav#navbar ul li a {
+	color: #292929;
+}
+
+nav#navbar ul li a:hover {
+	cursor: pointer;
+	text-decoration: none;
+	color: #292929;
+}
+
 div#banner {
 	/*min-height: 60px;*/
 	height: 45px;
@@ -72,7 +96,7 @@ ul.menu li i.fa {
 }
 
 div#main {
-	margin: 1em auto;
+	margin: 5.5em auto 1em auto;
     max-width: 65%;
 }
 
@@ -85,15 +109,6 @@ div#content {
 div#set-list {
 	width: 65%;
 	margin-top: 2em;
-	overflow-y: scroll;
-    min-height: 300px;
-}
-
-table#set-list {
-	width: 65%;
-	margin-top: 2em;
-	overflow-y: scroll;
-    min-height: 300px;
 }
 
 div.ui-section {
@@ -106,5 +121,5 @@ div.ui-section {
 table.table > tbody > tr > td {
 	border-top: none;
 	font-size: 13px;
-
 }
+
