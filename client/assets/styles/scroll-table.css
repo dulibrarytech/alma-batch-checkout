@@ -1,0 +1,32 @@
+table.scroll {
+    width: 100%;
+}
+
+table.scroll thead, table.scroll tbody, table.scroll tr, table.scroll td, table.scroll th { display: block; }
+
+table.scroll tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+table.scroll thead th {
+    height: 30px;
+    padding-bottom: 1.8em;
+    /*text-align: left;*/
+}
+
+table.scroll tbody {
+    height: 250px;
+    overflow-y: auto;
+}
+
+table.scroll thead {
+    /* fallback */
+}
+
+table.scroll tbody td, thead th {
+    /*width: 19.2%;*/
+    float: left;
+}
