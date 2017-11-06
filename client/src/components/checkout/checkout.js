@@ -3,7 +3,9 @@ import {SystemUtils} from '../../utils/SystemUtils.js';
 
 export class Checkout {
   
-  constructor() {
+  constructor(systemUtils) {
+
+    this.utils = systemUtils;
 
     this.setList = [];
     this.activeSet = {
@@ -50,3 +52,5 @@ export class Checkout {
 
   }
 }
+
+Checkout.inject = [SystemUtils];

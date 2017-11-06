@@ -6,7 +6,7 @@
 export class Configuration {  
 	constructor(){
 
-		this.serverUrl = process.env.APP_HOST + ":" + process.env.APP_PORT;
+		this.serverUrl = "localhost:9000";
 
 		this.clientIDHEader = "abc-client";
 
