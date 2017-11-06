@@ -1,19 +1,31 @@
 <template>
-	<div id="content">
-		
-		<div id="set-list" class="ui-section">
-
-			<table class="table table-striped ui-section scroll">
-				<thead>
-					<tr><th width="10%"></th><th width="68%">Set</th><th width="22%">Status</th></tr>
-				</thead>
-				<tbody>
-					<tr repeat.for="set of setList"><td class="filterable-cell" width="10%" style="padding-left:20px"><input type="checkbox" value=""></td><td class="filterable-cell" width="70%">${set.name}</td><td class="filterable-cell" width="20%">${set.status}</td></tr>
-				</tbody>
-			</table>
-
+	<div id="content" class="container">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="ui-section">
+					<table class="table table-striped ui-section scroll">
+						<thead>
+							<tr><th width="10%"></th><th width="68%">Set</th><th width="22%">Status</th></tr>
+						</thead>
+						<tbody>
+							<tr repeat.for="set of setList"><td class="filterable-cell" width="10%" style="padding-left:20px"><input type="checkbox" value=""></td><td class="filterable-cell" width="70%">${set.name}</td><td class="filterable-cell" width="20%">${set.status}</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div id="borrower-form" class="ui-section">
+					<form>
+						<div class="form-group">
+							<!-- <label for="borrower-id-input">DUID</label> -->
+		    				<input type="number" class="form-control" id="borrower-id-input" placeholder="Enter DUID">
+		    				<button id="borrower-id-submit" class="btn btn-primary" click.bind="submitBorrowerID()">Enter</button>
+		    				<button id="borrower-id-clear" class="btn btn-primary" click.bind="clearActiveBorrower()">Clear</button>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
-
 	</div>
 
 </template>

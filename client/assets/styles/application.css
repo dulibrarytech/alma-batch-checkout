@@ -97,18 +97,12 @@ ul.menu li i.fa {
 
 div#main {
 	margin: 5.5em auto 1em auto;
-    max-width: 65%;
 }
 
 div#content {
     background-color: white;
     min-height: 600px;
-    padding: 3em;
-}
-
-div#set-list {
-	width: 65%;
-	margin-top: 2em;
+    padding: 5.5em 3em 3em 3em;
 }
 
 div.ui-section {
@@ -123,5 +117,18 @@ table.table > tbody > tr > td {
 	font-size: 13px;
 }
 
+div#borrower-form {
+	padding: 1.5em;
+	float: right;
+}
+
+div#borrower-form input {
+	width: 75%;
+	display: initial;
+}
+
+div#borrower-form form div.form-group {
+	margin-bottom: 0;
+}
 
 

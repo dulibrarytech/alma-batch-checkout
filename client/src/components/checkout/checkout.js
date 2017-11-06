@@ -24,6 +24,9 @@ export class Checkout {
   }
 
   attached() {
+    // Initialize elements
+    document.getElementById("borrower-id-clear").style.display = "none";
+
     // Populate the set list table
     this.loadSets();
   }
