@@ -18,9 +18,9 @@
 					<form>
 						<div class="form-group">
 							<!-- <label for="borrower-id-input">DUID</label> -->
-		    				<input type="number" class="form-control" id="borrower-id-input" placeholder="Enter DUID">
-		    				<button id="borrower-id-submit" class="btn btn-primary" click.bind="submitBorrowerID()">Enter</button>
-		    				<button id="borrower-id-clear" class="btn btn-primary" click.bind="clearActiveBorrower()">Clear</button>
+		    				<input type="text" class="form-control" id="borrower-id-input" placeholder="Enter DUID">
+		    				<button id="borrower-id-submit" class="btn btn-primary" click.trigger="submitBorrowerID()">Enter</button>
+		    				<button id="borrower-id-clear" class="btn btn-primary" click.trigger="clearActiveBorrower()">Clear</button>
 						</div>
 					</form>
 				</div>

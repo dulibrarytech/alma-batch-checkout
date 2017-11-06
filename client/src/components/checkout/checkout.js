@@ -66,11 +66,13 @@ export class Checkout {
   }
 
   submitBorrowerID() {
-
+    document.getElementById("borrower-id-submit").style.display = "none";
+    document.getElementById("borrower-id-clear").style.display = "inline-block";
   }
 
   clearActiveBorrower() {
-
+    document.getElementById("borrower-id-submit").style.display = "inline-block";
+    document.getElementById("borrower-id-clear").style.display = "none";
   }
 
   checkInSet() {
