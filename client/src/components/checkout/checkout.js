@@ -88,6 +88,19 @@ export class Checkout {
   // Click on a row in the set list table.  Set as active set, but do not select the set.
   onSelectSetRow(index) {
 
+    // Highlight the row, unhighlight others 
+    var rows = document.getElementsByClassName("set-row");
+    for(var row of rows) {
+
+      row.style.borderStyle = "none";
+    }
+
+    var id = "set-row-" + (index+1);
+    document.getElementById(id).style.borderStyle = "solid";
+    document.getElementById(id).style.borderWidth = "1px";
+    document.getElementById(id).style.borderColor = "#0BB3E4";
+
+    // Store active set
     this.activeSet.name = this.setList[index].name;
     this.activeSet.creator = this.setList[index].creator;
     this.activeSet.createDate = this.setList[index].createDate;
@@ -125,6 +138,17 @@ export class Checkout {
     }
   }
 
+  refreshPatronFormState() {
+    if(this.activeBorrower.id) {
+      document.getElementById("borrower-id-submit").style.display = "none";
+      document.getElementById("borrower-id-clear").style.display = "inline-block";
+    }
+    else {
+      document.getElementById("borrower-id-submit").style.display = "inline-block";
+      document.getElementById("borrower-id-clear").style.display = "none";
+    }
+  }
+
   submitBorrowerID() {
 
     var borrowerID;
@@ -141,8 +165,6 @@ export class Checkout {
     }
 
     else {
-      document.getElementById("borrower-id-submit").style.display = "none";
-      document.getElementById("borrower-id-clear").style.display = "inline-block";
 
       this.utils.doAjax('/patron/data', 'get', {patronID: borrowerID}, null).then(response => {
 
@@ -157,17 +179,17 @@ export class Checkout {
 
             // Update buttons
             this.refreshSetState();
+            this.refreshPatronFormState();
           }
       });      
     }
   }
 
   clearActiveBorrower() {
-    document.getElementById("borrower-id-submit").style.display = "inline-block";
-    document.getElementById("borrower-id-clear").style.display = "none";
     this.resetActiveBorrower();
     this.borrowerID = "";
     this.refreshSetState();
+    this.refreshPatronFormState();
   }
 
   checkInSet() {

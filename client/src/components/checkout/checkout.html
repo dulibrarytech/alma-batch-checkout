@@ -9,7 +9,7 @@
 							<tr><th width="10%"></th><th width="68%">Name</th><th width="22%">Status</th></tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="i of setList.length" click.delegate="onSelectSetRow(i)"><td class="filterable-cell" width="10%" style="padding-left:20px"><input type="checkbox" value=""></td><td class="filterable-cell" width="70%">${setList[i].name}</td><td class="filterable-cell" width="20%">${setList[i].status}</td></tr>
+							<tr repeat.for="i of setList.length" id="set-row-${i+1}" class="set-row" click.delegate="onSelectSetRow(i)"><td class="filterable-cell" width="10%" style="padding-left:20px"><input type="checkbox" value=""></td><td class="filterable-cell" width="70%">${setList[i].name}</td><td class="filterable-cell" width="20%">${setList[i].status}</td></tr>
 						</tbody>
 					</table>
 				</div>
@@ -17,8 +17,8 @@
 					<div id="message-display"></div>
 				</div>
 				<div id="set-buttons">
-					<button id="checkout-button" class="btn btn-primary" click.trigger="checkInSet()()">Check Out</button>
-		    		<button id="checkin-button" class="btn btn-primary" click.trigger="checkOutSet()">Check In</button>
+					<button id="checkout-button" class="btn btn-primary" click.trigger="checkOutSet()">Check Out</button>
+		    		<button id="checkin-button" class="btn btn-primary" click.trigger="checkInSet()">Check In</button>
 				</div>
 			</div>
 			<div class="col-md-5">

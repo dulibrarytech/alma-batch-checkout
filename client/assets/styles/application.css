@@ -153,6 +153,7 @@ div#message-display {
 
 table#set-table tr:hover {
 	cursor: pointer;
+	background-color: #e5e3e1;
 }
 
 div#set-buttons {
