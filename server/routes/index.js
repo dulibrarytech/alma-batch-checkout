@@ -2,7 +2,8 @@
 
 module.exports = function (app) {
 
-	require('../modules/set/SetRoutes.js')(app);
+	require('../modules/set/Routes.js')(app);
+	require('../modules/borrower/Routes.js')(app);
 
     app.get('/', function(req, res) {
 	    res.render('index.html');
