@@ -18,6 +18,7 @@ export class Checkout {
   attached() {
     // Initialize elements
     document.getElementById("borrower-id-clear").style.display = "none";
+    this.setButtonVisibility(-1);
 
     // Initialize view members
     this.resetActiveSet();
@@ -25,6 +26,21 @@ export class Checkout {
 
     // Populate the set list table
     this.loadSets();
+  }
+
+  setButtonVisibility(state) {
+    if(state === 0) {
+      document.getElementById("checkin-button").style.display = "none";
+      document.getElementById("checkout-button").style.display = "inline-block";
+    }
+    else if(state === 1) {
+      document.getElementById("checkin-button").style.display = "inline-block";
+      document.getElementById("checkout-button").style.display = "none";
+    }
+    else if(state === -1) {
+      document.getElementById("checkin-button").style.display = "none";
+      document.getElementById("checkout-button").style.display = "none";
+    }
   }
 
   resetActiveSet() {
@@ -36,6 +52,7 @@ export class Checkout {
       loanPeriod: "",
       status: ""
     };
+    this.setButtonVisibility(-1);
   }
 
   resetActiveBorrower() {
@@ -69,13 +86,34 @@ export class Checkout {
   }
 
   // Click on a row in the set list table.  Set as active set, but do not select the set.
-  onSelectSetRow() {
+  onSelectSetRow(index) {
+      console.log("DEV Select set ", this.setList[index]);
+    this.activeSet.name = this.setList[index].name;
+    this.activeSet.creator = this.setList[index].creator;
+    this.activeSet.createDate = this.setList[index].createDate;
+    this.activeSet.setID = this.setList[index].setID;
+    this.activeSet.loanPeriod = this.setList[index].loanPeriod;
+    this.activeSet.status = this.setList[index].status;
 
+    if(this.activeSet.status == "On Loan") {
+      this.setButtonVisibility(1);
+
+      // AJAX get borrower name via 
+    }
+    else if(this.activeSet.status == "Available") {
+      this.setButtonVisibility(0);
+    }
+    else {
+      console.log("Status error");
+      this.setButtonVisibility(-1);
+    }
   }
 
   // Select a set via the checkbox.  Set as active set, and add to selected sets array.
-  onSelectSet() {
+  onSelectSet(index) {
+    this.onSelectSetRow(index);
 
+    // Add id to this.selectedSets[]
   }
 
   submitBorrowerID() {
@@ -104,7 +142,6 @@ export class Checkout {
             // Set the active borrower
             this.activeBorrower.id = this.borrowerID;
             this.activeBorrower.name = response.data.lname + ", " + response.data.fname;
-              console.log("TEST active borrower is:", this.activeBorrower);
           }
       });      
     }
@@ -114,7 +151,6 @@ export class Checkout {
     document.getElementById("borrower-id-submit").style.display = "inline-block";
     document.getElementById("borrower-id-clear").style.display = "none";
     this.resetActiveBorrower();
-      console.log("TEST active borrower is:", this.activeBorrower);
     this.borrowerID = "";
   }
 

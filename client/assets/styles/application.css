@@ -44,11 +44,13 @@ nav#navbar {
 
 nav#navbar ul {
 	padding-left: 1.4em;
+	display: flex;
 }
 
 nav#navbar ul li {
 	padding-top: 1em;
 	list-style: none;
+	padding-right: 2em;
 }
 
 nav#navbar ul li a {
@@ -138,6 +140,14 @@ div#borrower-form form div.form-group {
 	top: 11px;
     left: 20px;
     font-size: 14px;
+}
+
+table#set-table tr:hover {
+	cursor: pointer;
+}
+
+div#set-buttons {
+	margin-top: 1em;
 }
 
 

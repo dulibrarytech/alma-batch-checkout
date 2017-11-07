@@ -4,14 +4,18 @@
 			<div class="col-md-7">
 				<label>Sets:</label>
 				<div class="ui-section">
-					<table class="table table-striped ui-section scroll">
+					<table id="set-table" class="table table-striped ui-section scroll">
 						<thead>
 							<tr><th width="10%"></th><th width="68%">Name</th><th width="22%">Status</th></tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="set of setList"><td class="filterable-cell" width="10%" style="padding-left:20px"><input type="checkbox" value=""></td><td class="filterable-cell" width="70%">${set.name}</td><td class="filterable-cell" width="20%">${set.status}</td></tr>
+							<tr repeat.for="i of setList.length" click.delegate="onSelectSetRow(i)"><td class="filterable-cell" width="10%" style="padding-left:20px"><input type="checkbox" value=""></td><td class="filterable-cell" width="70%">${setList[i].name}</td><td class="filterable-cell" width="20%">${setList[i].status}</td></tr>
 						</tbody>
 					</table>
+				</div>
+				<div id="set-buttons">
+					<button id="checkout-button" class="btn btn-primary" click.trigger="checkInSet()()">Check Out</button>
+		    		<button id="checkin-button" class="btn btn-primary" click.trigger="checkOutSet()">Check In</button>
 				</div>
 			</div>
 			<div class="col-md-5">
