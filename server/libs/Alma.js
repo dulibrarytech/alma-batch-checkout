@@ -1,9 +1,7 @@
 'use strict'
 
-var test = "test";
+exports.getUserData = function(userID) {
+	console.log("Alma::getUserData()", userID);
 
-var testF = function(str) {
-	console.log(str);
+	
 };
-
-testF(test);

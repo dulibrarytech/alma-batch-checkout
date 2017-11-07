@@ -1,4 +1,5 @@
 'use strict'
+
 import {SystemUtils} from '../../utils/SystemUtils.js';
 
 export class Checkout {
@@ -8,6 +9,25 @@ export class Checkout {
     this.utils = systemUtils;
 
     this.setList = [];
+    this.activeSet = {};
+    this.selectedSets = [];
+    this.activeBorrower = {};
+    this.borrowerID = "";
+  }
+
+  attached() {
+    // Initialize elements
+    document.getElementById("borrower-id-clear").style.display = "none";
+
+    // Initialize view members
+    this.resetActiveSet();
+    this.resetActiveBorrower();
+
+    // Populate the set list table
+    this.loadSets();
+  }
+
+  resetActiveSet() {
     this.activeSet = {
       name: "",
       creator: "",
@@ -16,19 +36,13 @@ export class Checkout {
       loanPeriod: "",
       status: ""
     };
-    this.selectedSets = [];
-
-    this.activeBorrower = {
-
-    };
   }
 
-  attached() {
-    // Initialize elements
-    document.getElementById("borrower-id-clear").style.display = "none";
-
-    // Populate the set list table
-    this.loadSets();
+  resetActiveBorrower() {
+    this.activeBorrower = {
+      id: "",
+      name: ""
+    };
   }
 
   // Get the set list from the server, populate list
@@ -66,13 +80,31 @@ export class Checkout {
   }
 
   submitBorrowerID() {
-    document.getElementById("borrower-id-submit").style.display = "none";
-    document.getElementById("borrower-id-clear").style.display = "inline-block";
+
+    // AJAX /borrower/data/:id
+    var borrowerID;
+      console.log("LEN",this.borrowerID.length);
+    if(this.borrowerID == "") {
+      console.log("Please enter a DUID");
+    }
+    else if(isNaN(this.borrowerID) !== false) {
+      console.log("Please enter a number");
+    }
+    else if(this.borrowerID.length > 9) {
+      console.log("Invalid ID format, please enter a valid DUID");
+    }
+    else {
+      document.getElementById("borrower-id-submit").style.display = "none";
+      document.getElementById("borrower-id-clear").style.display = "inline-block";
+    }
   }
 
   clearActiveBorrower() {
     document.getElementById("borrower-id-submit").style.display = "inline-block";
     document.getElementById("borrower-id-clear").style.display = "none";
+
+    this.resetActiveBorrower();
+    this.borrowerID = "";
   }
 
   checkInSet() {
