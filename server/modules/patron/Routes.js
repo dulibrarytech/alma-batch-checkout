@@ -4,7 +4,7 @@ var controller = require("./Controller");
 
 module.exports = function (app) {
 
-	app.get('/borrower/data', function(req, res) {
-		controller.borrowerData(req, res);
+	app.get('/patron/data', function(req, res) {
+		controller.patronData(req, res);
 	});
 }

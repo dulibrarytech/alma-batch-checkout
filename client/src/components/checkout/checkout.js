@@ -40,8 +40,8 @@ export class Checkout {
 
   resetActiveBorrower() {
     this.activeBorrower = {
-      id: "",
-      name: ""
+      id: null,
+      name: "No patron selected"
     };
   }
 
@@ -65,7 +65,6 @@ export class Checkout {
             });
           }
         }
-          console.log("DEV: SetList:", this.setList);
     });
   }
 
@@ -81,9 +80,7 @@ export class Checkout {
 
   submitBorrowerID() {
 
-    // AJAX /borrower/data/:id
     var borrowerID;
-      console.log("LEN",this.borrowerID.length);
     if(this.borrowerID == "") {
       console.log("Please enter a DUID");
     }
@@ -96,14 +93,28 @@ export class Checkout {
     else {
       document.getElementById("borrower-id-submit").style.display = "none";
       document.getElementById("borrower-id-clear").style.display = "inline-block";
+
+      this.utils.doAjax('/patron/data', 'get', {patronID: borrowerID}, null).then(response => {
+
+          if(response.error) {
+            console.log("Server error:", response.error);
+          }
+          else {
+
+            // Set the active borrower
+            this.activeBorrower.id = this.borrowerID;
+            this.activeBorrower.name = response.data.lname + ", " + response.data.fname;
+              console.log("TEST active borrower is:", this.activeBorrower);
+          }
+      });      
     }
   }
 
   clearActiveBorrower() {
     document.getElementById("borrower-id-submit").style.display = "inline-block";
     document.getElementById("borrower-id-clear").style.display = "none";
-
     this.resetActiveBorrower();
+      console.log("TEST active borrower is:", this.activeBorrower);
     this.borrowerID = "";
   }
 

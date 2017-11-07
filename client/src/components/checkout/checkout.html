@@ -2,10 +2,11 @@
 	<div id="content" class="container">
 		<div class="row">
 			<div class="col-md-7">
+				<label>Sets:</label>
 				<div class="ui-section">
 					<table class="table table-striped ui-section scroll">
 						<thead>
-							<tr><th width="10%"></th><th width="68%">Set</th><th width="22%">Status</th></tr>
+							<tr><th width="10%"></th><th width="68%">Name</th><th width="22%">Status</th></tr>
 						</thead>
 						<tbody>
 							<tr repeat.for="set of setList"><td class="filterable-cell" width="10%" style="padding-left:20px"><input type="checkbox" value=""></td><td class="filterable-cell" width="70%">${set.name}</td><td class="filterable-cell" width="20%">${set.status}</td></tr>
@@ -14,13 +15,14 @@
 				</div>
 			</div>
 			<div class="col-md-5">
+				<label>Select a Patron:</label>
 				<div id="borrower-form" class="ui-section">
 					<form>
 						<div class="form-group">
-							<!-- <label for="borrower-id-input">DUID</label> -->
 		    				<input type="text" class="form-control" id="borrower-id-input" value.bind="borrowerID" placeholder="Enter DUID">
 		    				<button id="borrower-id-submit" class="btn btn-primary" click.trigger="submitBorrowerID()">Enter</button>
 		    				<button id="borrower-id-clear" class="btn btn-primary" click.trigger="clearActiveBorrower()">Clear</button>
+		    				<span id="borrower-name">${activeBorrower.name}</span> 
 						</div>
 					</form>
 				</div>

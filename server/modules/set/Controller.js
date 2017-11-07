@@ -6,8 +6,7 @@ var async = require('async'),
     Model = require('./Model');
 
 exports.setAll = function(req, res) {
-	var data = {
-		sets: [],
+	var response = {
 		error: null
 	};
 
@@ -16,13 +15,14 @@ exports.setAll = function(req, res) {
 			
 		if(err) {
 			console.log("Error:", err);
-			data.error = err;
+			response.error = err;
+			res.setStatus(500);
 		}
 		else {
-			data.sets = Service.createSetDataList(sets);
+			response['sets'] = Service.createSetDataList(sets);
 		}
 
-		res.send(JSON.stringify(data));
+		res.send(JSON.stringify(response));
 	});
 }
 

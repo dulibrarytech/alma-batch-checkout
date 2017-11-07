@@ -125,10 +125,19 @@ div#borrower-form {
 div#borrower-form input {
 	width: 75%;
 	display: initial;
+	/*margin-bottom: 1.5em;*/
 }
 
 div#borrower-form form div.form-group {
 	margin-bottom: 0;
+}
+
+#borrower-name {
+	float: left;
+	position: relative;
+	top: 11px;
+    left: 20px;
+    font-size: 14px;
 }
 
 
