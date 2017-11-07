@@ -48,7 +48,7 @@ export class Checkout {
       name: "",
       creator: "",
       createDate: "",
-      setID: "",
+      setID: null,
       loanPeriod: "",
       status: ""
     };
@@ -87,26 +87,14 @@ export class Checkout {
 
   // Click on a row in the set list table.  Set as active set, but do not select the set.
   onSelectSetRow(index) {
-      console.log("DEV Select set ", this.setList[index]);
+
     this.activeSet.name = this.setList[index].name;
     this.activeSet.creator = this.setList[index].creator;
     this.activeSet.createDate = this.setList[index].createDate;
     this.activeSet.setID = this.setList[index].setID;
     this.activeSet.loanPeriod = this.setList[index].loanPeriod;
     this.activeSet.status = this.setList[index].status;
-
-    if(this.activeSet.status == "On Loan") {
-      this.setButtonVisibility(1);
-
-      // AJAX get borrower name via 
-    }
-    else if(this.activeSet.status == "Available") {
-      this.setButtonVisibility(0);
-    }
-    else {
-      console.log("Status error");
-      this.setButtonVisibility(-1);
-    }
+    this.refreshSetState();
   }
 
   // Select a set via the checkbox.  Set as active set, and add to selected sets array.
@@ -116,9 +104,32 @@ export class Checkout {
     // Add id to this.selectedSets[]
   }
 
+  refreshSetState() {
+    if(this.activeSet.setID && this.activeSet.status == "On Loan") {
+      this.setButtonVisibility(1);
+      document.getElementById("message-display").innerHTML = "";
+    }
+    else if(this.activeSet.setID && this.activeSet.status == "Available") {
+      if(this.activeBorrower.id) {
+        this.setButtonVisibility(0);
+        document.getElementById("message-display").innerHTML = "";
+      }
+      else {
+        this.setButtonVisibility(-1);
+        document.getElementById("message-display").innerHTML = "Please select a patron to check out this item.";
+      }
+    }
+    else {
+      this.setButtonVisibility(-1);
+      document.getElementById("message-display").innerHTML = "";
+    }
+  }
+
   submitBorrowerID() {
 
     var borrowerID;
+
+    // Validate form
     if(this.borrowerID == "") {
       console.log("Please enter a DUID");
     }
@@ -128,6 +139,7 @@ export class Checkout {
     else if(this.borrowerID.length > 9) {
       console.log("Invalid ID format, please enter a valid DUID");
     }
+
     else {
       document.getElementById("borrower-id-submit").style.display = "none";
       document.getElementById("borrower-id-clear").style.display = "inline-block";
@@ -142,6 +154,9 @@ export class Checkout {
             // Set the active borrower
             this.activeBorrower.id = this.borrowerID;
             this.activeBorrower.name = response.data.lname + ", " + response.data.fname;
+
+            // Update buttons
+            this.refreshSetState();
           }
       });      
     }
@@ -152,6 +167,7 @@ export class Checkout {
     document.getElementById("borrower-id-clear").style.display = "none";
     this.resetActiveBorrower();
     this.borrowerID = "";
+    this.refreshSetState();
   }
 
   checkInSet() {

@@ -142,6 +142,15 @@ div#borrower-form form div.form-group {
     font-size: 14px;
 }
 
+div#set-data {
+	margin-top: 1em;
+}
+
+div#message-display {
+    font-size: 14px;
+    margin-left: 1em;
+}
+
 table#set-table tr:hover {
 	cursor: pointer;
 }
