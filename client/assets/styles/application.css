@@ -143,8 +143,13 @@ table.table  th {
 }
 
 div#borrower-form {
+	height: 105px;
+} 
+
+div#borrower-form,
+div#edit-set-form {
 	padding: 1.5em;
-	float: right;
+	/*float: right;*/
 }
 
 div#borrower-form input {

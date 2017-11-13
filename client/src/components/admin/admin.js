@@ -7,15 +7,27 @@ export class Admin {
   constructor(systemUtils) {
   		console.log("U", systemUtils);
     this.utils = systemUtils;
+
     this.setList = [];
+    this.activeSet = {};
   }
 
   attached() {
   	this.loadSets();
+  	this.resetActiveSet();
+  	this.showEditSection(false);
   }
 
-  editSet(id) {
-  	console.log("Edit set ", id);
+  editSet(index) {
+  	this.showEditSection(true);
+
+    // Store active set
+    this.activeSet.name = this.setList[index].name;
+    this.activeSet.creator = this.setList[index].creator;
+    this.activeSet.createDate = this.setList[index].createDate;
+    this.activeSet.setID = this.setList[index].setID;
+    this.activeSet.loanPeriod = this.setList[index].loanPeriod;
+    this.activeSet.status = this.setList[index].status;
   }
 
   // Get the set list from the server, populate list
@@ -39,6 +51,25 @@ export class Admin {
           }
         }
     });
+  }
+
+  showEditSection(show) {
+	document.getElementById("edit-set-section").style.display = show ? "block" : "none";
+  }
+
+  closeEditSection() {
+  	this.showEditSection(false);
+  }
+
+  resetActiveSet() {
+    this.activeSet = {
+      name: "",
+      creator: "",
+      createDate: "",
+      setID: null,
+      loanPeriod: "",
+      status: ""
+    };
   }
 }
 

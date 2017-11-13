@@ -11,13 +11,25 @@
 							<tr><th width="80%">Name</th><th width="20%"></th></tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="i of setList.length" id="set-row-${i+1}" class="set-row"><td class="filterable-cell" width="80%">${setList[i].name}</td><td class="filterable-cell" width="20%" style="text-align: right; padding-right: 2em"><button id="borrower-id-submit" class="btn-xs btn-primary" click.trigger="editSet(setList[i].setID)">Edit</button></td></tr>
+							<tr repeat.for="i of setList.length" id="set-row-${i+1}" class="set-row"><td class="filterable-cell" width="80%">${setList[i].name}</td><td class="filterable-cell" width="20%" style="text-align: right; padding-right: 2em"><button id="borrower-id-submit" class="btn-xs btn-primary" click.trigger="editSet(i)">Edit</button></td></tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
 			<div class="col-md-5">
-
+				<div id="edit-set-section">
+					<div class="ui-section-label">
+						<label>Edit Set:</label>
+					</div>
+					<div id="edit-set-form" class="ui-section">
+						<form>
+							<div class="">
+			    				<button id="borrower-id-submit" class="btn btn-primary" click.trigger="updateSet()">Update</button>
+			    				<button id="borrower-id-clear" class="btn btn-primary" click.trigger="closeEditSection()">Close</button>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
