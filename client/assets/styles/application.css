@@ -138,6 +138,10 @@ table.table > tbody > tr > td {
 	font-size: 13px;
 }
 
+table.table  th {
+	font-size: 14px !important;
+}
+
 div#borrower-form {
 	padding: 1.5em;
 	float: right;
