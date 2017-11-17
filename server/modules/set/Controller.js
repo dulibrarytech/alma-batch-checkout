@@ -16,7 +16,7 @@ exports.setAll = function(req, res) {
 		if(err) {
 			console.log("Error:", err);
 			response.error = err;
-			res.setStatus(500);
+			res.status(500);
 		}
 		else {
 			response['sets'] = Service.createSetDataList(sets);
@@ -26,7 +26,25 @@ exports.setAll = function(req, res) {
 	});
 }
 
-exports.setLoan = function(req, res) {
+// Return an array of items in the set
+exports.setItems = function(req, res) {
+	var response = {
+		error: null
+	};
 
+	// Get all sets from the database
+	Model.getSetItems(req.query.setID, function(err, sets) {
+
+		if(err) {
+			console.log("Error:", err);
+			response.error = err;
+			res.status(500);
+		}
+		else {
+			response['items'] = sets;
+		}
+
+		res.send(JSON.stringify(response));
+	});
 }
 

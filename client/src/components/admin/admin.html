@@ -23,6 +23,14 @@
 					</div>
 					<div id="edit-set-form" class="ui-section">
 						<form>
+
+							<label for="set-item-list">Items:</label>
+							<div id="set-item-list" class="form-group">
+								<ul class="list-group">
+									<li class="list-group-item" repeat.for="item of activeSet.items">${item}</li>
+								</ul>
+							</div>
+
 							<div class="">
 			    				<button id="borrower-id-submit" class="btn btn-primary" click.trigger="updateSet()">Update</button>
 			    				<button id="borrower-id-clear" class="btn btn-primary" click.trigger="closeEditSection()">Close</button>

@@ -1,6 +1,6 @@
 body {
 	background-color: #f7f7f7;
-	font-size: 16px;
+	font-size: 14px;
 	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 	color: #404040;
 }
@@ -55,6 +55,7 @@ nav#navbar ul li {
 
 nav#navbar ul li a {
 	color: #292929;
+	font-size: 16px;
 }
 
 nav#navbar ul li a:selected {
@@ -186,6 +187,16 @@ table#set-table tr:hover {
 
 div#set-buttons {
 	margin-top: 1em;
+}
+
+div#set-item-list {
+	max-height: 150px;
+    overflow: hidden;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e5e3e1;
+    border-radius: 4px;
+    overflow-y: scroll;
 }
 
 
