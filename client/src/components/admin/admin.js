@@ -19,7 +19,6 @@ export class Admin {
   }
 
   editSet(index) {
-  	this.showEditSection(true);
 
     // Store active set
     this.activeSet.name = this.setList[index].name;
@@ -28,6 +27,18 @@ export class Admin {
     this.activeSet.setID = this.setList[index].setID;
     this.activeSet.loanPeriod = this.setList[index].loanPeriod;
     this.activeSet.status = this.setList[index].status;
+
+    // Get set items
+    this.utils.doAjax('/set/items', 'get', {setID: this.activeSet.setID}, null).then(response => {
+      if(response.error) {
+        console.log("Server error:", response.error);
+      }
+      else {
+        this.activeSet.items = response.items;
+      }
+    });
+
+    this.showEditSection(true);
   }
 
   // Get the set list from the server, populate list
@@ -54,7 +65,7 @@ export class Admin {
   }
 
   showEditSection(show) {
-	document.getElementById("edit-set-section").style.display = show ? "block" : "none";
+	  document.getElementById("edit-set-section").style.display = show ? "block" : "none";
   }
 
   closeEditSection() {
@@ -68,7 +79,8 @@ export class Admin {
       createDate: "",
       setID: null,
       loanPeriod: "",
-      status: ""
+      status: "",
+      items: []
     };
   }
 }

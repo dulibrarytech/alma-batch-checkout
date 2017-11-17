@@ -26,3 +26,7 @@ exports.setAll = function(req, res) {
 	});
 }
 
+exports.setLoan = function(req, res) {
+
+}
+

@@ -50,7 +50,8 @@ export class Checkout {
       createDate: "",
       setID: null,
       loanPeriod: "",
-      status: ""
+      status: "",
+      items: []
     };
     this.setButtonVisibility(-1);
   }
@@ -88,13 +89,14 @@ export class Checkout {
   // Click on a row in the set list table.  Set as active set, but do not select the set.
   onSelectSetRow(index) {
 
-    // Highlight the row, unhighlight others 
+    // Unselect all rows
     var rows = document.getElementsByClassName("set-row");
     for(var row of rows) {
 
       row.style.borderStyle = "none";
     }
 
+    // Highlight selected row
     var id = "set-row-" + (index+1);
     document.getElementById(id).style.borderStyle = "solid";
     document.getElementById(id).style.borderWidth = "1px";
@@ -108,6 +110,13 @@ export class Checkout {
     this.activeSet.loanPeriod = this.setList[index].loanPeriod;
     this.activeSet.status = this.setList[index].status;
     this.refreshSetState();
+
+    // If on loan, get the loan data
+    if(this.activeSet.status == "On Loan") {
+      // this.utils.doAjax('/set/loan', 'get', {setID: this.activeSet.setID}, null).then(response => {
+
+      // });
+    }
   }
 
   // Select a set via the checkbox.  Set as active set, and add to selected sets array.
