@@ -33,7 +33,7 @@
 								<label>Items:</label>
 								<div id="set-item-list" class="form-group">
 									<table class="table table-striped">
-										<tr repeat.for="index of activeSet.items.length" id="set-item-${index+1}" click.delegate="selectSetItem(index)"><td width="85%">${activeSet.items[index]}</td><td width="15%"><button class="btn btn-xs btn-primary" click.delegate="removeBarcode(index)">Remove</button></td></tr>
+										<tr repeat.for="index of activeSet.items.length" id="set-item-${index+1}" class="set-item" click.delegate="selectSetItem(index)"><td width="85%">${activeSet.items[index]}</td><td width="15%"><button class="btn btn-xs btn-primary" click.delegate="removeBarcode(index)">Remove</button></td></tr>
 									</table>
 								</div>
 							</div>
@@ -47,8 +47,8 @@
 							</div>
 
 							<div id="set-edit-buttons">
-			    				<button id="borrower-id-submit" class="btn btn-primary" click.trigger="updateSet()">Update</button>
-			    				<button id="borrower-id-clear" class="btn btn-primary" click.trigger="closeEditSection()">Close</button>
+			    				<button id="borrower-id-submit" class="btn btn-primary" click.delegate="updateSet()">Update</button>
+			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="closeEditSection()">Close</button>
 							</div>
 						</form>
 					</div>

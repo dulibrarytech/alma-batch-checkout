@@ -98,13 +98,11 @@ export class Admin {
 
   selectSetItem(index) {
     if(this.activeSet.setID) {
-        console.log("SSI");
-      this.activeBarcode = this.activeSet.items[index];
+      //this.activeBarcode = this.activeSet.items[index];
     }
   }
 
   removeBarcode(index) {
-    console.log("Remove", index);
     this.activeSet.items.splice(index,1);
     this.activeBarcode = "";
   }
