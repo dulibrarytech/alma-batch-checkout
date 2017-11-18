@@ -10,6 +10,7 @@ export class Admin {
 
     this.setList = [];
     this.activeSet = {};
+    this.activeBarcode = "";
   }
 
   attached() {
@@ -66,6 +67,12 @@ export class Admin {
 
   showEditSection(show) {
 	  document.getElementById("edit-set-section").style.display = show ? "block" : "none";
+    document.getElementById("add-item").style.display = "block";
+    document.getElementById("remove-item").style.display = "none";
+  }
+
+  updateSet(setID) {
+    console.log("Update item ", setID);
   }
 
   closeEditSection() {
@@ -82,6 +89,31 @@ export class Admin {
       status: "",
       items: []
     };
+  }
+
+  addBarcode() {
+    if(this.activeSet.setID) {
+      this.activeSet.items.push(this.activeBarcode);
+      this.activeBarcode = "";
+    }
+  }
+
+  selectSetItem(index) {
+    if(this.activeSet.setID) {
+      this.activeBarcode = this.activeSet.items[index];
+      document.getElementById("remove-item").style.display = "block";
+      document.getElementById("add-item").style.display = "none";
+    }
+  }
+
+  removeBarcode() {
+
+  }
+
+  closeRemoveBarcode() {
+    document.getElementById("add-item").style.display = "block";
+    document.getElementById("remove-item").style.display = "none";
+    this.activeBarcode = "";
   }
 }
 

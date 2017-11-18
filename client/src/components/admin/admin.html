@@ -24,14 +24,39 @@
 					<div id="edit-set-form" class="ui-section">
 						<form>
 
-							<label for="set-name">Name:</label>
-							<input id="set-name" class="form-control" type="text" value.bind="activeSet.name"/>
+							<div class="form-group">
+								<label>Name:</label>
+								<input class="form-control" type="text" value.bind="activeSet.name"/>
+							</div>
 
-							<label for="set-item-list">Items:</label>
-							<div id="set-item-list" class="form-group">
-								<ul class="list-group">
-									<li class="list-group-item" repeat.for="item of activeSet.items">${item}</li>
-								</ul>
+							<div class="form-group">
+								<label>Items:</label>
+								<div id="set-item-list" class="form-group">
+									<ul class="list-group">
+										<li class="list-group-item set-item" repeat.for="index of activeSet.items.length" id="set-item-${index+1}"  click.trigger="selectSetItem(index)">${activeSet.items[index]}</li>
+									</ul>
+
+									<table class="table table-striped">
+
+									</table>
+								</div>
+							</div>
+
+							<div id="add-item" class="form-group">
+								<label>Add item:</label>
+								<div>
+									<input class="form-control" type="text" value.bind="activeBarcode" style="float: left; width: 60%"/>
+									<button id="" class="btn btn-primary" click.trigger="addBarcode()" style="float: right">Add</button>
+								</div>
+							</div>
+
+							<div id="remove-item" class="form-group">
+								<label>Remove item:</label>
+								<div>
+									<input class="form-control" type="text" value.bind="activeBarcode" style="float: left; width: 50%"/>
+									<button class="btn btn-primary" click.trigger="closeRemoveBarcode()" style="float: right">Close</button>
+									<button class="btn btn-primary" click.trigger="removeBarcode()" style="float: right; margin-right: 0.3em">Remove</button>
+								</div>
 							</div>
 
 							<div id="set-edit-buttons">

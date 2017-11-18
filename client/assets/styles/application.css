@@ -190,11 +190,7 @@ div#set-buttons {
 }
 
 div#set-edit-buttons {
-	margin-top: 3em;
-}
-
-#edit-set-form input {
-	margin-top: 1em;
+	margin-top: 5em;
 }
 
 div#set-item-list {
@@ -205,6 +201,10 @@ div#set-item-list {
     border-color: #e5e3e1;
     border-radius: 4px;
     overflow-y: scroll;
+}
+
+div#set-item-list li.set-item:hover {
+	cursor: pointer;
 }
 
 
