@@ -11,7 +11,7 @@
 							<tr><th width="80%">Name</th><th width="20%"></th></tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="i of setList.length" id="set-row-${i+1}" class="set-row"><td class="filterable-cell" width="80%">${setList[i].name}</td><td class="filterable-cell" width="20%" style="text-align: right; padding-right: 2em"><button id="borrower-id-submit" class="btn-xs btn-primary" click.trigger="editSet(i)">Edit</button></td></tr>
+							<tr repeat.for="i of setList.length" id="set-row-${i+1}" class="set-row"><td class="filterable-cell" width="80%">${setList[i].name}</td><td class="filterable-cell" width="20%" style="text-align: right; padding-right: 2em"><button id="borrower-id-submit" class="btn-xs btn-primary" click.delegate="editSet(i)">Edit</button></td></tr>
 						</tbody>
 					</table>
 				</div>
@@ -32,12 +32,8 @@
 							<div class="form-group">
 								<label>Items:</label>
 								<div id="set-item-list" class="form-group">
-									<ul class="list-group">
-										<li class="list-group-item set-item" repeat.for="index of activeSet.items.length" id="set-item-${index+1}"  click.trigger="selectSetItem(index)">${activeSet.items[index]}</li>
-									</ul>
-
 									<table class="table table-striped">
-
+										<tr repeat.for="index of activeSet.items.length" id="set-item-${index+1}" click.delegate="selectSetItem(index)"><td width="85%">${activeSet.items[index]}</td><td width="15%"><button class="btn btn-xs btn-primary" click.delegate="removeBarcode(index)">Remove</button></td></tr>
 									</table>
 								</div>
 							</div>
@@ -46,16 +42,7 @@
 								<label>Add item:</label>
 								<div>
 									<input class="form-control" type="text" value.bind="activeBarcode" style="float: left; width: 60%"/>
-									<button id="" class="btn btn-primary" click.trigger="addBarcode()" style="float: right">Add</button>
-								</div>
-							</div>
-
-							<div id="remove-item" class="form-group">
-								<label>Remove item:</label>
-								<div>
-									<input class="form-control" type="text" value.bind="activeBarcode" style="float: left; width: 50%"/>
-									<button class="btn btn-primary" click.trigger="closeRemoveBarcode()" style="float: right">Close</button>
-									<button class="btn btn-primary" click.trigger="removeBarcode()" style="float: right; margin-right: 0.3em">Remove</button>
+									<button id="" class="btn btn-primary" click.delegate="addBarcode()" style="float: right">Add</button>
 								</div>
 							</div>
 

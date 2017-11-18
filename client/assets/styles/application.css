@@ -203,7 +203,7 @@ div#set-item-list {
     overflow-y: scroll;
 }
 
-div#set-item-list li.set-item:hover {
+div#set-item-list tr.set-item:hover {
 	cursor: pointer;
 }
 

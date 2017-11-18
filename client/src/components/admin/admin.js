@@ -67,8 +67,6 @@ export class Admin {
 
   showEditSection(show) {
 	  document.getElementById("edit-set-section").style.display = show ? "block" : "none";
-    document.getElementById("add-item").style.display = "block";
-    document.getElementById("remove-item").style.display = "none";
   }
 
   updateSet(setID) {
@@ -100,19 +98,14 @@ export class Admin {
 
   selectSetItem(index) {
     if(this.activeSet.setID) {
+        console.log("SSI");
       this.activeBarcode = this.activeSet.items[index];
-      document.getElementById("remove-item").style.display = "block";
-      document.getElementById("add-item").style.display = "none";
     }
   }
 
-  removeBarcode() {
-
-  }
-
-  closeRemoveBarcode() {
-    document.getElementById("add-item").style.display = "block";
-    document.getElementById("remove-item").style.display = "none";
+  removeBarcode(index) {
+    console.log("Remove", index);
+    this.activeSet.items.splice(index,1);
     this.activeBarcode = "";
   }
 }
