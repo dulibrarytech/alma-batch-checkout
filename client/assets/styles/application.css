@@ -189,8 +189,16 @@ div#set-buttons {
 	margin-top: 1em;
 }
 
+div#set-edit-buttons {
+	margin-top: 3em;
+}
+
+#edit-set-form input {
+	margin-top: 1em;
+}
+
 div#set-item-list {
-	max-height: 150px;
+	height: 150px;
     overflow: hidden;
     border-style: solid;
     border-width: 1px;

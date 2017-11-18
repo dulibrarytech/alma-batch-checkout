@@ -24,6 +24,9 @@
 					<div id="edit-set-form" class="ui-section">
 						<form>
 
+							<label for="set-name">Name:</label>
+							<input id="set-name" class="form-control" type="text" value.bind="activeSet.name"/>
+
 							<label for="set-item-list">Items:</label>
 							<div id="set-item-list" class="form-group">
 								<ul class="list-group">
@@ -31,7 +34,7 @@
 								</ul>
 							</div>
 
-							<div class="">
+							<div id="set-edit-buttons">
 			    				<button id="borrower-id-submit" class="btn btn-primary" click.trigger="updateSet()">Update</button>
 			    				<button id="borrower-id-clear" class="btn btn-primary" click.trigger="closeEditSection()">Close</button>
 							</div>

@@ -35,10 +35,6 @@ export class Admin {
       }
       else {
         this.activeSet.items = response.items;
-        this.activeSet.items.push("5347593857398");
-        this.activeSet.items.push("5347593857398");
-        this.activeSet.items.push("5347593857398");
-        this.activeSet.items.push("5347593857398");
       }
     });
 
