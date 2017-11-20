@@ -126,7 +126,6 @@ export class Checkout {
       }
       else {
         this.activeSet.loan = response.data;
-        console.log("DEV Loandata", this.activeSet.loan.due);
       }
     });
   }
@@ -139,7 +138,6 @@ export class Checkout {
   }
 
   refreshSetState() {
-    console.log("TEST refresh: activeSet:", this.activeSet);
     if(this.activeSet.setID && this.activeSet.status == "On Loan") {
       this.setButtonVisibility(1);
       document.getElementById("message-display").innerHTML = "";
@@ -222,8 +220,9 @@ export class Checkout {
       else {
 
         this.activeSet.loan = null;
+        this.activeSet.status = "Available";
         this.loadSets();
-        this.setButtonVisibility(0);
+        this.refreshSetState();
       }
     });
   }
@@ -232,9 +231,10 @@ export class Checkout {
     if(this.activeBorrower.id) {
       this.utils.doAjax('/set/loan/create', 'post', {patronID: this.activeBorrower.id, setID: this.activeSet.setID}, null).then(response => {
 
-        this.loadSets();
         this.getLoanData();
-        this.setButtonVisibility(1);
+        this.activeSet.status = "On Loan";
+        this.loadSets();
+        this.refreshSetState();
       });
     }
     else {

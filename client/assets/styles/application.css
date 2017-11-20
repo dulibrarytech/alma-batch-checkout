@@ -194,6 +194,11 @@ div#set-edit-buttons {
 	margin-top: 5em;
 }
 
+tr.set-item td button {
+	background-color: darkgrey;
+    border-style: none;
+}
+
 div#set-item-list {
 	height: 150px;
     overflow: hidden;
