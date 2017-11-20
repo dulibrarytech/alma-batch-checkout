@@ -11,3 +11,14 @@ exports.getUserData = function(userID, callback) {
 	callback(null, {data:"RAWDATA"});
 };
 
+var getRawData = function(userID, callback) {
+	callback("RAWDATA");
+};
+
+// Parse out the first and last name
+exports.getUserName = function(userID, callback) {
+	var name = "John User"
+
+	callback(null, name);
+}; 
+

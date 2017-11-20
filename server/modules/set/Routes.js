@@ -28,19 +28,15 @@ module.exports = function (app) {
 		controller.setItems(req, res);
 	});
 
-	app.post('/set/loan/create', function(req, res) {
-		controller.setLoan(req, res);
-	});
-
 	app.get('/set/loan/data', function(req, res) {
-		controller.setLoan(req, res);
+		controller.setLoanData(req, res);
 	});
 
-	app.put('/set/loan/update', function(req, res) {
-		controller.setLoan(req, res);
+	app.post('/set/loan/create', function(req, res) {
+		controller.setLoanCreate(req, res);
 	});
 
 	app.delete('/set/loan/remove', function(req, res) {
-		controller.setLoan(req, res);
+		controller.setLoanRemove(req, res);
 	});
 }

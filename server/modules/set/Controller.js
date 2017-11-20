@@ -48,3 +48,60 @@ exports.setItems = function(req, res) {
 	});
 }
 
+exports.setLoanData = function(req, res) {
+	var response = {
+		error: null
+	};
+
+	Model.getLoanBySetId(req.query.setID, function(err, loan) {
+		if(err) {
+			console.log("Error:", err);
+			response.error = err;
+			res.status(500);
+		}
+		else {
+			response['data'] = loan;
+			response.data.due = response.data.due.toString();
+
+			res.send(JSON.stringify(response));
+		}
+	});
+}
+
+exports.setLoanCreate = function(req, res) {
+	var response = {
+		error: null
+	};
+
+	Model.addLoan(req.body.patronID, req.body.setID, function(err, loanID) {
+		if(err) {
+			console.log("Error:", err);
+			response.error = err;
+			res.status(500);
+		}
+		else {
+			response['id'] = loanID;
+			res.send(JSON.stringify(response));
+		}
+	});
+}
+
+exports.setLoanRemove = function(req, res) {
+	var response = {
+		error: null
+	};
+
+	// Remove loan, and set loanID = "" on set with loanID=loanID
+	Model.deleteLoan(req.query.loanID, function(err) {
+
+		if(err) {
+			console.log("Error:", err);
+			response.error = err;
+			res.status(500);
+		}
+
+		res.send(JSON.stringify(response));
+	});
+}
+
+

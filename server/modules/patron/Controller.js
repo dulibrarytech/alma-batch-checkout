@@ -18,8 +18,7 @@ exports.patronData = function(req, res) {
 		}
 		else {
 			response['data'] = data;
-				console.log("TEST3 data:", data);
-		}
+	}
 		
 		res.send(JSON.stringify(response));
 	});
