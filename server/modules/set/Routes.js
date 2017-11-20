@@ -33,6 +33,7 @@ module.exports = function (app) {
 	});
 
 	app.post('/set/loan/create', function(req, res) {
+			console.log("REQ", req.body);
 		controller.setLoanCreate(req, res);
 	});
 

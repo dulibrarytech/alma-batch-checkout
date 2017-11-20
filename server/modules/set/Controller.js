@@ -72,7 +72,7 @@ exports.setLoanCreate = function(req, res) {
 	var response = {
 		error: null
 	};
-
+		console.log("TEST body:", req.body);
 	Model.addLoan(req.body.patronID, req.body.setID, function(err, loanID) {
 		if(err) {
 			console.log("Error:", err);

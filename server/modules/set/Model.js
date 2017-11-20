@@ -31,6 +31,28 @@ exports.fetchAllSets = function(callback) {
 	}
 };
 
+var getSet = function(setID, callback) {
+        var data = {};
+        try {
+                console.log("HERE");
+                collection.findOne( {_id: ObjectId(setID)}).then(set => {
+                        if (set) {
+                                console.log("HERE@", set);
+                                data = set;
+                        }
+                        else {
+                                console.log("No set found");
+
+                        }
+                        callback(null, data);
+                });
+        }
+        catch(e) {
+                callback(e, null);
+        }
+
+}
+
 exports.getSetItems = function(setID, callback) {
         var items = [];
         try {
@@ -81,26 +103,36 @@ exports.getLoanBySetId = function(setID, callback) {
 
 // Add the loan doc
 exports.addLoan = function(patronID, setID, callback) {
-                console.log("TEST in addLoan()");
+
         try {
-                // var doc = {
-                //         setID:
-                //         userID:
-                //         due:
-                // }
-                // db.products.insertOne(doc);
+                
                 getSet(setID, function(err, set) {
                         if(err) {
                                 console.log("Error: ", err);
                         }
                         else {
-                                console.log("Set: ", set);
-                                console.log("Datetest: ", Date.now());
-                                //var dueDate = 
+                                var date = new Date();
+                                var hours = set.data.period * (60*60*1000);
+                                date.setTime(date.getTime() + hours);
+                                
+                                var doc = {
+                                        setID: setID,
+                                        userID: patronID,
+                                        due: date
+                                }
+
+                                loanCollection.insertOne(doc).then(data => {
+                                        setStatus(true, setID, function(err, data) {
+                                                if(err) {
+                                                        callback(err, null);
+                                                }
+                                        })
+                                        callback(null, data.insertedId);
+                                });
                         }
                 });
         } catch (e) {
-                print (e);
+                callback(e, null);
         };
 }
 
@@ -120,26 +152,6 @@ var setStatus = function(status, setID, callback) {
         } catch (e) {
            callback(e, null);
         }
-}
-
-exports.getSet = function(setID, callback) {
-        var set = {};
-        try {
-                collection.findOne( {_id: ObjectId(setID)}).then(set => {
-                        if (set) {
-                                set = set;
-                        }
-                        else {
-                                console.log("No set found");
-
-                        }
-                        callback(null, date);
-                });
-        }
-        catch(e) {
-                callback(e, null);
-        }
-
 }
 
 exports.addSet = function(callback) {

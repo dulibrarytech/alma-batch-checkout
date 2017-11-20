@@ -9,8 +9,6 @@ var express = require('express'),
 module.exports = function () {
 	var app = express();
 	var server = http.createServer(app);
-	
-	require('../server/routes/index')(app);
 
 	var allowCrossDomain = function(req, res, next) {
 	    res.header('Access-Control-Allow-Origin', '*');
@@ -30,6 +28,8 @@ module.exports = function () {
 	app.use(allowCrossDomain);
 	app.use(cookieParser());
 	app.use(express.static(path.join(__dirname, '../client')));
+
+	require('../server/routes/index')(app);
 
 	app.set('port', process.env.PORT || 9000);
 
