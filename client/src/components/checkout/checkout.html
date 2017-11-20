@@ -18,6 +18,11 @@
 				<div id="set-data">
 					<div id="message-display"></div>
 				</div>
+				<div id="loan-data" if.bind="activeSet.loan">
+					<label>Patron:</label>${activeSet.loan.username}<br />
+					<label>DUID:</label>${activeSet.loan.userID}<br />
+					<label>Due:</label>${activeSet.loan.due}<br />
+				</div>
 				<div id="set-buttons">
 					<button id="checkout-button" class="btn btn-primary" click.trigger="checkOutSet()">Check Out</button>
 		    		<button id="checkin-button" class="btn btn-primary" click.trigger="checkInSet()">Check In</button>

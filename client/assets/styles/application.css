@@ -108,8 +108,9 @@ div#main {
 
 div#content {
     background-color: white;
-    min-height: 600px;
+   /* min-height: 600px;*/
     padding: 5.5em 3em 3em 3em;
+    height: 750px;
 }
 
 div.ui-section {
@@ -205,6 +206,11 @@ div#set-item-list {
 
 div#set-item-list tr.set-item:hover {
 	cursor: pointer;
+}
+
+div#loan-data label {
+	width: 80px;
+	margin-left: 1em;
 }
 
 

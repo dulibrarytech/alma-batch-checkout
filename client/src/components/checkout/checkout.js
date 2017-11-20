@@ -51,7 +51,8 @@ export class Checkout {
       setID: null,
       loanPeriod: "",
       status: "",
-      items: []
+      items: [],
+      loan: null
     };
     this.setButtonVisibility(-1);
   }
@@ -71,6 +72,7 @@ export class Checkout {
           console.log("Server error:", response.error);
         }
         else {
+          this.setList = [];
           for(var index in response.sets) {
 
             this.setList.push({
@@ -88,7 +90,6 @@ export class Checkout {
 
   // Click on a row in the set list table.  Set as active set, but do not select the set.
   onSelectSetRow(index) {
-      console.log("Select row");
     // Unselect all rows
     var rows = document.getElementsByClassName("set-row");
     for(var row of rows) {
@@ -109,14 +110,25 @@ export class Checkout {
     this.activeSet.setID = this.setList[index].setID;
     this.activeSet.loanPeriod = this.setList[index].loanPeriod;
     this.activeSet.status = this.setList[index].status;
+    this.activeSet.loan = null;
     this.refreshSetState();
 
     // If on loan, get the loan data
     if(this.activeSet.status == "On Loan") {
-      this.utils.doAjax('/set/loan/data', 'get', {setID: this.activeSet.setID}, null).then(response => {
-        console.log("Display Loandata");
-      });
+      this.getLoanData();
     }
+  }
+
+  getLoanData() {
+    this.utils.doAjax('/set/loan/data', 'get', {setID: this.activeSet.setID}, null).then(response => {
+      if(response.error) {
+        console.error("Error retrieving loan data:", response.error);
+      }
+      else {
+        this.activeSet.loan = response.data;
+        console.log("DEV Loandata", this.activeSet.loan.due);
+      }
+    });
   }
 
   // Select a set via the checkbox.  Set as active set, and add to selected sets array.
@@ -127,6 +139,7 @@ export class Checkout {
   }
 
   refreshSetState() {
+    console.log("TEST refresh: activeSet:", this.activeSet);
     if(this.activeSet.setID && this.activeSet.status == "On Loan") {
       this.setButtonVisibility(1);
       document.getElementById("message-display").innerHTML = "";
@@ -175,7 +188,7 @@ export class Checkout {
 
     else {
 
-      this.utils.doAjax('/patron/data', 'get', {patronID: borrowerID}, null).then(response => {
+      this.utils.doAjax('/patron/data', 'get', {patronID: this.borrowerID}, null).then(response => {
 
           if(response.error) {
             console.log("Server error:", response.error);
@@ -202,16 +215,26 @@ export class Checkout {
   }
 
   checkInSet() {
-    this.utils.doAjax('/set/loan/remove', 'get', {setID: this.activeSet.setID}, null).then(response => {
-      console.log("DEV removed loan", response);
+    this.utils.doAjax('/set/loan/remove', 'delete', {setID: this.activeSet.setID}, null).then(response => {
+      if(response.error) {
+        console.error("Error checkin in item: ", response.error);
+      }
+      else {
+
+        this.activeSet.loan = null;
+        this.loadSets();
+        this.setButtonVisibility(0);
+      }
     });
   }
 
   checkOutSet() {
     if(this.activeBorrower.id) {
-      this.utils.doAjax('/set/loan/create', 'get', {patronID: this.activeBorrower.id, setID: this.activeSet.setID}, null).then(response => {
-          console.log("DEV Created loan", response);
+      this.utils.doAjax('/set/loan/create', 'post', {patronID: this.activeBorrower.id, setID: this.activeSet.setID}, null).then(response => {
+
         this.loadSets();
+        this.getLoanData();
+        this.setButtonVisibility(1);
       });
     }
     else {

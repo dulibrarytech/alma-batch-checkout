@@ -91,7 +91,7 @@ exports.setLoanRemove = function(req, res) {
 		error: null
 	};
 
-	Model.deleteLoan(req.body.loanID, function(err) {
+	Model.deleteLoan(req.body.setID, function(err) {
 
 		if(err) {
 			console.log("Error:", err);

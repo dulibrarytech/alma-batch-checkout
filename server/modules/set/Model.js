@@ -133,11 +133,11 @@ exports.addLoan = function(patronID, setID, callback) {
         };
 }
 
-exports.deleteLoan = function(loanID, callback) {
+exports.deleteLoan = function(setID, callback) {
         try {
-                loanCollection.findOne({"_id": ObjectId(loanID)}).then(set => {
+                loanCollection.findOne({"setID": setID}).then(loan => {
 
-                        var setID = set.setID;
+                        var loanID = loan._id;
                         loanCollection.deleteOne( { "_id" : ObjectId(loanID) } ).then(data => {
                                 setStatus(false, setID, function(err, data) {
                                         if(err) {
