@@ -72,7 +72,7 @@ exports.setLoanCreate = function(req, res) {
 	var response = {
 		error: null
 	};
-		console.log("TEST body:", req.body);
+
 	Model.addLoan(req.body.patronID, req.body.setID, function(err, loanID) {
 		if(err) {
 			console.log("Error:", err);
@@ -91,8 +91,7 @@ exports.setLoanRemove = function(req, res) {
 		error: null
 	};
 
-	// Remove loan, and set loanID = "" on set with loanID=loanID
-	Model.deleteLoan(req.query.loanID, function(err) {
+	Model.deleteLoan(req.body.loanID, function(err) {
 
 		if(err) {
 			console.log("Error:", err);

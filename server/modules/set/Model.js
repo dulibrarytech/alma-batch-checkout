@@ -34,10 +34,8 @@ exports.fetchAllSets = function(callback) {
 var getSet = function(setID, callback) {
         var data = {};
         try {
-                console.log("HERE");
                 collection.findOne( {_id: ObjectId(setID)}).then(set => {
                         if (set) {
-                                console.log("HERE@", set);
                                 data = set;
                         }
                         else {
@@ -105,7 +103,6 @@ exports.getLoanBySetId = function(setID, callback) {
 exports.addLoan = function(patronID, setID, callback) {
 
         try {
-                
                 getSet(setID, function(err, set) {
                         if(err) {
                                 console.log("Error: ", err);
@@ -124,9 +121,9 @@ exports.addLoan = function(patronID, setID, callback) {
                                 loanCollection.insertOne(doc).then(data => {
                                         setStatus(true, setID, function(err, data) {
                                                 if(err) {
-                                                        callback(err, null);
+                                                        callback("Error setting status: " + err, null);
                                                 }
-                                        })
+                                        });
                                         callback(null, data.insertedId);
                                 });
                         }
@@ -137,7 +134,23 @@ exports.addLoan = function(patronID, setID, callback) {
 }
 
 exports.deleteLoan = function(loanID, callback) {
+        try {
+                loanCollection.findOne({"_id": ObjectId(loanID)}).then(set => {
 
+                        var setID = set.setID;
+                        loanCollection.deleteOne( { "_id" : ObjectId(loanID) } ).then(data => {
+                                setStatus(false, setID, function(err, data) {
+                                        if(err) {
+                                                callback("Error setting status: " + err, null);
+                                        }
+                                });
+                                callback(null, data.deletedCount);
+                        });
+                });
+
+        } catch (e) {
+                callback(e, null);
+        }
 }
 
 // Set status on set
