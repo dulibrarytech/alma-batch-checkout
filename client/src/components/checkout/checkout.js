@@ -88,7 +88,7 @@ export class Checkout {
 
   // Click on a row in the set list table.  Set as active set, but do not select the set.
   onSelectSetRow(index) {
-
+      console.log("Select row");
     // Unselect all rows
     var rows = document.getElementsByClassName("set-row");
     for(var row of rows) {
@@ -113,9 +113,9 @@ export class Checkout {
 
     // If on loan, get the loan data
     if(this.activeSet.status == "On Loan") {
-      // this.utils.doAjax('/set/loan', 'get', {setID: this.activeSet.setID}, null).then(response => {
-
-      // });
+      this.utils.doAjax('/set/loan/data', 'get', {setID: this.activeSet.setID}, null).then(response => {
+        console.log("Display Loandata");
+      });
     }
   }
 
@@ -202,11 +202,21 @@ export class Checkout {
   }
 
   checkInSet() {
-
+    this.utils.doAjax('/set/loan/remove', 'get', {setID: this.activeSet.setID}, null).then(response => {
+      console.log("DEV removed loan", response);
+    });
   }
 
   checkOutSet() {
-
+    if(this.activeBorrower.id) {
+      this.utils.doAjax('/set/loan/create', 'get', {patronID: this.activeBorrower.id, setID: this.activeSet.setID}, null).then(response => {
+          console.log("DEV Created loan", response);
+        this.loadSets();
+      });
+    }
+    else {
+      console.log("Error: no borrower active");
+    }
   }
 }
 
