@@ -148,8 +148,7 @@ div#borrower-form {
 	height: 105px;
 } 
 
-div#borrower-form,
-div#edit-set-form {
+div.form-window {
 	padding: 1.5em;
 	/*float: right;*/
 }
@@ -190,8 +189,8 @@ div#set-buttons {
 	margin-top: 1em;
 }
 
-div#set-edit-buttons {
-	margin-top: 5em;
+div.popup-window-buttons {
+	margin-top: 2em;
 }
 
 tr.set-item td button {
@@ -211,6 +210,10 @@ div#set-item-list {
 
 div#set-item-list tr.set-item:hover {
 	cursor: pointer;
+}
+
+div#add-item {
+	height: 60px;
 }
 
 div#loan-data label {

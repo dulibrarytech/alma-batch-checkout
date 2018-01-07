@@ -21,7 +21,7 @@
 					<div class="ui-section-label">
 						<label>Edit Set:</label>
 					</div>
-					<div id="edit-set-form" class="ui-section">
+					<div class="ui-section form-window">
 						<form>
 
 							<div class="form-group">
@@ -46,9 +46,29 @@
 								</div>
 							</div>
 
-							<div id="set-edit-buttons">
+							<div class="popup-window-buttons">
 			    				<button id="borrower-id-submit" class="btn btn-primary" click.delegate="updateSet()">Update</button>
 			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="closeEditSection()">Close</button>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<div id="new-set-section">
+					<div class="ui-section-label">
+						<label>Create New Set:</label>
+					</div>
+					<div class="ui-section form-window">
+						<form>
+
+							<div class="form-group">
+								<label>Name:</label>
+								<input class="form-control" type="text" value.bind="activeSet.name"/>
+							</div>
+
+							<div class="popup-window-buttons">
+			    				<button id="borrower-id-submit" class="btn btn-primary" click.delegate="createSet()">Create</button>
+			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="closeNewSetSection()">Cancel</button>
 							</div>
 						</form>
 					</div>
