@@ -26,6 +26,27 @@ exports.setAll = function(req, res) {
 	});
 }
 
+exports.setCreate = function(req, res) {
+	var response = {
+		error: null
+	};
+
+	// Get all sets from the database
+	Model.addSet(function(err, id) {
+			
+		if(err) {
+			console.log("Error:", err);
+			response.error = err;
+			res.status(500);
+		}
+		else {
+			response['id'] = id;
+		}
+
+		res.send(JSON.stringify(response));
+	});
+}
+
 // Return an array of items in the set
 exports.setItems = function(req, res) {
 	var response = {

@@ -12,6 +12,10 @@ module.exports = function (app) {
 		controller.setAll(req, res);
 	});
 
+	app.get('/set/create', function(req, res) {
+		controller.setCreate(req, res);
+	});
+
 	app.get('/set/data', function(req, res) {
 		controller.setItems(req, res);
 	});
