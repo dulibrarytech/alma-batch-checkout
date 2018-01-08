@@ -137,7 +137,6 @@ export class Admin {
   confirmRemoveSet(setID) {
     document.getElementById("remove-set-button").style.display = "none";
     document.getElementById("remove-set-button-confirm").style.display = "block";
-    this.showSetWindow(false);
 
     setTimeout(function() { 
       document.getElementById("remove-set-button").style.display = "block";
@@ -161,6 +160,7 @@ export class Admin {
       else {
         console.log("Set deleted");
         //this.utils.sendMessage("Set updated");
+        this.showSetWindow(false);
         this.loadSets();
       }
     });
