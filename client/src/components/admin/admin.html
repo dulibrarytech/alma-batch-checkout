@@ -4,6 +4,8 @@
 			<div class="col-md-7">
 				<div class="ui-section-label">
 					<label>Sets:</label>
+					<!-- <button id="create-set-button" class="btn-xs btn-primary" click.delegate="showSetWindow('new')">Add Set</button> -->
+					<span class="form-add-new-link form-link" click.delegate="showSetWindow('new')"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp&nbspAdd Set</span>
 				</div>
 				<div class="ui-section">
 					<table id="set-table" class="table table-striped ui-section scroll">
@@ -48,7 +50,7 @@
 
 							<div class="popup-window-buttons">
 			    				<button id="borrower-id-submit" class="btn btn-primary" click.delegate="updateSet()">Update</button>
-			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="closeEditSection()">Close</button>
+			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="closeSetWindow()">Close</button>
 							</div>
 						</form>
 					</div>
@@ -68,7 +70,7 @@
 
 							<div class="popup-window-buttons">
 			    				<button id="borrower-id-submit" class="btn btn-primary" click.delegate="createSet()">Create</button>
-			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="closeNewSetSection()">Cancel</button>
+			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="closeSetWindow()">Cancel</button>
 							</div>
 						</form>
 					</div>

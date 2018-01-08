@@ -16,18 +16,18 @@ export class Admin {
   attached() {
   	this.loadSets();
   	this.resetActiveSet();
-  	this.showEditSection(false);
+  	this.showSetWindow(false);
   }
 
   editSet(index) {
 
     // Store active set
-    this.activeSet.name = this.setList[index].name;
-    this.activeSet.creator = this.setList[index].creator;
-    this.activeSet.createDate = this.setList[index].createDate;
-    this.activeSet.setID = this.setList[index].setID;
-    this.activeSet.loanPeriod = this.setList[index].loanPeriod;
-    this.activeSet.status = this.setList[index].status;
+    this.activeSet.name = "";
+    this.activeSet.creator = "";
+    this.activeSet.createDate = "";
+    this.activeSet.setID = null;
+    this.activeSet.loanPeriod = "";
+    this.activeSet.status = "";
 
     // Get set items
     this.utils.doAjax('/set/items', 'get', {setID: this.activeSet.setID}, null).then(response => {
@@ -39,7 +39,7 @@ export class Admin {
       }
     });
 
-    this.showEditSection(true);
+    this.showSetWindow("edit");
   }
 
   // Get the set list from the server, populate list
@@ -65,16 +65,39 @@ export class Admin {
     });
   }
 
-  showEditSection(show) {
-	  document.getElementById("edit-set-section").style.display = show ? "block" : "none";
+  /* 
+   * ["edit" | "new" | false]
+   */
+  showSetWindow(show) {
+
+    switch(show) {
+      case "edit":
+        document.getElementById("edit-set-section").style.display = "block";
+        document.getElementById("new-set-section").style.display = "none";
+        break;
+      case "new":
+        document.getElementById("edit-set-section").style.display = "none";
+        document.getElementById("new-set-section").style.display = "block";
+        break;
+      case false:
+      default:
+        document.getElementById("edit-set-section").style.display = "none";
+        document.getElementById("new-set-section").style.display = "none";
+        break;
+    }
+  }
+
+  createSet() {
+    console.log("Create set");
   }
 
   updateSet(setID) {
     console.log("Update item ", setID);
   }
 
-  closeEditSection() {
-  	this.showEditSection(false);
+  closeSetWindow() {
+    this.resetActiveSet();
+  	this.showSetWindow(false);
   }
 
   resetActiveSet() {

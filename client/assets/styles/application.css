@@ -144,6 +144,17 @@ table.table  th {
 	font-size: 14px !important;
 }
 
+.form-link:hover {
+	cursor: pointer;
+}
+
+span.form-add-new-link {
+	float: right;
+	color: #0BB3E4;
+	margin-top: 2px;
+	margin-right: 2px;
+}
+
 div#borrower-form {
 	height: 105px;
 } 
