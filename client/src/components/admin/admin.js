@@ -95,7 +95,7 @@ export class Admin {
     console.log("Create set");
   }
 
-  updateSet(setID) {
+  updateSet(cz) {
     if(typeof setID == 'undefined' && this.activeSet.setID) {
       setID = this.activeSet.setID;
     }
@@ -114,6 +114,38 @@ export class Admin {
       else {
         console.log("Set updated");
         this.utils.sendMessage("Set updated");
+        this.loadSets();
+      }
+    });
+  }
+
+  confirmRemoveSet(setID) {
+    document.getElementById("remove-set-button").style.display = "none";
+    document.getElementById("remove-set-button-confirm").style.display = "block";
+    this.showSetWindow(false);
+
+    setTimeout(function() { 
+      document.getElementById("remove-set-button").style.display = "block";
+      document.getElementById("remove-set-button-confirm").style.display = "none";
+    }, 3000);
+  }
+
+  removeSet(setID) {
+    if(typeof setID == 'undefined' && this.activeSet.setID) {
+      setID = this.activeSet.setID;
+    }
+
+    var body = {
+      setID: setID
+    }
+
+    this.utils.doAjax('/set', 'delete', body, null).then(response => {
+      if(response.error) {
+        console.log("Server error:", response.error);
+      }
+      else {
+        console.log("Set deleted");
+        //this.utils.sendMessage("Set updated");
         this.loadSets();
       }
     });

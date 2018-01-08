@@ -13,7 +13,9 @@
 							<tr><th width="80%">Name</th><th width="20%"></th></tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="i of setList.length" id="set-row-${i+1}" class="set-row"><td class="filterable-cell" width="80%">${setList[i].name}</td><td class="filterable-cell" width="20%" style="text-align: right; padding-right: 2em"><button id="borrower-id-submit" class="btn-xs btn-primary" click.delegate="editSet(i)">Edit</button></td></tr>
+							<tr repeat.for="i of setList.length" id="set-row-${i+1}" class="set-row"><td class="filterable-cell" width="70%">${setList[i].name}</td><td class="filterable-cell" width="30%" style="text-align: right; padding-right: 2em"><button class="btn-xs btn-primary" click.delegate="editSet(i)">Edit</button>
+							<!-- <button class="btn-xs btn-danger" click.delegate="removeSet(i)">Remove</button> --></td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -48,10 +50,12 @@
 								</div>
 							</div>
 
+							<span class="message"></span>
 							<div class="popup-window-buttons">
 			    				<button id="borrower-id-submit" class="btn btn-primary" click.delegate="updateSet()">Update</button>
 			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="showSetWindow(false)">Close</button>
-			    				<span class="message"></span>
+			    				<button id="remove-set-button" class="btn btn-danger" style="float: right" click.delegate="confirmRemoveSet()">Remove This Set</button> 
+			    				<button id="remove-set-button-confirm" class="btn btn-danger" style="float: right; display: none" click.delegate="removeSet()">Click To Confirm</button> 
 							</div>
 						</form>
 					</div>

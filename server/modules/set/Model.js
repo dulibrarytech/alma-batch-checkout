@@ -185,7 +185,12 @@ exports.updateSet = function(setID, data, callback) {
     }
 }
 
-exports.removeSet = function(setID, callback) {
-
+exports.deleteSet = function(setID, callback) {
+    try {
+       collection.deleteOne( { "_id" : ObjectId(setID) } );
+       callback(null, true);
+    } catch (e) {
+       callback(e, null);
+    }
 }
 

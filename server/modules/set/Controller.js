@@ -51,10 +51,25 @@ exports.setUpdate = function(req, res) {
 	var response = {
 		error: null
 	};
-
-		console.log("TEST setUpdate controller gets:", req.body);
-
+	
 	Model.updateSet(req.body.setID, req.body.data, function(err) {
+		if(err) {
+			console.log("Error:", err);
+			response.error = err;
+			res.status(500);
+		}
+		res.send(JSON.stringify(response));
+	})
+}
+
+exports.setRemove = function(req, res) {
+	var response = {
+		error: null
+	};
+
+		console.log("TEST setRemove controller gets:", req.body);
+
+	Model.deleteSet(req.body.setID, function(err) {
 		if(err) {
 			console.log("Error:", err);
 			response.error = err;
