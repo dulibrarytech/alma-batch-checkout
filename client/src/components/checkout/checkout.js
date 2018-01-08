@@ -120,7 +120,7 @@ export class Checkout {
   }
 
   getLoanData() {
-    this.utils.doAjax('/set/loan/data', 'get', {setID: this.activeSet.setID}, null).then(response => {
+    this.utils.doAjax('/set/loan', 'get', {setID: this.activeSet.setID}, null).then(response => {
       if(response.error) {
         console.error("Error retrieving loan data:", response.error);
       }
@@ -213,7 +213,7 @@ export class Checkout {
   }
 
   checkInSet() {
-    this.utils.doAjax('/set/loan/remove', 'delete', {setID: this.activeSet.setID}, null).then(response => {
+    this.utils.doAjax('/set/loan', 'delete', {setID: this.activeSet.setID}, null).then(response => {
       if(response.error) {
         console.error("Error checkin in item: ", response.error);
       }
@@ -229,7 +229,7 @@ export class Checkout {
 
   checkOutSet() {
     if(this.activeBorrower.id) {
-      this.utils.doAjax('/set/loan/create', 'post', {patronID: this.activeBorrower.id, setID: this.activeSet.setID}, null).then(response => {
+      this.utils.doAjax('/set/loan', 'post', {patronID: this.activeBorrower.id, setID: this.activeSet.setID}, null).then(response => {
 
         this.getLoanData();
         this.activeSet.status = "On Loan";
