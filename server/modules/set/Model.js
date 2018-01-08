@@ -171,8 +171,18 @@ exports.addSet = function(callback) {
 
 }
 
-exports.updateSet = function(setID, callback) {
-
+exports.updateSet = function(setID, data, callback) {
+    try {
+       collection.updateOne(
+          { _id : ObjectId(setID) },
+          { $set: { "data.title" : data.title, 
+                    "items" : data.items
+                  } }
+       );
+       callback(null, true);
+    } catch (e) {
+       callback(e, null);
+    }
 }
 
 exports.removeSet = function(setID, callback) {

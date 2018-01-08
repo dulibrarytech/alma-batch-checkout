@@ -52,8 +52,8 @@ export class Admin {
           console.log("Server error:", response.error);
         }
         else {
+          this.setList = [];
           for(var index in response.sets) {
-
             this.setList.push({
               name: response.sets[index].title,
               creator: response.sets[index].createdBy,
@@ -96,13 +96,29 @@ export class Admin {
   }
 
   updateSet(setID) {
-    console.log("Update item ", setID);
+    if(typeof setID == 'undefined' && this.activeSet.setID) {
+      setID = this.activeSet.setID;
+    }
 
-    
+    var body = {
+      setID: setID, 
+      data: {}
+    }
+    body.data['title'] = this.activeSet.name;
+    body.data['items'] = this.activeSet.items;
+
+    this.utils.doAjax('/set', 'put', body, null).then(response => {
+      if(response.error) {
+        console.log("Server error:", response.error);
+      }
+      else {
+        console.log("Set updated");
+        this.loadSets();
+      }
+    });
   }
 
   resetActiveSet() {
-      console.log("TEST Reset active set");
     this.activeSet = {
       name: "",
       creator: "",
@@ -117,10 +133,8 @@ export class Admin {
   validateBarcode(barcode) {
     var isValid = false;
     if(barcode != "" && isNaN(barcode) === false) {
-      console.log("TEST barcode is valid");
       isValid = true;
     }
-
     return isValid;
   }
 

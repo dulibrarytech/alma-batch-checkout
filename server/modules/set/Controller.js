@@ -47,6 +47,23 @@ exports.setCreate = function(req, res) {
 	});
 }
 
+exports.setUpdate = function(req, res) {
+	var response = {
+		error: null
+	};
+
+		console.log("TEST setUpdate controller gets:", req.body);
+
+	Model.updateSet(req.body.setID, req.body.data, function(err) {
+		if(err) {
+			console.log("Error:", err);
+			response.error = err;
+			res.status(500);
+		}
+		res.send(JSON.stringify(response));
+	})
+}
+
 // Return an array of items in the set
 exports.setItems = function(req, res) {
 	var response = {
