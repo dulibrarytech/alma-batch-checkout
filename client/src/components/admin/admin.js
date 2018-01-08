@@ -12,6 +12,7 @@ export class Admin {
 
     // Dialog variables
     this.barcode = "";
+    this.setName = "";
   }
 
   attached() {
@@ -36,8 +37,6 @@ export class Admin {
       }
       else {
         this.activeSet.items = response.items;
-          console.log("TEST active set is", this.activeSet);
-          console.log("TEST setlist is", this.setList);
       }
     });
 
@@ -92,10 +91,26 @@ export class Admin {
   }
 
   createSet() {
-    console.log("Create set");
+    var body = {
+      title: this.setName,
+      creator: "",
+      period: 48
+    }
+
+    this.utils.doAjax('/set', 'post', body, null).then(response => {
+      if(response.error) {
+        console.log("Server error:", response.error);
+      }
+      else {
+        console.log("Set created: ", response.id);
+        this.utils.sendMessage("Set created");
+        this.setName = "";
+        this.loadSets();
+      }
+    });
   }
 
-  updateSet(cz) {
+  updateSet(setID) {
     if(typeof setID == 'undefined' && this.activeSet.setID) {
       setID = this.activeSet.setID;
     }

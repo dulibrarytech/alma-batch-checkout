@@ -31,8 +31,15 @@ exports.setCreate = function(req, res) {
 		error: null
 	};
 
+	console.log("Controller rx:", req.body);
+	var set = {
+		title: req.body.title,
+		creator: req.body.creator,
+		period: req.body.period
+	}
+
 	// Get all sets from the database
-	Model.addSet(function(err, id) {
+	Model.addSet(set, function(err, id) {
 			
 		if(err) {
 			console.log("Error:", err);
@@ -51,7 +58,7 @@ exports.setUpdate = function(req, res) {
 	var response = {
 		error: null
 	};
-	
+
 	Model.updateSet(req.body.setID, req.body.data, function(err) {
 		if(err) {
 			console.log("Error:", err);

@@ -70,9 +70,10 @@
 
 							<div class="form-group">
 								<label>Name:</label>
-								<input class="form-control" type="text" value.bind="activeSet.name"/>
+								<input class="form-control" type="text" value.bind="setName"/>
 							</div>
 
+							<span class="message"></span>
 							<div class="popup-window-buttons">
 			    				<button id="borrower-id-submit" class="btn btn-primary" click.delegate="createSet()">Create</button>
 			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="showSetWindow(false)">Cancel</button>

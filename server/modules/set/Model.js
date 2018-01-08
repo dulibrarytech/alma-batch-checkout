@@ -167,8 +167,29 @@ var setStatus = function(status, setID, callback) {
         }
 }
 
-exports.addSet = function(callback) {
+exports.addSet = function(data, callback) {
 
+    var setData = {};
+    setData['createDate'] = new Date();
+    setData['title'] = data.title || "";
+    setData['creator'] = data.creator || "";
+    setData['period'] = data.period || 48;
+
+    var doc = {
+        data: setData,
+        status: "AVAILABLE",
+        loanID: "",
+        items: ""
+    }
+
+    try {
+        collection.insertOne(doc).then(data => {
+            callback(null, data.insertedId);
+        });
+    }
+    catch(e) {
+        callback(e, null);
+    }
 }
 
 exports.updateSet = function(setID, data, callback) {
