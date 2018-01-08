@@ -113,6 +113,7 @@ export class Admin {
       }
       else {
         console.log("Set updated");
+        this.utils.sendMessage("Set updated");
         this.loadSets();
       }
     });

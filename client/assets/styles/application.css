@@ -186,9 +186,11 @@ div#set-data {
 	margin-top: 1em;
 }
 
-div#message-display {
+div#message-display,
+.message {
     font-size: 14px;
     margin-left: 1em;
+    color: red;
 }
 
 table#set-table tr:hover {
