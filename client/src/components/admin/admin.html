@@ -43,14 +43,14 @@
 							<div id="add-item" class="form-group">
 								<label>Add item:</label>
 								<div>
-									<input class="form-control" type="text" value.bind="activeBarcode" style="float: left; width: 60%"/>
+									<input class="form-control" type="text" value.bind="barcode" style="float: left; width: 60%"/>
 									<button id="" class="btn btn-primary" click.delegate="addBarcode()" style="float: right">Add</button>
 								</div>
 							</div>
 
 							<div class="popup-window-buttons">
 			    				<button id="borrower-id-submit" class="btn btn-primary" click.delegate="updateSet()">Update</button>
-			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="closeSetWindow()">Close</button>
+			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="showSetWindow(false)">Close</button>
 							</div>
 						</form>
 					</div>
@@ -70,7 +70,7 @@
 
 							<div class="popup-window-buttons">
 			    				<button id="borrower-id-submit" class="btn btn-primary" click.delegate="createSet()">Create</button>
-			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="closeSetWindow()">Cancel</button>
+			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="showSetWindow(false)">Cancel</button>
 							</div>
 						</form>
 					</div>

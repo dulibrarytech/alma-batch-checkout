@@ -5,29 +5,29 @@ import {SystemUtils} from '../../utils/SystemUtils.js';
 export class Admin {
   
   constructor(systemUtils) {
-  		console.log("U", systemUtils);
     this.utils = systemUtils;
-
     this.setList = [];
     this.activeSet = {};
     this.activeBarcode = "";
+
+    // Dialog variables
+    this.barcode = "";
   }
 
   attached() {
   	this.loadSets();
-  	this.resetActiveSet();
   	this.showSetWindow(false);
   }
 
   editSet(index) {
 
     // Store active set
-    this.activeSet.name = "";
-    this.activeSet.creator = "";
-    this.activeSet.createDate = "";
-    this.activeSet.setID = null;
-    this.activeSet.loanPeriod = "";
-    this.activeSet.status = "";
+    this.activeSet.name = this.setList[index].name || "";
+    this.activeSet.creator = this.setList[index].creator || "";
+    this.activeSet.createDate = this.setList[index].createDate || "";
+    this.activeSet.setID = this.setList[index].setID || null;
+    this.activeSet.loanPeriod = this.setList[index].loanPeriod || "";
+    this.activeSet.status = this.setList[index].status || "";
 
     // Get set items
     this.utils.doAjax('/set/items', 'get', {setID: this.activeSet.setID}, null).then(response => {
@@ -36,6 +36,8 @@ export class Admin {
       }
       else {
         this.activeSet.items = response.items;
+          console.log("TEST active set is", this.activeSet);
+          console.log("TEST setlist is", this.setList);
       }
     });
 
@@ -76,11 +78,13 @@ export class Admin {
         document.getElementById("new-set-section").style.display = "none";
         break;
       case "new":
+        this.resetActiveSet();
         document.getElementById("edit-set-section").style.display = "none";
         document.getElementById("new-set-section").style.display = "block";
         break;
       case false:
       default:
+        this.resetActiveSet();
         document.getElementById("edit-set-section").style.display = "none";
         document.getElementById("new-set-section").style.display = "none";
         break;
@@ -93,14 +97,12 @@ export class Admin {
 
   updateSet(setID) {
     console.log("Update item ", setID);
-  }
 
-  closeSetWindow() {
-    this.resetActiveSet();
-  	this.showSetWindow(false);
+    
   }
 
   resetActiveSet() {
+      console.log("TEST Reset active set");
     this.activeSet = {
       name: "",
       creator: "",
@@ -112,10 +114,20 @@ export class Admin {
     };
   }
 
+  validateBarcode(barcode) {
+    var isValid = false;
+    if(barcode != "" && isNaN(barcode) === false) {
+      console.log("TEST barcode is valid");
+      isValid = true;
+    }
+
+    return isValid;
+  }
+
   addBarcode() {
-    if(this.activeSet.setID) {
-      this.activeSet.items.push(this.activeBarcode);
-      this.activeBarcode = "";
+    if(this.activeSet.setID && this.validateBarcode(this.barcode) === true) {
+      this.activeSet.items.push(this.barcode);
+      this.barcode = "";
     }
   }
 
