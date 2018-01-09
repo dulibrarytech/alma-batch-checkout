@@ -109,7 +109,7 @@ exports.setLoanData = function(req, res) {
 exports.setLoanCreate = function(req, res) {
 	var response = {};
 
-	Model.addLoan(req.body.patronID, req.body.setID, function(err, loanID) {
+	Model.addLoan(req.body.patronID, req.body.setID, req.body.patronName, function(err, loanID) {
 		if(err) {
 			response['error'] = err;
 			res.status(500);

@@ -60,7 +60,8 @@ export class Checkout {
   resetActiveBorrower() {
     this.activeBorrower = {
       id: null,
-      name: "No patron selected"
+      fname: "",
+      lname: "No patron selected"
     };
   }
 
@@ -185,7 +186,7 @@ export class Checkout {
     }
 
     else {
-        console.log("TTT");
+        
       this.utils.doAjax('/patron/data', 'get', {patronID: this.borrowerID}, null).then(response => {
 
           if(response.error) {
@@ -194,7 +195,11 @@ export class Checkout {
           else {
             // Set the active borrower
             this.activeBorrower.id = this.borrowerID;
-            this.activeBorrower.name = response.data.lname + ", " + response.data.fname;
+            this.activeBorrower.fname = response.data.fname;
+            this.activeBorrower.lname = response.data.lname;
+
+            document.getElementById("borrower-id-input").style.color = "green";
+            console.log("Set color:", document.getElementById("borrower-id-input").style.color);
 
             // Update buttons
             this.refreshSetState();
@@ -205,6 +210,7 @@ export class Checkout {
   }
 
   clearActiveBorrower() {
+    document.getElementById("borrower-id-input").style.color = "black";
     this.resetActiveBorrower();
     this.borrowerID = "";
     this.refreshSetState();
@@ -228,7 +234,8 @@ export class Checkout {
 
   checkOutSet() {
     if(this.activeBorrower.id) {
-      this.utils.doAjax('/set/loan', 'post', {patronID: this.activeBorrower.id, setID: this.activeSet.setID}, null).then(response => {
+      var name = this.activeBorrower.fname + " " + this.activeBorrower.lname;
+      this.utils.doAjax('/set/loan', 'post', {patronID: this.activeBorrower.id, setID: this.activeSet.setID, patronName: name}, null).then(response => {
 
         this.getLoanData();
         this.activeSet.status = "On Loan";

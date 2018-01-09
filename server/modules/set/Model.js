@@ -100,7 +100,7 @@ exports.getLoanBySetId = function(setID, callback) {
 }
 
 // Add the loan doc
-exports.addLoan = function(patronID, setID, callback) {
+exports.addLoan = function(patronID, setID, patronName, callback) {
 
         try {
                 getSet(setID, function(err, set) {
@@ -115,6 +115,7 @@ exports.addLoan = function(patronID, setID, callback) {
                                 var doc = {
                                         setID: setID,
                                         userID: patronID,
+                                        userName: patronName,
                                         due: date
                                 }
 

@@ -38,7 +38,7 @@
 		    				<input type="text" class="form-control" id="borrower-id-input" value.bind="borrowerID" placeholder="Enter DUID">
 		    				<button id="borrower-id-submit" class="btn btn-primary" click.trigger="submitBorrowerID()">Enter</button>
 		    				<button id="borrower-id-clear" class="btn btn-primary" click.trigger="clearActiveBorrower()">Clear</button>
-		    				<span id="borrower-name">${activeBorrower.name}</span> 
+		    				<span id="borrower-name">${activeBorrower.lname}<span if.bind="activeBorrower.id">,&nbsp</span>${activeBorrower.fname}</span> 
 						</div>
 					</form>
 				</div>

@@ -7,16 +7,17 @@ exports.getPatronData = function(patronID) {
 
 	var data = [];
 	return new Promise(function(fulfill, reject) {
-		Alma.getUserData(patronID, function(err, data) {
+		Alma.getUserData(patronID, function(err, response) {
 			if(err) {
 				console.log("Error retrieving user data from Alma: ", err);
 				fulfill(false);
 			}
 			else {
-
-				// Use local function that parses data out of xml. Return data object with user name
-
-				fulfill({fname:"John", lname: "User"});
+				var data = {
+					fname: response.firstname,
+					lname: response.lastname
+				}
+				fulfill(data);
 			}
 		})
 	});
