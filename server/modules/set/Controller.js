@@ -6,16 +6,13 @@ var async = require('async'),
     Model = require('./Model');
 
 exports.setAll = function(req, res) {
-	var response = {
-		error: null
-	};
+	var response = {};
 
 	// Get all sets from the database
 	Model.fetchAllSets(function(err, sets) {
 			
 		if(err) {
-			console.log("Error:", err);
-			response.error = err;
+			response['error'] = err;
 			res.status(500);
 		}
 		else {
@@ -27,11 +24,8 @@ exports.setAll = function(req, res) {
 }
 
 exports.setCreate = function(req, res) {
-	var response = {
-		error: null
-	};
+	var response = {};
 
-	console.log("Controller rx:", req.body);
 	var set = {
 		title: req.body.title,
 		creator: req.body.creator,
@@ -42,8 +36,7 @@ exports.setCreate = function(req, res) {
 	Model.addSet(set, function(err, id) {
 			
 		if(err) {
-			console.log("Error:", err);
-			response.error = err;
+			response['error'] = err;
 			res.status(500);
 		}
 		else {
@@ -55,14 +48,11 @@ exports.setCreate = function(req, res) {
 }
 
 exports.setUpdate = function(req, res) {
-	var response = {
-		error: null
-	};
+	var response = {};
 
 	Model.updateSet(req.body.setID, req.body.data, function(err) {
 		if(err) {
-			console.log("Error:", err);
-			response.error = err;
+			response['error'] = err;
 			res.status(500);
 		}
 		res.send(JSON.stringify(response));
@@ -70,16 +60,11 @@ exports.setUpdate = function(req, res) {
 }
 
 exports.setRemove = function(req, res) {
-	var response = {
-		error: null
-	};
-
-		console.log("TEST setRemove controller gets:", req.body);
+	var response = {};
 
 	Model.deleteSet(req.body.setID, function(err) {
 		if(err) {
-			console.log("Error:", err);
-			response.error = err;
+			response['error'] = err;
 			res.status(500);
 		}
 		res.send(JSON.stringify(response));
@@ -88,16 +73,12 @@ exports.setRemove = function(req, res) {
 
 // Return an array of items in the set
 exports.setItems = function(req, res) {
-	var response = {
-		error: null
-	};
+	var response = {};
 
 	// Get all sets from the database
 	Model.getSetItems(req.query.setID, function(err, sets) {
-
 		if(err) {
-			console.log("Error:", err);
-			response.error = err;
+			response['error'] = err;
 			res.status(500);
 		}
 		else {
@@ -109,14 +90,11 @@ exports.setItems = function(req, res) {
 }
 
 exports.setLoanData = function(req, res) {
-	var response = {
-		error: null
-	};
+	var response = {};
 
 	Model.getLoanBySetId(req.query.setID, function(err, loan) {
 		if(err) {
-			console.log("Error:", err);
-			response.error = err;
+			response['error'] = err;
 			res.status(500);
 		}
 		else {
@@ -129,14 +107,11 @@ exports.setLoanData = function(req, res) {
 }
 
 exports.setLoanCreate = function(req, res) {
-	var response = {
-		error: null
-	};
+	var response = {};
 
 	Model.addLoan(req.body.patronID, req.body.setID, function(err, loanID) {
 		if(err) {
-			console.log("Error:", err);
-			response.error = err;
+			response['error'] = err;
 			res.status(500);
 		}
 		else {
@@ -147,15 +122,11 @@ exports.setLoanCreate = function(req, res) {
 }
 
 exports.setLoanRemove = function(req, res) {
-	var response = {
-		error: null
-	};
+	var response = {};
 
 	Model.deleteLoan(req.body.setID, function(err) {
-
 		if(err) {
-			console.log("Error:", err);
-			response.error = err;
+			response['error'] = err;
 			res.status(500);
 		}
 

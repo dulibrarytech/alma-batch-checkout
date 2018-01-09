@@ -185,14 +185,13 @@ export class Checkout {
     }
 
     else {
-
+        console.log("TTT");
       this.utils.doAjax('/patron/data', 'get', {patronID: this.borrowerID}, null).then(response => {
 
           if(response.error) {
             console.log("Server error:", response.error);
           }
           else {
-
             // Set the active borrower
             this.activeBorrower.id = this.borrowerID;
             this.activeBorrower.name = response.data.lname + ", " + response.data.fname;
