@@ -19,3 +19,16 @@ exports.createSetDataList = function(sets) {
 
 	return list;
 };
+
+exports.createPatronLoans = function(patronID, setID) {
+	var data = [];
+	return new Promise(function(fulfill, reject) {
+
+		fulfill("ALMAF");
+
+
+
+
+
+	});
+}

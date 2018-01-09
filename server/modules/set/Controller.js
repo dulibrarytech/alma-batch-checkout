@@ -116,7 +116,12 @@ exports.setLoanCreate = function(req, res) {
 		}
 		else {
 			response['id'] = loanID;
-			res.send(JSON.stringify(response));
+			Service.createPatronLoans(req.body.patronID, req.body.setID).then(data => {
+
+					console.log("TESTA createPatronLoans done: rx: ", data);
+					console.log("TESTB response obj ", response);
+				res.send(JSON.stringify(response));
+			});
 		}
 	});
 }

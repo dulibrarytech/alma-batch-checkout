@@ -78,15 +78,16 @@ exports.getLoanBySetId = function(setID, callback) {
 
                                 data['due'] = loan.due;
                                 data['userID'] = loan.userID;
+                                data['username'] = loan.userName;
 
-                                Alma.getUserName(loan.userID, function(err, name) {
-                                        if(err) {
-                                                console.log("Error: ", err);
-                                        }
-                                        else {
-                                                data['username'] = name;
-                                        }
-                                });
+                                // Alma.getUserName(loan.userID, function(err, name) {
+                                //         if(err) {
+                                //                 console.log("Error: ", err);
+                                //         }
+                                //         else {
+                                //                 data['username'] = name;
+                                //         }
+                                // });
                         }
                         else {
                                 console.log("No loan found for set", setID);
