@@ -18,5 +18,10 @@ export class Configuration {
 			data: null,
 			token: null
 		};
+
+		this.settings = {
+
+			maxBarcodeLength: 30
+		}
 	}
 }

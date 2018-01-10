@@ -8,6 +8,7 @@ var almaDomain = "https://api-na.hosted.exlibrisgroup.com";
 // Get all required user data
 exports.getUserData = function(userID, callback) {
 
+	// GET user url
 	var url = almaDomain + "/almaws/v1/users/";
 	url += userID;
 	url += "?apikey=" + process.env.ALMA_API_KEY;
@@ -42,11 +43,24 @@ exports.getUserData = function(userID, callback) {
 	data['firstname'] = "Jeff";
 	data['lastname'] = "Rynhart";
 	callback(null, data);
-};
+}
+
+exports.checkoutItem = function(barcode, callback) {
+
+	var loanID = "12345"; // DEV
+
+	// GET barcode url
+	var url = almaDomain + "/almaws/v1/items";
+	url += "?item_barcode=" + barcode;
+	url += "&apikey=" + process.env.ALMA_API_KEY;
+
+
+	callback(null, loanID);
+}
 
 // exports.createUserLoans()
 
 var getRawData = function(userID, callback) {
 	callback("RAWDATA");
-};
+}
 

@@ -1,11 +1,14 @@
 'use strict'
 
 import {SystemUtils} from '../../utils/SystemUtils.js';
+import {Configuration} from '../../../config/Configuration.js';
 
 export class Admin {
   
-  constructor(systemUtils) {
+  constructor(systemUtils, configuration) {
     this.utils = systemUtils;
+    this.settings = configuration.settings;
+
     this.setList = [];
     this.activeSet = {};
     this.activeBarcode = "";
@@ -180,8 +183,14 @@ export class Admin {
 
   validateBarcode(barcode) {
     var isValid = false;
-    if(barcode != "" && isNaN(barcode) === false) {
+    // if(barcode != "" && isNaN(barcode) === false) {
+    //   isValid = true;
+    // }
+    if(barcode != "" && barcode.length < this.settings.maxBarcodeLength) {
       isValid = true;
+    }
+    else {
+      console.log("Barcode fails validation");
     }
     return isValid;
   }
@@ -205,4 +214,4 @@ export class Admin {
   }
 }
 
-Admin.inject = [SystemUtils];
+Admin.inject = [SystemUtils, Configuration];
