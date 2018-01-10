@@ -28,17 +28,26 @@ exports.createPatronLoans = function(patronID, setID) {
 		// Get set
 		Model.getSetItems(setID, function(err, items) {
 			if(err) {
-				fulfill(err.toString());
+				reject(err.toString());
 			}
 			else {
 				
-				console.log("TEST have items: ", items);
+				console.log("TEST createPatronLoans have items: ", items);
 
-
-
-
-
-
+				// loop items.length
+				var temp = [];
+				temp.push(items[0]);
+				for(var i=0; i<temp.length; i++) {
+					Alma.checkoutItem(temp[i], function(err, response) {
+						if(err) {
+							reject("Could not check out item ", temp[i], ": Error: ", err);
+						}
+						else {
+							console.log("Checked out item ", temp[i], ": ", response);
+						}
+					});
+				}
+					console.log("TEST fulfilling");
 				fulfill(true);
 			}
 		})
