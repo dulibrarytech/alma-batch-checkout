@@ -21,6 +21,11 @@ exports.patronData = function(req, res) {
 	}
 		
 		res.send(JSON.stringify(response));
-	});
+	}).catch(error => {
+		console.log(error);
+		response['error'] = "Server error: Could not get patron data";
+		res.status(500);
+		res.send(JSON.stringify(response));
+	});;
 }
 

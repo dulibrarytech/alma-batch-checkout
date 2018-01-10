@@ -21,7 +21,7 @@ exports.createSetDataList = function(sets) {
 	return list;
 };
 
-exports.createPatronLoans = function(patronID, setID) {
+exports.createPatronLoans = function(patronID, setID, callback) {
 	var data = [];
 	return new Promise(function(fulfill, reject) {
 
@@ -38,21 +38,13 @@ exports.createPatronLoans = function(patronID, setID) {
 				var temp = [];
 				temp.push(items[0]);
 				for(var i=0; i<temp.length; i++) {
-					Alma.checkoutItem(temp[i], function(err, response) {
-						if(err) {
-							reject("Could not check out item ", temp[i], ": Error: ", err);
-						}
-						else {
-							console.log("Checked out item ", temp[i], ": ", response);
-						}
+					Alma.checkoutItem(patronID, temp[i], function(err, response) {
+						console.log("TEST alma callback", response);
 					});
 				}
 					console.log("TEST fulfilling");
 				fulfill(true);
 			}
 		})
-
-
-
 	});
 }

@@ -10,7 +10,7 @@ exports.getPatronData = function(patronID) {
 		Alma.getUserData(patronID, function(err, response) {
 			if(err) {
 				console.log("Error retrieving user data from Alma: ", err);
-				fulfill(false);
+				reject(false);
 			}
 			else {
 				var data = {
