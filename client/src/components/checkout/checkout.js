@@ -12,6 +12,7 @@ export class Checkout {
     this.activeSet = {};
     this.selectedSets = [];
     this.activeBorrower = {};
+    this.activeBorrowerDisplay = "";
     this.borrowerID = "";
   }
 
@@ -61,8 +62,9 @@ export class Checkout {
     this.activeBorrower = {
       id: null,
       fname: "",
-      lname: "No patron selected"
+      lname: ""
     };
+    this.activeBorrowerDisplay = "No patron selected.";
   }
 
   // Get the set list from the server, populate list
@@ -186,7 +188,8 @@ export class Checkout {
     }
 
     else {
-        
+      
+      this.activeBorrowerDisplay = "Please wait...";
       this.utils.doAjax('/patron/data', 'get', {patronID: this.borrowerID}, null).then(response => {
 
           if(response.error) {
@@ -197,6 +200,7 @@ export class Checkout {
             this.activeBorrower.id = this.borrowerID;
             this.activeBorrower.fname = response.data.fname;
             this.activeBorrower.lname = response.data.lname;
+            this.activeBorrowerDisplay = response.data.lname + ", " + response.data.fname;
 
             document.getElementById("borrower-id-input").style.color = "green";
             console.log("Set color:", document.getElementById("borrower-id-input").style.color);

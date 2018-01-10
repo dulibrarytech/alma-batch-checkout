@@ -25,12 +25,9 @@ exports.createPatronLoans = function(patronID, setID) {
 	var data = [];
 	return new Promise(function(fulfill, reject) {
 
-		console.log("ALMA createPatronLoans test patronID/setID in:", patronID, setID);
-
 		// Get set
 		Model.getSetItems(setID, function(err, items) {
 			if(err) {
-				console.log("Error retrieving set items, can not create loans: ", err);
 				fulfill(err.toString());
 			}
 			else {
