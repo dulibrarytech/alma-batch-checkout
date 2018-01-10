@@ -20,6 +20,7 @@ db.createCollection( "abcdb_loan",
          [
             { "setID" : { $type: "string" } },
             { "userID" : { $type: "string" } },
+            { "userName" : { $type: "string" } },
             { "due" : { $type: "date" } }
          ]
       },
