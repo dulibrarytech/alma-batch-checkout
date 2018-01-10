@@ -1,7 +1,8 @@
 'use strict'
 
 var config = require('../../../config/configuration'),
-    Alma = require('../../libs/Alma.js');
+    Alma = require('../../libs/Alma.js'),
+    Model = require('./Model');
 
 exports.createSetDataList = function(sets) {
 
@@ -24,9 +25,26 @@ exports.createPatronLoans = function(patronID, setID) {
 	var data = [];
 	return new Promise(function(fulfill, reject) {
 
-		fulfill("ALMAF");
+		console.log("ALMA createPatronLoans test patronID/setID in:", patronID, setID);
+
+		// Get set
+		Model.getSetItems(setID, function(err, items) {
+			if(err) {
+				console.log("Error retrieving set items, can not create loans: ", err);
+				fulfill(err.toString());
+			}
+			else {
+				
+				console.log("TEST have items: ", items);
 
 
+
+
+
+
+				fulfill(true);
+			}
+		})
 
 
 

@@ -109,21 +109,30 @@ exports.setLoanData = function(req, res) {
 exports.setLoanCreate = function(req, res) {
 	var response = {};
 
-	Model.addLoan(req.body.patronID, req.body.setID, req.body.patronName, function(err, loanID) {
-		if(err) {
-			response['error'] = err;
-			res.status(500);
-		}
-		else {
-			response['id'] = loanID;
-			Service.createPatronLoans(req.body.patronID, req.body.setID).then(data => {
+	Service.createPatronLoans(req.body.patronID, req.body.setID).then(data => {
 
-					console.log("TESTA createPatronLoans done: rx: ", data);
-					console.log("TESTB response obj ", response);
+			console.log("TESTA createPatronLoans done: rx: ", data);
+			console.log("TESTB response obj ", response);
+
+		Model.addLoan(req.body.patronID, req.body.setID, req.body.patronName, function(err, loanID) {
+			if(err) {
+				response['error'] = err;
+				res.status(500);
+			}
+			else {
+				response['id'] = loanID;
+				console.log("TEST loan added. sending response:", response);
 				res.send(JSON.stringify(response));
-			});
-		}
+			}
+		});
+
+	}).catch(error => {
+		console.log(error);
+		response['error'] = "Server error: Could not create Alma user loan";
+		res.status(500);
+		res.send(JSON.stringify(response));
 	});
+
 }
 
 exports.setLoanRemove = function(req, res) {

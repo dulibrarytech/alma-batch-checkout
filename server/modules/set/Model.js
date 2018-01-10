@@ -60,7 +60,6 @@ exports.getSetItems = function(setID, callback) {
                         }
                         else {
                                 console.log("No items found");
-
                         }
                         callback(null, items);
                 });
@@ -79,15 +78,6 @@ exports.getLoanBySetId = function(setID, callback) {
                                 data['due'] = loan.due;
                                 data['userID'] = loan.userID;
                                 data['username'] = loan.userName;
-
-                                // Alma.getUserName(loan.userID, function(err, name) {
-                                //         if(err) {
-                                //                 console.log("Error: ", err);
-                                //         }
-                                //         else {
-                                //                 data['username'] = name;
-                                //         }
-                                // });
                         }
                         else {
                                 console.log("No loan found for set", setID);
@@ -102,7 +92,7 @@ exports.getLoanBySetId = function(setID, callback) {
 
 // Add the loan doc
 exports.addLoan = function(patronID, setID, patronName, callback) {
-
+        console.log("TEST add loan model");
         try {
                 getSet(setID, function(err, set) {
                         if(err) {
