@@ -54,6 +54,7 @@ exports.checkoutItem = function(barcode, callback) {
 	url += "?item_barcode=" + barcode;
 	url += "&apikey=" + process.env.ALMA_API_KEY;
 
+	
 
 	callback(null, loanID);
 }
