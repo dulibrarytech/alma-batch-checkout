@@ -199,6 +199,7 @@ export class Admin {
     if(this.activeSet.setID && this.validateBarcode(this.barcode) === true) {
       this.activeSet.items.push(this.barcode);
       this.barcode = "";
+      document.getElementById("add-barcode").focus();
     }
   }
 

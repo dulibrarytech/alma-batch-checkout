@@ -45,8 +45,10 @@
 							<div id="add-item" class="form-group">
 								<label>Add item:</label>
 								<div>
-									<input class="form-control" type="text" value.bind="barcode" style="float: left; width: 60%"/>
-									<button id="" class="btn btn-primary" click.delegate="addBarcode()" style="float: right">Add</button>
+									<form role="form" submit.delegate="addBarcode()">
+										<input id="add-barcode" class="form-control" type="text" value.bind="barcode" style="float: left; width: 60%"/>
+										<button class="btn btn-primary" type="submit" click.delegate="addBarcode()" style="float: right">Add</button>
+									</form>
 								</div>
 							</div>
 
