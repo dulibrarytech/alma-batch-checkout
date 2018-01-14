@@ -21,7 +21,7 @@ exports.createSetDataList = function(sets) {
 	return list;
 };
 
-exports.createPatronLoans = function(patronID, setID, callback) {
+exports.createPatronLoans = function(patronID, setID, patronName, callback) {
 	var data = [];
 	return new Promise(function(fulfill, reject) {
 
@@ -31,8 +31,6 @@ exports.createPatronLoans = function(patronID, setID, callback) {
 				reject(err.toString());
 			}
 			else {
-				
-				console.log("TEST createPatronLoans have items: ", items);
 
 				// loop items.length
 				var temp = [];
@@ -42,8 +40,15 @@ exports.createPatronLoans = function(patronID, setID, callback) {
 						console.log("TEST alma callback", response);
 					});
 				}
-					console.log("TEST fulfilling");
-				fulfill(true);
+
+				Model.addLoan(patronID, setID, patronName, function(err, loanID) {
+					if(err) {
+						reject(err.toString());
+					}
+					else {
+						fulfill(true);
+					}
+				});
 			}
 		})
 	});

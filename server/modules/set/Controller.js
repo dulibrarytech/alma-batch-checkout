@@ -109,21 +109,12 @@ exports.setLoanData = function(req, res) {
 exports.setLoanCreate = function(req, res) {
 	var response = {};
 
-	Service.createPatronLoans(req.body.patronID, req.body.setID).then(data => {
+	Service.createPatronLoans(req.body.patronID, req.body.setID, req.body.patronName).then(data => {
 
 			console.log("TESTA createPatronLoans done: rx: ", data);
 
-		Model.addLoan(req.body.patronID, req.body.setID, req.body.patronName, function(err, loanID) {
-			if(err) {
-				response['error'] = err;
-				res.status(500);
-			}
-			else {
-				response['id'] = loanID;
-					console.log("TEST loan added. sending response:", response);
-				res.send(JSON.stringify(response));
-			}
-		});
+		response['id'] = data.loanID;
+		res.send(JSON.stringify(response));
 
 	}).catch(error => {
 		console.log(error);

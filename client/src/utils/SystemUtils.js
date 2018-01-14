@@ -61,7 +61,7 @@ export class SystemUtils {
         this.http.defaults.headers['x-access-token'] = this.config.session.token;
 
         // Start spinner
-        var target = document.getElementById(this.config.mainContentDiv);
+        var target = document.getElementById("content");
         this.startSpinner();
         target.appendChild(this.spinner.el);
 

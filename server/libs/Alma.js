@@ -12,15 +12,12 @@ exports.getUserData = function(userID, callback) {
 
 		var endpoint = "users/" + userID;
 		performRequest(endpoint, "GET", {}, function(err, response) {
-			console.log("Perform request ok");
-
 			if(err) {
 				console.log("Alma error: " + err);
-				// Logger
+				// TODO Logger
 				callback(err, null);
 			}
 			else {
-
 				var userData = JSON.parse(response),
 					data = {
 					firstname: userData.first_name,
@@ -38,62 +35,45 @@ exports.getUserData = function(userID, callback) {
 
 exports.checkoutItem = function(userID, barcode, callback) {
 
-	// GET barcode url
-	var url = almaDomain + "/almaws/v1/items";
-	url += "?item_barcode=" + barcode;
-	url += "&apikey=" + process.env.ALMA_API_KEY;
-
 	try {
-		console.log("Barcode api on item: ", url);
-		// request(url, function (error, response, body) {
-		//   if(error) {
-		//   	console.log("Error contacting Alma");
-		//   	// Logger
-		//   	callback(error, null);
-		//   }
-		//   else if(response.statusCode != 200) {
-		//   	var err = "Alma returns status " + response.statusCode + " for barcode: " + barcode;
-		//   	console.log(err);
-		//   	// Logger
-		//   	callback(err, null);
-		//   }
-		//   else {
-		  	
-		//   	console.log("BC response: ", body);
-		// 	parseString(body, function (err, result) {
 
-		// 		try {
-		// 			// Get the item id
-		// 		    console.log("BC parsed: ", result);
-		// 		    var itemID = result.item.$.item_data.pid;
-		// 		    console.log("item id: ", itemID);
+		// Get the Alma item pid using the barcode
+		var endpoint = "items?item_barcode=" + barcode;
+		performRequest(endpoint, "POST", {}, function(err, response) {
+			if(err) {
+				console.log("Alma error: " + err);
+				// Logger
+				callback(err, null);
+			}
+			else {
+				
+				// Parse out the item pid, then construct checkout url
+				var item_id = response.item_data.pid;
+				endpoint = "users/" + userID + "/loans?item_pid=" + item_id + "&item_barcode=" + barcode;
 
-		// 			// Send the check out request
-		// 			console.log("Checking out...");
-		// 			url = almaDomain + "/almaws/v1/users";
-
-		// 		    callback(null, "12345");
-		// 		}
-		// 		catch (e) {
-		// 			callback(e, null);
-		// 		}
-		// 	});
-		//   }
-		// });
-
-
-
-
-		
+				// Check out the item
+				performRequest(endpoint, "POST", {}, function(err, response) {
+					if(err) {
+						console.log("Alma error: " + err);
+						// TODO Logger
+						callback(err, null);
+					}
+					else {
+						// TODO Logger
+						console.log("TEST checkout response:", response);
+						callback(null, response);
+					}
+				});
+			}
+		});
 	}
 	catch (e) {
 		callback(e, null);
 	}
-
-	//callback(null, loanID);
 }
 
 var performRequest = function (endpoint, method, data=null, callback) {
+
   var dataString;
   var headers = {
     'Authorization': 'apikey ' + process.env.ALMA_API_KEY,
@@ -110,6 +90,7 @@ var performRequest = function (endpoint, method, data=null, callback) {
     method: method,
     headers: headers
   };
+  	console.log("Options are:", options);
 
   if (data && method != 'GET') {
   	options['formData'] = data;
