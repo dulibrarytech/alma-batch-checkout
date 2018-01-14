@@ -72,7 +72,7 @@ exports.checkoutItem = function(userID, barcode, callback) {
 	}
 }
 
-exports.checkinItem = function() {
+exports.checkinItem = function(barcode, callback) {
 	try {
 
 		// Get the Alma item pid using the barcode
