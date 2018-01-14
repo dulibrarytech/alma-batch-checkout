@@ -34,18 +34,18 @@ exports.getUserData = function(userID, callback) {
 }
 
 exports.checkoutItem = function(userID, barcode, callback) {
-
 	try {
 
 		// Get the Alma item pid using the barcode
 		var endpoint = "items?item_barcode=" + barcode;
-		performRequest(endpoint, "POST", {}, function(err, response) {
+		performRequest(endpoint, "GET", {}, function(err, response) {
 			if(err) {
 				console.log("Alma error: " + err);
-				// Logger
+				// TODO Logger
 				callback(err, null);
 			}
 			else {
+				console.log("TEST Successfully retrieved data for item barcode ", barcode, response);
 				
 				// Parse out the item pid, then construct checkout url
 				var item_id = response.item_data.pid;
@@ -60,7 +60,50 @@ exports.checkoutItem = function(userID, barcode, callback) {
 					}
 					else {
 						// TODO Logger
-						console.log("TEST checkout response:", response);
+						console.log("TEST checkout item barcode ", barcode, " response:", response);
+						callback(null, response);
+					}
+				});
+			}
+		});
+	}
+	catch (e) {
+		callback(e, null);
+	}
+}
+
+exports.checkinItem = function() {
+	try {
+
+		// Get the Alma item pid using the barcode
+		var endpoint = "items?item_barcode=" + barcode;
+		performRequest(endpoint, "GET", {}, function(err, response) {
+			if(err) {
+				console.log("Alma error: " + err);
+				// TODO Logger
+				callback(err, null);
+			}
+			else {
+				console.log("TEST Successfully retrieved data for item barcode ", barcode, response);
+				
+				// Parse out the item pid, then construct checkout url
+				var item_id = response.item_data.pid,
+					holding_id = response.holding_data.honding_id,
+					mms_id = response.bib_data.mms_id;
+
+				endpoint = "bibs/" + mms_id + "/holdings/" + holding_id + "/items/" + item_id;
+				// POST /almaws/v1/bibs/{mms_id}/holdings/{holding_id}/items/{item_pid}
+
+				// Check in the item
+				performRequest(endpoint, "POST", {}, function(err, response) {
+					if(err) {
+						console.log("Alma error: " + err);
+						// TODO Logger
+						callback(err, null);
+					}
+					else {
+						// TODO Logger
+						console.log("TEST checkin item barcode ", barcode, " response:", response);
 						callback(null, response);
 					}
 				});
@@ -95,7 +138,7 @@ var performRequest = function (endpoint, method, data=null, callback) {
   if (data && method != 'GET') {
   	options['formData'] = data;
   }
-
+  	console.log("TEST Alma request gets options: ", options);
   request(
     options,
     function(err, response, body) {

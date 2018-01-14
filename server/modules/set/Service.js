@@ -53,3 +53,7 @@ exports.createPatronLoans = function(patronID, setID, patronName, callback) {
 		})
 	});
 }
+
+exports.deletePatronLoans = function(patronID, setID, callback) {
+	
+}
