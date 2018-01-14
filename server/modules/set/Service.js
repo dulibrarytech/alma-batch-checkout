@@ -37,7 +37,7 @@ exports.createPatronLoans = function(patronID, setID, patronName, callback) {
 				temp.push(items[0]);
 				for(var i=0; i<temp.length; i++) {
 					Alma.checkoutItem(patronID, temp[i], function(err, response) {
-						console.log("TEST alma callback", response);
+						console.log("TEST alma checkout callback", response);
 					});
 				}
 
@@ -54,6 +54,35 @@ exports.createPatronLoans = function(patronID, setID, patronName, callback) {
 	});
 }
 
-exports.deletePatronLoans = function(patronID, setID, callback) {
-	
+exports.deletePatronLoans = function(setID, callback) {
+	var data = [];
+	return new Promise(function(fulfill, reject) {
+
+		// Get set
+		Model.getSetItems(setID, function(err, items) {
+			if(err) {
+				reject(err.toString());
+			}
+			else {
+
+				// loop items.length
+				var temp = [];
+				temp.push(items[0]);
+				for(var i=0; i<temp.length; i++) {
+					Alma.checkinItem(temp[i], function(err, response) {
+						console.log("TEST alma checkin callback", response);
+					});
+				}
+
+				Model.deleteLoan(setID, function(err) {
+					if(err) {
+						reject(err.toString());
+					}
+					else {
+						fulfill(true);
+					}
+				});
+			}
+		})
+	});
 }

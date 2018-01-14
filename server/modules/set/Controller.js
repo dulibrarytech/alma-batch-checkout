@@ -110,15 +110,13 @@ exports.setLoanCreate = function(req, res) {
 	var response = {};
 
 	Service.createPatronLoans(req.body.patronID, req.body.setID, req.body.patronName).then(data => {
-
-			console.log("TESTA createPatronLoans done: rx: ", data);
-
+			console.log("TEST createPatronLoans done: rx: ", data);
 		response['id'] = data.loanID;
 		res.send(JSON.stringify(response));
 
 	}).catch(error => {
 		console.log(error);
-		response['error'] = "Server error: Could not create Alma user loan";
+		response['error'] = "Server error: Could not create user loan";
 		res.status(500);
 		res.send(JSON.stringify(response));
 	});
@@ -128,12 +126,23 @@ exports.setLoanCreate = function(req, res) {
 exports.setLoanRemove = function(req, res) {
 	var response = {};
 
-	Model.deleteLoan(req.body.setID, function(err) {
-		if(err) {
-			response['error'] = err;
-			res.status(500);
-		}
+	// Model.deleteLoan(req.body.setID, function(err) {
+	// 	if(err) {
+	// 		response['error'] = err;
+	// 		res.status(500);
+	// 	}
 
+	// 	res.send(JSON.stringify(response));
+	// });
+
+	Service.deletePatronLoans(req.body.setID).then(data => {
+			console.log("TEST deletePatronLoans done: rx: ", data);
+		res.send(JSON.stringify(response));
+
+	}).catch(error => {
+		console.log(error);
+		response['error'] = "Server error: Could not remove user loan";
+		res.status(500);
 		res.send(JSON.stringify(response));
 	});
 }

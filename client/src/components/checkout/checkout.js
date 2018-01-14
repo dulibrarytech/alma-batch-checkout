@@ -224,7 +224,7 @@ export class Checkout {
   checkInSet() {
     this.utils.doAjax('/set/loan', 'delete', {setID: this.activeSet.setID}, null).then(response => {
       if(response.error) {
-        console.error("Error checkin in item: ", response.error);
+        console.error("Error:", response.error);
       }
       else {
 

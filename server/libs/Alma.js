@@ -6,6 +6,8 @@ var parseString = require('xml2js').parseString;
 var host = "https://api-na.hosted.exlibrisgroup.com",
 	path = "/almaws/v1/";
 
+
+
 // Get all required user data
 exports.getUserData = function(userID, callback) {
 	try {
@@ -119,7 +121,7 @@ var performRequest = function (endpoint, method, data=null, callback) {
 
   var dataString;
   var headers = {
-    'Authorization': 'apikey ' + process.env.ALMA_API_KEY,
+    'Authorization': 'apikey ' + apiKey,
     'Accept': 'application/json'
   };
   if (data && method != 'GET') {
