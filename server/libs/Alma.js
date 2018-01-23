@@ -6,7 +6,8 @@ var parseString = require('xml2js').parseString;
 var host = "https://api-na.hosted.exlibrisgroup.com",
 	path = "/almaws/v1/";
 
-
+var library = "p",
+	circDesk = "DEFAULT_CIRC_DESK";
 
 // Get all required user data
 exports.getUserData = function(userID, callback) {
@@ -38,6 +39,8 @@ exports.getUserData = function(userID, callback) {
 exports.checkoutItem = function(userID, barcode, callback) {
 	try {
 
+			console.log("TEST checkout pre barcode request");
+
 		// Get the Alma item pid using the barcode
 		var endpoint = "items?item_barcode=" + barcode;
 		performRequest(endpoint, "GET", {}, function(err, response) {
@@ -53,8 +56,20 @@ exports.checkoutItem = function(userID, barcode, callback) {
 				var item_id = response.item_data.pid;
 				endpoint = "users/" + userID + "/loans?item_pid=" + item_id + "&item_barcode=" + barcode;
 
+				var body = {
+					"circ_desk": {
+		                "value": circDesk,
+		                "desc": "Main"
+		            },
+		            "library": {
+		                "value": library,
+		                "desc": "Main"
+		            }
+				};
+
+					console.log("TEST checkout pre checkout request");
 				// Check out the item
-				performRequest(endpoint, "POST", {}, function(err, response) {
+				performRequest(endpoint, "POST", body, function(err, response) {
 					if(err) {
 						console.log("Alma error: " + err);
 						// TODO Logger
@@ -62,7 +77,7 @@ exports.checkoutItem = function(userID, barcode, callback) {
 					}
 					else {
 						// TODO Logger
-						console.log("TEST checkout item barcode ", barcode, " response:", response);
+						console.log("TEST checkout response item barcode ", barcode, " response:", response);
 						callback(null, response);
 					}
 				});
@@ -76,6 +91,8 @@ exports.checkoutItem = function(userID, barcode, callback) {
 
 exports.checkinItem = function(barcode, callback) {
 	try {
+
+			console.log("TEST checkin pre barcode request");
 
 		// Get the Alma item pid using the barcode
 		var endpoint = "items?item_barcode=" + barcode;
@@ -93,11 +110,14 @@ exports.checkinItem = function(barcode, callback) {
 					holding_id = response.holding_data.honding_id,
 					mms_id = response.bib_data.mms_id;
 
-				endpoint = "bibs/" + mms_id + "/holdings/" + holding_id + "/items/" + item_id;
+				var queryString = "?op=scan&library=" + library + "&circ_desk=" + circDesk;
+
+				endpoint = "bibs/" + mms_id + "/holdings/" + holding_id + "/items/" + item_id + queryString;
 				// POST /almaws/v1/bibs/{mms_id}/holdings/{holding_id}/items/{item_pid}
 
+					console.log("TEST checkins pre checkin request");
 				// Check in the item
-				performRequest(endpoint, "POST", {}, function(err, response) {
+				performRequest(endpoint, "POST", null, function(err, response) {
 					if(err) {
 						console.log("Alma error: " + err);
 						// TODO Logger
@@ -135,7 +155,7 @@ var performRequest = function (endpoint, method, data=null, callback) {
     method: method,
     headers: headers
   };
-  	console.log("Options are:", options);
+  	console.log("TEST Options are:", options);
 
   if (data && method != 'GET') {
   	options['formData'] = data;
