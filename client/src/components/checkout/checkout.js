@@ -19,6 +19,8 @@ export class Checkout {
   attached() {
     // Initialize elements
     document.getElementById("borrower-id-clear").style.display = "none";
+    document.getElementById("borrower-id-input").focus();
+
     this.setButtonVisibility(-1);
 
     // Initialize view members

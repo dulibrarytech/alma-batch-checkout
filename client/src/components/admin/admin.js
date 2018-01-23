@@ -78,6 +78,7 @@ export class Admin {
       case "edit":
         document.getElementById("edit-set-section").style.display = "block";
         document.getElementById("new-set-section").style.display = "none";
+        document.getElementById("add-barcode").focus();
         break;
       case "new":
         this.resetActiveSet();
