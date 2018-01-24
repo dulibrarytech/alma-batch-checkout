@@ -14,7 +14,7 @@ exports.patronData = function(req, res) {
 
 		if(data === false) {
 			response.error = "Can't get patron data";
-			res.setStatus(500);
+			res.setStatus(200);
 		}
 		else {
 			response['data'] = data;
@@ -24,7 +24,7 @@ exports.patronData = function(req, res) {
 	}).catch(error => {
 		console.log(error);
 		response['error'] = "Server error: Could not get patron data";
-		res.status(500);
+		res.status(200);
 		res.send(JSON.stringify(response));
 	});;
 }

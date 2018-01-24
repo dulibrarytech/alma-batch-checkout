@@ -33,10 +33,12 @@ exports.createPatronLoans = function(patronID, setID, patronName, callback) {
 			else {
 
 				// loop items.length
-				var temp = [];
-				temp.push(items[0]);
-				for(var i=0; i<temp.length; i++) {
-					Alma.checkoutItem(patronID, temp[i], function(err, response) {
+				// var temp = [];
+				// temp.push(items[0]);
+
+				for(var i=0; i<items.length; i++) {
+						console.log("TEST checkout item ", items[i]);
+					Alma.checkoutItem(patronID, items[i], function(err, response) {
 						console.log("TEST alma checkout callback", response);
 					});
 				}
@@ -66,13 +68,13 @@ exports.deletePatronLoans = function(setID, callback) {
 			else {
 
 				// loop items.length
-				var temp = [];
-				temp.push(items[0]);
-				for(var i=0; i<temp.length; i++) {
-					Alma.checkinItem(temp[i], function(err, response) {
-						console.log("TEST alma checkin callback", response);
-					});
-				}
+				// var temp = [];
+				// temp.push(items[0]);
+				// for(var i=0; i<temp.length; i++) {
+				// 	Alma.checkinItem(temp[i], function(err, response) {
+				// 		console.log("TEST alma checkin callback", response);
+				// 	});
+				// }
 
 				Model.deleteLoan(setID, function(err) {
 					if(err) {

@@ -13,7 +13,7 @@ exports.setAll = function(req, res) {
 			
 		if(err) {
 			response['error'] = err;
-			res.status(500);
+			res.status(200);
 		}
 		else {
 			response['sets'] = Service.createSetDataList(sets);
@@ -37,7 +37,7 @@ exports.setCreate = function(req, res) {
 			
 		if(err) {
 			response['error'] = err;
-			res.status(500);
+			res.status(200);
 		}
 		else {
 			response['id'] = id;
@@ -53,7 +53,7 @@ exports.setUpdate = function(req, res) {
 	Model.updateSet(req.body.setID, req.body.data, function(err) {
 		if(err) {
 			response['error'] = err;
-			res.status(500);
+			res.status(200);
 		}
 		res.send(JSON.stringify(response));
 	})
@@ -65,7 +65,7 @@ exports.setRemove = function(req, res) {
 	Model.deleteSet(req.body.setID, function(err) {
 		if(err) {
 			response['error'] = err;
-			res.status(500);
+			res.status(200);
 		}
 		res.send(JSON.stringify(response));
 	})
@@ -79,7 +79,7 @@ exports.setItems = function(req, res) {
 	Model.getSetItems(req.query.setID, function(err, sets) {
 		if(err) {
 			response['error'] = err;
-			res.status(500);
+			res.status(200);
 		}
 		else {
 			response['items'] = sets;
@@ -95,7 +95,7 @@ exports.setLoanData = function(req, res) {
 	Model.getLoanBySetId(req.query.setID, function(err, loan) {
 		if(err) {
 			response['error'] = err;
-			res.status(500);
+			res.status(200);
 		}
 		else {
 			response['data'] = loan;
@@ -117,7 +117,7 @@ exports.setLoanCreate = function(req, res) {
 	}).catch(error => {
 		console.log(error);
 		response['error'] = "Server error: Could not create user loan";
-		res.status(500);
+		res.status(200);
 		res.send(JSON.stringify(response));
 	});
 
@@ -126,15 +126,6 @@ exports.setLoanCreate = function(req, res) {
 exports.setLoanRemove = function(req, res) {
 	var response = {};
 
-	// Model.deleteLoan(req.body.setID, function(err) {
-	// 	if(err) {
-	// 		response['error'] = err;
-	// 		res.status(500);
-	// 	}
-
-	// 	res.send(JSON.stringify(response));
-	// });
-
 	Service.deletePatronLoans(req.body.setID).then(data => {
 			console.log("TEST deletePatronLoans done: rx: ", data);
 		res.send(JSON.stringify(response));
@@ -142,9 +133,8 @@ exports.setLoanRemove = function(req, res) {
 	}).catch(error => {
 		console.log(error);
 		response['error'] = "Server error: Could not remove user loan";
-		res.status(500);
+		res.status(200);
 		res.send(JSON.stringify(response));
 	});
 }
-
 

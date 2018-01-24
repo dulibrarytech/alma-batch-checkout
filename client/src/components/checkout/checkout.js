@@ -174,6 +174,13 @@ export class Checkout {
     }
   }
 
+  onClickBorrowerIDInput() {
+    document.getElementById("borrower-id-input").style.color = "black";
+    if(this.activeBorrower.id == null) {
+      this.activeBorrowerDisplay = "No patron selected.";
+    }
+  }
+
   submitBorrowerID() {
 
     var borrowerID;
@@ -181,12 +188,15 @@ export class Checkout {
     // Validate form
     if(this.borrowerID == "") {
       console.log("Please enter a DUID");
+      this.activeBorrowerDisplay = "Please enter a DUID";
     }
     else if(isNaN(this.borrowerID) !== false) {
       console.log("Please enter a number");
+      this.activeBorrowerDisplay = "Please enter a number";
     }
     else if(this.borrowerID.length > 9) {
       console.log("Invalid ID format, please enter a valid DUID");
+      this.activeBorrowerDisplay = "Invalid ID format, please enter a valid DUID";
     }
 
     else {
@@ -196,6 +206,8 @@ export class Checkout {
 
           if(response.error) {
             console.log("Server error:", response.error);
+            this.activeBorrowerDisplay = "Could not select user";
+            document.getElementById("borrower-id-input").style.color = "red";
           }
           else {
             // Set the active borrower
