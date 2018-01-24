@@ -265,16 +265,24 @@ export class Checkout {
   }
 
   checkOutSet() {
-    this.utils.doAjax('/set/loan', 'post', {patronID: this.activeBorrower.id, setID: this.activeSet.setID, patronName: name}, null).then(response => {
+    if(this.activeBorrower.id) {
+      var name = this.activeBorrower.fname + " " + this.activeBorrower.lname;
+      this.utils.doAjax('/set/loan', 'post', {patronID: this.activeBorrower.id, setID: this.activeSet.setID, patronName: name}, null).then(response => {
+        
         if(response.error) {
           console.log("Error: ", response.error);
         }
         else {
-
-          console.log("Checkout");
+          this.getLoanData();
+          this.activeSet.status = "On Loan";
+          this.loadSets();
+          this.refreshSetState();
         }
-    });
-
+      });
+    }
+    else {
+      console.log("Error: no borrower active");
+    }
   }
 }
 

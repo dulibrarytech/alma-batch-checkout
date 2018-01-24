@@ -3,6 +3,8 @@
 var request = require("request");
 var parseString = require('xml2js').parseString;
 
+var settings = require("../config/settings");
+
 var host = "https://api-na.hosted.exlibrisgroup.com",
 	path = "/almaws/v1/";
 
@@ -14,7 +16,7 @@ exports.getUserData = function(userID, callback) {
 	try {
 
 		var endpoint = "users/" + userID;
-		performRequest(endpoint, "GET", {}, function(err, response) {
+		almaRequest(endpoint, "GET", {}, function(err, response) {
 			if(err) {
 				console.log("Alma error: " + err);
 				// TODO Logger
@@ -39,50 +41,94 @@ exports.getUserData = function(userID, callback) {
 exports.checkoutItem = function(userID, barcode, callback) {
 	try {
 
-			console.log("TEST checkout pre barcode request");
-
 		// Get the Alma item pid using the barcode
-		var endpoint = "items?item_barcode=" + barcode;
-		performRequest(endpoint, "GET", {}, function(err, response) {
+		// var endpoint = "items?item_barcode=" + barcode;
+		// performRequest(endpoint, "GET", {}, function(err, response) {
+		// 	if(err) {
+		// 		console.log("Alma error: " + err);
+		// 		// TODO Logger
+		// 		callback(err, null);
+		// 	}
+		// 	else {
+		// 			console.log("TEST Successfully retrieved data for item barcode ", barcode, typeof response);
+		// 		var itemData = JSON.parse(response);
+		// 		// Parse out the item pid, then construct checkout url
+		// 		var item_id = itemData.item_data.pid;
+		// 		endpoint = "users/" + userID + "/loans?item_pid=" + item_id + "&item_barcode=" + barcode;
+
+		// 		// var body = {
+		// 		// 	"circ_desk": {
+		//   //               "value": circDesk,
+		//   //               "desc": "Main"
+		//   //           },
+		//   //           "library": {
+		//   //               "value": library,
+		//   //               "desc": "Main"
+		//   //           }
+		// 		// };
+
+		// 		var body = JSON.stringify({
+		// 			"circ_desk[value]": "DEFAULT_CIRC_DESK",
+		// 			"circ_desk[desc]": "Main",
+		// 			"library[value]": "p",
+		// 			"library[desc]": "Main"
+		// 		});
+
+		// 			console.log("TEST checkout pre checkout request");
+		// 		// Check out the item
+		// 		almaRequest(endpoint, "POST", body, function(err, response) {
+		// 			if(err) {
+		// 				console.log("Alma error: " + err);
+		// 				// TODO Logger
+		// 				callback(err, null);
+		// 			}
+		// 			else {
+		// 				// TODO Logger
+		// 				console.log("TEST checkout response item barcode ", barcode, " response:", response);
+		// 				callback(null, response);
+		// 			}
+		// 		});
+		// 	}
+		// });
+
+
+
+		// Skip barcode request - assign bib,holding,item ids manually here, for testing the checkout request.
+		var item_id = "23665224580002766";
+		var endpoint = "users/" + userID + "/loans?item_pid=" + item_id + "&item_barcode=" + barcode;
+
+
+		var body = {
+			"circ_desk": {
+	            "value": circDesk,
+	            "desc": "Main"
+	        },
+	        "library": {
+	            "value": library,
+	            "desc": "Main"
+	        }
+		};
+
+		// var body = {
+		// 	"circ_desk": circDesk,
+	 //        "library": library
+		// };
+
+			console.log("TEST checkout pre checkout request");
+		// Check out the item
+		almaRequest(endpoint, "POST", body, function(err, response) {
 			if(err) {
 				console.log("Alma error: " + err);
 				// TODO Logger
 				callback(err, null);
 			}
 			else {
-				console.log("TEST Successfully retrieved data for item barcode ", barcode, response);
-				
-				// Parse out the item pid, then construct checkout url
-				var item_id = response.item_data.pid;
-				endpoint = "users/" + userID + "/loans?item_pid=" + item_id + "&item_barcode=" + barcode;
-
-				var body = {
-					"circ_desk": {
-		                "value": circDesk,
-		                "desc": "Main"
-		            },
-		            "library": {
-		                "value": library,
-		                "desc": "Main"
-		            }
-				};
-
-					console.log("TEST checkout pre checkout request");
-				// Check out the item
-				performRequest(endpoint, "POST", body, function(err, response) {
-					if(err) {
-						console.log("Alma error: " + err);
-						// TODO Logger
-						callback(err, null);
-					}
-					else {
-						// TODO Logger
-						console.log("TEST checkout response item barcode ", barcode, " response:", response);
-						callback(null, response);
-					}
-				});
+				// TODO Logger
+				console.log("TEST checkout response item barcode ", barcode, " response:", response);
+				callback(null, response);
 			}
 		});
+
 	}
 	catch (e) {
 		callback(e, null);
@@ -117,7 +163,7 @@ exports.checkinItem = function(barcode, callback) {
 
 					console.log("TEST checkins pre checkin request");
 				// Check in the item
-				performRequest(endpoint, "POST", null, function(err, response) {
+				almaRequest(endpoint, "POST", null, function(err, response) {
 					if(err) {
 						console.log("Alma error: " + err);
 						// TODO Logger
@@ -137,50 +183,59 @@ exports.checkinItem = function(barcode, callback) {
 	}
 }
 
-var performRequest = function (endpoint, method, data=null, callback) {
+var almaRequest = function(endpoint, method, data=null, callback) {
+ 	var dataString,
+  	  	apikey = 'apikey ' + settings.alma_api_key;
 
-  var dataString;
-  var headers = {
-    'Authorization': 'apikey ' + apiKey,
-    'Accept': 'application/json'
-  };
-  if (data && method != 'GET') {
-  	dataString = JSON.stringify(data);
-    headers['Content-Type'] = 'application/json';
-    headers['Content-Length'] = dataString.length;
-  }
+  	var headers = {
+    	'Authorization': apikey,
+    	'Accept': 'application/json'
+  	};
 
-  var options = {
-    uri: host + path + endpoint,
-    method: method,
-    headers: headers
-  };
-  	console.log("TEST Options are:", options);
+  	if(data && method != 'GET') {
+	  	dataString = JSON.stringify(data);
+	    headers['Content-Type'] = 'application/json';
+	    headers['Content-Length'] = dataString.length;
+	}
 
-  if (data && method != 'GET') {
-  	options['formData'] = data;
-  }
-  	console.log("TEST Alma request gets options: ", options);
-  request(
-    options,
-    function(err, response, body) {
-      if (!err && ('' + response.statusCode).match(/^[4-5]\d\d$/)) {
-        console.log('Error from Alma: ' + body);
-        var message;
-        try {
-          var obj = JSON.parse(body);
-          message = obj.errorList.error[0].errorMessage + " (" + obj.errorList.error[0].errorCode + ")";
-        } catch (e) {
-          message = "Unknown error from Alma.";
-        }
-        err = new Error(message);
-      }
+	var options = {
+	    uri: host + path + endpoint,
+	    method: method,
+	    headers: headers
+	};
 
-      if(err) {
-      	callback(err, null);
-      }
-      else {
-      	callback(null, body);
-      }
-    });
-  }
+	if (data && method != 'GET') {
+	  	options['body'] = dataString;
+	}
+
+		console.log("DEV Sending alma request: -------------------------------------------");
+		console.log("METHOD:", options.method);
+		console.log("URI:", options.uri);
+		console.log("Headers:", options.headers);
+		console.log("FD Body type:", typeof options.formData);
+		console.log("FD Body:", options.formData);
+		console.log("---------------------------------------------------------------------");
+
+	request(options, function(err, response, body) {
+		console.log("Rx response", response);
+		if(err) {
+			var errString = "Error from Alma: " + err;
+			console.log(errString);
+			callback(errString, null);
+		}
+		else {
+			var obj = JSON.parse(body);
+			if(obj.errorsExist) {
+				for(var error of obj.errorList.error) {
+					console.log("Alma error code: ", error.errorCode);
+					console.log("Alma error message: ", error.errorMessage);
+				}
+				callback(error.errorMessage, null);
+			}
+			else {
+				console.log("Alma request success.  Body: ", body);
+				callback(null, body);
+			}
+		}
+	});
+}
