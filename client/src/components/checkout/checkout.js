@@ -1,12 +1,14 @@
 'use strict'
 
 import {SystemUtils} from '../../utils/SystemUtils.js';
+import {Configuration} from '../../../config/Configuration.js';
 
 export class Checkout {
   
-  constructor(systemUtils) {
+  constructor(systemUtils, configuration) {
 
     this.utils = systemUtils;
+    this.config = configuration;
 
     this.setList = [];
     this.activeSet = {};
@@ -184,7 +186,6 @@ export class Checkout {
   submitBorrowerID() {
 
     var borrowerID;
-
     // Validate form
     if(this.borrowerID == "") {
       console.log("Please enter a DUID");
@@ -198,9 +199,22 @@ export class Checkout {
       console.log("Invalid ID format, please enter a valid DUID");
       this.activeBorrowerDisplay = "Invalid ID format, please enter a valid DUID";
     }
+    else if(this.config.runtimeEnv == "development") {
+      // Set the DEV SESSION active borrower
+      this.activeBorrower.id = this.config.settings.devUserID;
+      console.log("Dev user loaded, ID ", this.activeBorrower.id);
+      this.activeBorrower.fname = "DEV";
+      this.activeBorrower.lname = "USER";
+      this.activeBorrowerDisplay = this.activeBorrower.fname + ", " + this.activeBorrower.lname;
 
+      document.getElementById("borrower-id-input").style.color = "green";
+      console.log("Set color:", document.getElementById("borrower-id-input").style.color);
+
+      // Update buttons
+      this.refreshSetState();
+      this.refreshPatronFormState();
+    }
     else {
-      
       this.activeBorrowerDisplay = "Please wait...";
       this.utils.doAjax('/patron/data', 'get', {patronID: this.borrowerID}, null).then(response => {
 
@@ -251,25 +265,17 @@ export class Checkout {
   }
 
   checkOutSet() {
-    if(this.activeBorrower.id) {
-      var name = this.activeBorrower.fname + " " + this.activeBorrower.lname;
-      this.utils.doAjax('/set/loan', 'post', {patronID: this.activeBorrower.id, setID: this.activeSet.setID, patronName: name}, null).then(response => {
-        
+    this.utils.doAjax('/set/loan', 'post', {patronID: this.activeBorrower.id, setID: this.activeSet.setID, patronName: name}, null).then(response => {
         if(response.error) {
           console.log("Error: ", response.error);
         }
         else {
-          this.getLoanData();
-          this.activeSet.status = "On Loan";
-          this.loadSets();
-          this.refreshSetState();
+
+          console.log("Checkout");
         }
-      });
-    }
-    else {
-      console.log("Error: no borrower active");
-    }
+    });
+
   }
 }
 
-Checkout.inject = [SystemUtils];
+Checkout.inject = [SystemUtils, Configuration];

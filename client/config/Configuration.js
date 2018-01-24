@@ -6,6 +6,8 @@
 export class Configuration {  
 	constructor(){
 
+		this.runtimeEnv = "development";
+
 		// Service URL, no trailing slash
 		this.serverUrl = "http://localhost:9000";
 
@@ -20,7 +22,7 @@ export class Configuration {
 		};
 
 		this.settings = {
-
+			devUserID: "872895198",
 			maxBarcodeLength: 30
 		}
 	}
