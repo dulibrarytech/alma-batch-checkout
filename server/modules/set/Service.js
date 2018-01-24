@@ -70,11 +70,19 @@ exports.deletePatronLoans = function(setID, callback) {
 				// loop items.length
 				// var temp = [];
 				// temp.push(items[0]);
-				// for(var i=0; i<temp.length; i++) {
-				// 	Alma.checkinItem(temp[i], function(err, response) {
-				// 		console.log("TEST alma checkin callback", response);
-				// 	});
-				// }
+
+				for(var i=0; i<items.length; i++) {
+						console.log("TEST checkin item ", items[i]);
+					Alma.checkinItem(items[i], function(err, response) {
+						if(err) {
+							console.log("SVC ERROR ", err);
+							reject(err.toString());
+						}
+						else {
+							fulfill(true);
+						}
+					});
+				}
 
 				Model.deleteLoan(setID, function(err) {
 					if(err) {

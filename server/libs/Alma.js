@@ -42,92 +42,79 @@ exports.checkoutItem = function(userID, barcode, callback) {
 	try {
 
 		// Get the Alma item pid using the barcode
-		// var endpoint = "items?item_barcode=" + barcode;
-		// performRequest(endpoint, "GET", {}, function(err, response) {
-		// 	if(err) {
-		// 		console.log("Alma error: " + err);
-		// 		// TODO Logger
-		// 		callback(err, null);
-		// 	}
-		// 	else {
-		// 			console.log("TEST Successfully retrieved data for item barcode ", barcode, typeof response);
-		// 		var itemData = JSON.parse(response);
-		// 		// Parse out the item pid, then construct checkout url
-		// 		var item_id = itemData.item_data.pid;
-		// 		endpoint = "users/" + userID + "/loans?item_pid=" + item_id + "&item_barcode=" + barcode;
-
-		// 		// var body = {
-		// 		// 	"circ_desk": {
-		//   //               "value": circDesk,
-		//   //               "desc": "Main"
-		//   //           },
-		//   //           "library": {
-		//   //               "value": library,
-		//   //               "desc": "Main"
-		//   //           }
-		// 		// };
-
-		// 		var body = JSON.stringify({
-		// 			"circ_desk[value]": "DEFAULT_CIRC_DESK",
-		// 			"circ_desk[desc]": "Main",
-		// 			"library[value]": "p",
-		// 			"library[desc]": "Main"
-		// 		});
-
-		// 			console.log("TEST checkout pre checkout request");
-		// 		// Check out the item
-		// 		almaRequest(endpoint, "POST", body, function(err, response) {
-		// 			if(err) {
-		// 				console.log("Alma error: " + err);
-		// 				// TODO Logger
-		// 				callback(err, null);
-		// 			}
-		// 			else {
-		// 				// TODO Logger
-		// 				console.log("TEST checkout response item barcode ", barcode, " response:", response);
-		// 				callback(null, response);
-		// 			}
-		// 		});
-		// 	}
-		// });
-
-
-
-		// Skip barcode request - assign bib,holding,item ids manually here, for testing the checkout request.
-		var item_id = "23665224580002766";
-		var endpoint = "users/" + userID + "/loans?item_pid=" + item_id + "&item_barcode=" + barcode;
-
-
-		var body = {
-			"circ_desk": {
-	            "value": circDesk,
-	            "desc": "Main"
-	        },
-	        "library": {
-	            "value": library,
-	            "desc": "Main"
-	        }
-		};
-
-		// var body = {
-		// 	"circ_desk": circDesk,
-	 //        "library": library
-		// };
-
-			console.log("TEST checkout pre checkout request");
-		// Check out the item
-		almaRequest(endpoint, "POST", body, function(err, response) {
+		var endpoint = "items?item_barcode=" + barcode;
+		almaRequest(endpoint, "GET", {}, function(err, response) {
 			if(err) {
 				console.log("Alma error: " + err);
 				// TODO Logger
 				callback(err, null);
 			}
 			else {
-				// TODO Logger
-				console.log("TEST checkout response item barcode ", barcode, " response:", response);
-				callback(null, response);
+					console.log("TEST Successfully retrieved data for item barcode ", barcode, typeof response);
+				var itemData = JSON.parse(response);
+				// Parse out the item pid, then construct checkout url
+				var item_id = itemData.item_data.pid;
+				endpoint = "users/" + userID + "/loans?item_pid=" + item_id + "&item_barcode=" + barcode;
+
+				var body = {
+					"circ_desk": {
+		                "value": circDesk,
+		                "desc": "Main"
+		            },
+		            "library": {
+		                "value": library,
+		                "desc": "Main"
+		            }
+				};
+
+					console.log("TEST checkout pre checkout request");
+				// Check out the item
+				almaRequest(endpoint, "POST", body, function(err, response) {
+					if(err) {
+						console.log("Alma error: " + err);
+						// TODO Logger
+						callback(err, null);
+					}
+					else {
+						// TODO Logger
+						console.log("TEST checkout response item barcode ", barcode, " response:", response);
+						callback(null, response);
+					}
+				});
 			}
 		});
+
+
+
+		// // Skip barcode request - assign bib,holding,item ids manually here, for testing the checkout request.
+		// var item_id = "23665224580002766";
+		// var endpoint = "users/" + userID + "/loans?item_pid=" + item_id + "&item_barcode=" + barcode;
+
+		// var body = {
+		// 	"circ_desk": {
+	 //            "value": circDesk,
+	 //            "desc": "Main"
+	 //        },
+	 //        "library": {
+	 //            "value": library,
+	 //            "desc": "Main"
+	 //        }
+		// };
+
+		// 	console.log("TEST checkout pre checkout request");
+		// // Check out the item
+		// almaRequest(endpoint, "POST", body, function(err, response) {
+		// 	if(err) {
+		// 		console.log("Alma error: " + err);
+		// 		// TODO Logger
+		// 		callback(err, null);
+		// 	}
+		// 	else {
+		// 		// TODO Logger
+		// 		console.log("TEST checkout response item barcode ", barcode, " response:", response);
+		// 		callback(null, response);
+		// 	}
+		// });
 
 	}
 	catch (e) {
@@ -141,8 +128,8 @@ exports.checkinItem = function(barcode, callback) {
 			console.log("TEST checkin pre barcode request");
 
 		// Get the Alma item pid using the barcode
-		var endpoint = "items?item_barcode=" + barcode;
-		performRequest(endpoint, "GET", {}, function(err, response) {
+		var endpoint = "items?item_barcode=" + barcode, queryString, url;
+		almaRequest(endpoint, "GET", {}, function(err, response) {
 			if(err) {
 				console.log("Alma error: " + err);
 				// TODO Logger
@@ -150,20 +137,19 @@ exports.checkinItem = function(barcode, callback) {
 			}
 			else {
 				console.log("TEST Successfully retrieved data for item barcode ", barcode, response);
-				
+				var itemData = JSON.parse(response);
+
 				// Parse out the item pid, then construct checkout url
-				var item_id = response.item_data.pid,
-					holding_id = response.holding_data.honding_id,
-					mms_id = response.bib_data.mms_id;
+				var item_id = itemData.item_data.pid,
+					holding_id = itemData.holding_data.honding_id,
+					mms_id = itemData.bib_data.mms_id;
 
-				var queryString = "?op=scan&library=" + library + "&circ_desk=" + circDesk;
+				endpoint = "bibs/" + mms_id + "/holdings/" + holding_id + "/items/" + item_id;
+				queryString = "?op=scan&library=" + library + "&circ_desk=" + circDesk;
+				url = endpoint + queryString;
 
-				endpoint = "bibs/" + mms_id + "/holdings/" + holding_id + "/items/" + item_id + queryString;
-				// POST /almaws/v1/bibs/{mms_id}/holdings/{holding_id}/items/{item_pid}
-
-					console.log("TEST checkins pre checkin request");
 				// Check in the item
-				almaRequest(endpoint, "POST", null, function(err, response) {
+				almaRequest(url, "POST", null, function(err, response) {
 					if(err) {
 						console.log("Alma error: " + err);
 						// TODO Logger
@@ -212,8 +198,8 @@ var almaRequest = function(endpoint, method, data=null, callback) {
 		console.log("METHOD:", options.method);
 		console.log("URI:", options.uri);
 		console.log("Headers:", options.headers);
-		console.log("FD Body type:", typeof options.formData);
-		console.log("FD Body:", options.formData);
+		console.log("FD Body type:", typeof options.body);
+		console.log("FD Body:", options.body);
 		console.log("---------------------------------------------------------------------");
 
 	request(options, function(err, response, body) {
