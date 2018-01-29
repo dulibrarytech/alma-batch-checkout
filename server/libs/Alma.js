@@ -18,7 +18,6 @@ exports.getUserData = function(userID, callback) {
 		var endpoint = "users/" + userID;
 		almaRequest(endpoint, "GET", {}, function(err, response) {
 			if(err) {
-				console.log("Alma error: " + err);
 				// TODO Logger
 				callback(err, null);
 			}
@@ -40,12 +39,10 @@ exports.getUserData = function(userID, callback) {
 
 exports.checkoutItem = function(userID, barcode, callback) {
 	try {
-
 		// Get the Alma item pid using the barcode
 		var endpoint = "items?item_barcode=" + barcode;
 		almaRequest(endpoint, "GET", {}, function(err, response) {
 			if(err) {
-				console.log("Alma error: " + err);
 				// TODO Logger
 				callback(err, null);
 			}
@@ -69,7 +66,6 @@ exports.checkoutItem = function(userID, barcode, callback) {
 				// Check out the item
 				almaRequest(endpoint, "POST", body, function(err, response) {
 					if(err) {
-						console.log("Alma error: " + err);
 						// TODO Logger
 						callback(err, null);
 					}
@@ -92,7 +88,6 @@ exports.checkinItem = function(barcode, callback) {
 		var endpoint = "items?item_barcode=" + barcode, queryString, url;
 		almaRequest(endpoint, "GET", {}, function(err, response) {
 			if(err) {
-				console.log("Alma error: " + err);
 				// TODO Logger
 				callback(err, null);
 			}
@@ -111,12 +106,9 @@ exports.checkinItem = function(barcode, callback) {
 				// Check in the item
 				almaRequest(url, "POST", null, function(err, response) {
 					if(err) {
-						console.log("Alma error: " + err);
-						// TODO Logger
 						callback(err, null);
 					}
 					else {
-						// TODO Logger
 						callback(null, response);
 					}
 				});
@@ -154,23 +146,30 @@ var almaRequest = function(endpoint, method, data=null, callback) {
 	}
 
 	request(options, function(err, response, body) {
+
 		if(err) {
 			var errString = "Error from Alma: " + err;
-			console.log(errString);
 			callback(errString, null);
 		}
 		else {
-			var obj = JSON.parse(body);
-			if(obj.errorsExist) {
-				for(var error of obj.errorList.error) {
-					console.log("Alma error code: ", error.errorCode);
-					console.log("Alma error message: ", error.errorMessage);
+			try {
+				var obj = JSON.parse(body), errorStr = "Alma error messages: ";
+				if(obj.errorsExist) {
+					for(var error of obj.errorList.error) {
+						console.log("Alma error code: ", error.errorCode);
+						console.log("Alma error message: ", error.errorMessage);
+						errorStr += (" " + error.errorMessage + " ");
+					}
+					console.log("ERRORSTR:", errorStr);
+					callback(errorStr, null);
 				}
-				callback(error.errorMessage, null);
+				else {
+					callback(null, body);
+				}
 			}
-			else {
-				console.log("Alma request success.  Body: ", body);
-				callback(null, body);
+			catch(e) {
+				var errString = "Error from Alma: " + e;
+				callback(e, null);
 			}
 		}
 	});

@@ -110,17 +110,18 @@ exports.setLoanCreate = function(req, res) {
 	var response = {};
 
 	Service.createPatronLoans(req.body.patronID, req.body.setID, req.body.patronName).then(data => {
-			console.log("TEST createPatronLoans done: rx: ", data);
 		response['id'] = data.loanID;
 		res.send(JSON.stringify(response));
 
 	}).catch(error => {
 		console.log(error);
-		response['error'] = "Server error: Could not create user loan";
+		response['error'] = "Could not create user loan";
 		res.status(200);
 		res.send(JSON.stringify(response));
 	});
-
+	// response['error'] = "Could not create user loan";
+	// 	res.status(200);
+	// 	res.send(JSON.stringify(response));
 }
 
 exports.setLoanRemove = function(req, res) {

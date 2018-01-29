@@ -271,6 +271,7 @@ export class Checkout {
         
         if(response.error) {
           console.log("Error: ", response.error);
+          this.utils.sendMessage("Can't checkout set, please contact systems support");
         }
         else {
           this.getLoanData();
