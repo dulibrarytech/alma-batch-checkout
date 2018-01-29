@@ -10,5 +10,7 @@ First you need to go into the ``client`` folder and run the usual commands to in
 
 Then you need to go into the ``server`` folder and just run: ``npm install`` to install the server side dependencies.
 
+# Server deploy
+
 ## Running
 To run, go into ``server`` and type ``node server.js`` it will run on port 9000 by default. Then visit: ``http://localhost:9000`` to see the app running.
