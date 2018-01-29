@@ -95,6 +95,13 @@ export class SystemUtils {
 		}, 3000);
 	}
 
+	clearMessages() {
+		var elts = document.getElementsByClassName('message');
+		for(var i=0; i<elts.length; i++) {
+			elts[i].innerHTML = "";
+		}
+	}
+
 	logout() {
         this.config.session.data = {};
         this.config.session.token = "";

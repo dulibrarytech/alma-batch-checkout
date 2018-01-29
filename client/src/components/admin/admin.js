@@ -25,6 +25,8 @@ export class Admin {
 
   editSet(index) {
 
+    this.utils.clearMessages();
+
     // Store active set
     this.activeSet.name = this.setList[index].name || "";
     this.activeSet.creator = this.setList[index].creator || "";
@@ -124,7 +126,7 @@ export class Admin {
       data: {}
     }
     body.data['title'] = this.activeSet.name;
-    body.data['items'] = this.activeSet.items;
+    body.data['items'] = this.activeSet.items.length === 0 ? "" : this.activeSet.items;
 
     this.utils.doAjax('/set', 'put', body, null).then(response => {
       if(response.error) {
@@ -190,17 +192,21 @@ export class Admin {
     if(barcode != "" && barcode.length < this.settings.maxBarcodeLength) {
       isValid = true;
     }
-    else {
-      console.log("Barcode fails validation");
-    }
     return isValid;
   }
 
   addBarcode() {
+
     if(this.activeSet.setID && this.validateBarcode(this.barcode) === true) {
+      if(this.activeSet.items.length === 0) {
+        this.activeSet.items = [];
+      }
       this.activeSet.items.push(this.barcode);
       this.barcode = "";
       document.getElementById("add-barcode").focus();
+    }
+    else {
+      console.log("Barcode fails validation");
     }
   }
 

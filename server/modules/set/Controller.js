@@ -49,7 +49,6 @@ exports.setCreate = function(req, res) {
 
 exports.setUpdate = function(req, res) {
 	var response = {};
-
 	Model.updateSet(req.body.setID, req.body.data, function(err) {
 		if(err) {
 			response['error'] = err;
