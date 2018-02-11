@@ -6,7 +6,7 @@
 export class Configuration {  
 	constructor(){
 
-		this.runtimeEnv = "development";
+		this.runtimeEnv = "production";
 
 		// Service URL, no trailing slash
 		this.serverUrl = "http://localhost:9000";
