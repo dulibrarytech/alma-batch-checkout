@@ -120,7 +120,7 @@ exports.checkinItem = function(barcode, callback) {
 	}
 }
 
-var almaRequest = function(endpoint, method, data=null, callback) {
+var almaRequest = function(endpoint, method, data, callback) {
  	var dataString,
   	  	apikey = 'apikey ' + settings.alma_api_key;
 

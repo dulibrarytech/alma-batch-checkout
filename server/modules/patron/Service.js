@@ -1,7 +1,6 @@
 'use strict'
 
-var config = require('../../../config/configuration'),
-    Alma = require('../../libs/Alma.js');
+var Alma = require('../../libs/Alma.js');
 
 exports.getPatronData = function(patronID) {
 

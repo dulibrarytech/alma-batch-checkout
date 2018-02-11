@@ -1,7 +1,6 @@
 'use strict';
 
 var async = require('async'),
-    config = require('../../../config/configuration'),
     Service = require('./Service'),
     Model = require('./Model');
 

@@ -2,7 +2,7 @@
 
 import {inject} from 'aurelia-framework';
 import {HttpClient, json} from 'aurelia-fetch-client';
-import {Configuration} from '../../../config/Configuration';
+import {Configuration} from '../../config/Configuration';
 
 export class SystemUtils {
 

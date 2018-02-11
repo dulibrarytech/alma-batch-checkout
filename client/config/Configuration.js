@@ -9,7 +9,7 @@ export class Configuration {
 		this.runtimeEnv = "production";
 
 		// Service URL, no trailing slash
-		this.serverUrl = "http://localhost:9000";
+		this.serverUrl = "http://localhost:9001";
 
 		// App settings
 		this.clientIDHeader = "abc-client";
