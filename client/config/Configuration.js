@@ -13,7 +13,7 @@ export class Configuration {
 
 		// App settings
 		this.clientIDHeader = "abc_client";
-		this.mainContentDiv = "content";
+		this.mainContentDiv = "main";
 
 		// Runtime objects (Do not change these values)
 		this.session = {
