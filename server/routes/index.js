@@ -6,7 +6,6 @@ module.exports = function (app) {
 	var settings = require('../config/settings.js');
 
 	var checkHeader = function(req, res, next) {
-
 	  if(req.headers['client-id-header'] == settings.client_header) {
 	    next();
 	  }
