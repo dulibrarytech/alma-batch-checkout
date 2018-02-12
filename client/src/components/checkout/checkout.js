@@ -207,7 +207,7 @@ export class Checkout {
       console.log("Please enter a number");
       this.activeBorrowerDisplay = "Please enter a number";
     }
-    else if(this.borrowerID.length > 9) {
+    else if(this.borrowerID.length > this.config.settings.maxPatronIDLength) {
       console.log("Invalid ID format, please enter a valid DUID");
       this.activeBorrowerDisplay = "Invalid ID format, please enter a valid DUID";
     }

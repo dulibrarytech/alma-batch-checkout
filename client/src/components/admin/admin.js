@@ -75,16 +75,6 @@ export class Admin {
     });
   }
 
-  validateAlphanumeric(string) {
-    var valid = true;
-
-    if( /[^a-zA-Z0-9]/.test( string )) {
-      valid = false;
-    }
-
-    return valid;
-  }
-
   /* 
    * ["edit" | "new" | false]
    */
@@ -112,7 +102,7 @@ export class Admin {
 
   createSet() {
 
-    if(this.validateAlphanumeric(this.setName)) {
+    if(this.validateCreateSetForm()) {
       var body = {
         title: this.setName,
         creator: "",
@@ -131,33 +121,32 @@ export class Admin {
         }
       });
     }
-    else {
-      console.log("Invalid characters entered")
-    }
   }
 
   updateSet(setID) {
-    if(typeof setID == 'undefined' && this.activeSet.setID) {
-      setID = this.activeSet.setID;
-    }
-
-    var body = {
-      setID: setID, 
-      data: {}
-    }
-    body.data['title'] = this.activeSet.name;
-    body.data['items'] = this.activeSet.items.length === 0 ? "" : this.activeSet.items;
-
-    this.utils.doAjax('/set', 'put', body, null).then(response => {
-      if(response.error) {
-        console.log("Server error:", response.error);
+    if(this.validateSetForm()) {
+      if(typeof setID == 'undefined' && this.activeSet.setID) {
+        setID = this.activeSet.setID;
       }
-      else {
-        console.log("Set updated");
-        this.utils.sendMessage("Set updated");
-        this.loadSets();
+
+      var body = {
+        setID: setID, 
+        data: {}
       }
-    });
+      body.data['title'] = this.activeSet.name;
+      body.data['items'] = this.activeSet.items.length === 0 ? "" : this.activeSet.items;
+
+      this.utils.doAjax('/set', 'put', body, null).then(response => {
+        if(response.error) {
+          console.log("Server error:", response.error);
+        }
+        else {
+          console.log("Set updated");
+          this.utils.sendMessage("Set updated");
+          this.loadSets();
+        }
+      });
+    }
   }
 
   confirmRemoveSet(setID) {
@@ -205,31 +194,61 @@ export class Admin {
       status: "",
       items: []
     };
+    this.setName = ""; // new set
   }
 
-  validateBarcode(barcode) {
-    var isValid = false;
-    // if(barcode != "" && isNaN(barcode) === false) {
-    //   isValid = true;
-    // }
-    if(barcode != "" && barcode.length < this.settings.maxBarcodeLength) {
-      isValid = true;
+  // TODO move To view helper
+  validateAlphanumeric(string) {
+    var valid = true;
+
+    if( /[^a-zA-Z0-9]/.test( string )) {
+      valid = false;
     }
+
+    return valid;
+  }
+
+  // TODO move To view helper
+  validateInputValue(value, length, element) {
+    var isValid = true;
+
+    if(value == "") {
+      isValid = false;
+      console.log(element, "fails validation: empty string");
+    }
+    else if(value.length > length) {
+      isValid = false;
+      console.log(element, "fails validation: max length of " + length + " exceeded");
+    }
+    else if(this.validateAlphanumeric(value) == false) {
+      isValid = false;
+      console.log(element, "fails validation: value entered is not alphanumeric");
+    }
+
     return isValid;
+  }
+
+  validateSetForm() {
+    return this.validateInputValue(this.activeSet.name, 50, "Name");
+  }
+
+  validateCreateSetForm() {
+    return this.validateInputValue(this.setName, 50, "Name");
+  }
+
+  validateBarcode() {
+    return this.validateInputValue(this.barcode, this.settings.maxBarcodeLength, "Barcode");
   }
 
   addBarcode() {
 
-    if(this.activeSet.setID && this.validateBarcode(this.barcode) === true) {
+    if(this.activeSet.setID && this.validateBarcode() === true) {
       if(this.activeSet.items.length === 0) {
         this.activeSet.items = [];
       }
       this.activeSet.items.push(this.barcode);
       this.barcode = "";
       document.getElementById("add-barcode").focus();
-    }
-    else {
-      console.log("Barcode fails validation");
     }
   }
 

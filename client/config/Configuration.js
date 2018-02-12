@@ -23,7 +23,8 @@ export class Configuration {
 
 		this.settings = {
 			devUserID: "872895198",
-			maxBarcodeLength: 30
+			maxBarcodeLength: 30,
+			maxPatronIDLength: 10
 		}
 	}
 }
