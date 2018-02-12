@@ -165,6 +165,10 @@ exports.addSet = function(data, callback) {
     setData['createDate'] = new Date();
     setData['title'] = data.title || "";
     setData['creator'] = data.creator || "";
+
+    if(typeof data.period == 'string') {
+        data.period = parseInt(data.period);
+    }
     setData['period'] = data.period || 48;
 
     var doc = {
