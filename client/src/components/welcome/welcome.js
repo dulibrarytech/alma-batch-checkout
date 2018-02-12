@@ -4,6 +4,10 @@ export class Welcome {
   lastName = 'Doe';
   previousValue = this.fullName;
 
+  constructor() {
+    
+  }
+
   get fullName() {
     return `${this.firstName} ${this.lastName}`;
   }

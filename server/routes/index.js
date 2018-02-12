@@ -21,6 +21,11 @@ module.exports = function (app) {
 	    res.render('index.html');
 	});
 
+	app.get('/error', function(req, res) {
+	    res.status(403);
+	    res.render('error.html');
+	});
+
 	// Protected routes
 	app.use(checkHeader);
 

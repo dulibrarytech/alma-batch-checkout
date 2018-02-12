@@ -8,6 +8,8 @@ export class App {
       { route: ['admin', 'admin'], name: 'components/admin/admin',      moduleId: 'components/admin/admin',      nav: true, title: 'Manage' }
     ]);
 
+    config.mapUnknownRoutes('not-found');
+
     this.router = router;
   }
 }

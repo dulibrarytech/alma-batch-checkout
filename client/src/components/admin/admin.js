@@ -23,6 +23,10 @@ export class Admin {
   	this.showSetWindow(false);
   }
 
+  activate(params, navigationInstruction) {
+      //console.log("TEST", navigationInstruction);
+  }
+
   editSet(index) {
 
     this.utils.clearMessages();
@@ -71,6 +75,16 @@ export class Admin {
     });
   }
 
+  validateAlphanumeric(string) {
+    var valid = true;
+
+    if( /[^a-zA-Z0-9]/.test( string )) {
+      valid = false;
+    }
+
+    return valid;
+  }
+
   /* 
    * ["edit" | "new" | false]
    */
@@ -97,23 +111,29 @@ export class Admin {
   }
 
   createSet() {
-    var body = {
-      title: this.setName,
-      creator: "",
-      period: 48
-    }
 
-    this.utils.doAjax('/set', 'post', body, null).then(response => {
-      if(response.error) {
-        console.log("Server error:", response.error);
+    if(this.validateAlphanumeric(this.setName)) {
+      var body = {
+        title: this.setName,
+        creator: "",
+        period: 48
       }
-      else {
-        console.log("Set created: ", response.id);
-        this.utils.sendMessage("Set created");
-        this.setName = "";
-        this.loadSets();
-      }
-    });
+
+      this.utils.doAjax('/set', 'post', body, null).then(response => {
+        if(response.error) {
+          console.log("Server error:", response.error);
+        }
+        else {
+          console.log("Set created: ", response.id);
+          this.utils.sendMessage("Set created");
+          this.setName = "";
+          this.loadSets();
+        }
+      });
+    }
+    else {
+      console.log("Invalid characters entered")
+    }
   }
 
   updateSet(setID) {
@@ -152,8 +172,11 @@ export class Admin {
 
   removeSet(setID) {
     if(typeof setID == 'undefined' && this.activeSet.setID) {
-      setID = this.activeSet.setID;
+      setID = this.activeSet.setID || "";
     }
+
+    document.getElementById("remove-set-button").style.display = "block";
+    document.getElementById("remove-set-button-confirm").style.display = "none";
 
     var body = {
       setID: setID

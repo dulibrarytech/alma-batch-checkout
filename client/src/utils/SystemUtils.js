@@ -62,8 +62,10 @@ export class SystemUtils {
 
         // Start spinner
         var target = document.getElementById("content");
-        this.startSpinner();
-        target.appendChild(this.spinner.el);
+        if(target) {
+        	this.startSpinner();
+        	target.appendChild(this.spinner.el);
+        }
 
         // Run the request
         return this.http.fetch(url, options).then(response => response.json())

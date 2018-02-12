@@ -2,13 +2,15 @@
 
 import {SystemUtils} from '../../utils/SystemUtils.js';
 import {Configuration} from '../../../config/Configuration.js';
+import {Router} from 'aurelia-router';
 
 export class Checkout {
   
-  constructor(systemUtils, configuration) {
+  constructor(systemUtils, configuration, router) {
 
     this.utils = systemUtils;
     this.config = configuration;
+    this.router = router;
 
     this.setList = [];
     this.activeSet = {};
@@ -31,6 +33,16 @@ export class Checkout {
 
     // Populate the set list table
     this.loadSets();
+  }
+
+  activate(params, navigationInstruction) {
+      if(navigationInstruction.route == "") {
+        this.router.navigate("checkout");
+
+        // this.utils.doAjax('/error', 'get', null, null).then(response => {
+        //   console.log("Access forbidden");
+        // });
+      }
   }
 
   setButtonVisibility(state) {
@@ -287,4 +299,4 @@ export class Checkout {
   }
 }
 
-Checkout.inject = [SystemUtils, Configuration];
+Checkout.inject = [SystemUtils, Configuration, Router];
