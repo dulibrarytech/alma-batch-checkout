@@ -1,6 +1,7 @@
 'use strict';
 
 var async = require('async'),
+	Sanitizor = require('../../libs/Sanitize'),
     Service = require('./Service'),
     Model = require('./Model');
 
@@ -32,15 +33,20 @@ exports.setAll = function(req, res) {
 exports.setCreate = function(req, res) {
 	var response = {};
 
-	if(!req.body.title || !req.body.creator || !req.body.period) {
+	if(!req.body.title) {
 		res.sendStatus(400);
 	}
 	else {
+		
+		// TODO add sanitization
 		var set = {
 			title: req.body.title,
 			creator: req.body.creator,
 			period: req.body.period
 		}
+
+		// var set = {};
+		// set['title'] = Sanitizor.checkInput(req.body.title);
 
 		// Get all sets from the database
 		Model.addSet(set, function(err, id) {
@@ -60,25 +66,40 @@ exports.setCreate = function(req, res) {
 
 exports.setUpdate = function(req, res) {
 	var response = {};
-	Model.updateSet(req.body.setID, req.body.data, function(err) {
-		if(err) {
-			response['error'] = err;
-			res.status(200);
-		}
-		res.send(JSON.stringify(response));
-	})
+
+	if(!req.body.setID || !req.body.data) {
+		res.sendStatus(400);
+	}
+	else {
+		// TODO add sanitization
+
+		Model.updateSet(req.body.setID, req.body.data, function(err) {
+			if(err) {
+				response['error'] = err;
+				res.status(200);
+			}
+			res.send(JSON.stringify(response));
+		});
+	}
 }
 
 exports.setRemove = function(req, res) {
 	var response = {};
 
-	Model.deleteSet(req.body.setID, function(err) {
-		if(err) {
-			response['error'] = err;
-			res.status(200);
-		}
-		res.send(JSON.stringify(response));
-	})
+	if(!req.body.setID) {
+		res.sendStatus(400);
+	}
+	else {
+		// TODO add sanitization (only alphanumeric)
+
+		Model.deleteSet(req.body.setID, function(err) {
+			if(err) {
+				response['error'] = err;
+				res.status(200);
+			}
+			res.send(JSON.stringify(response));
+		});
+	}
 }
 
 // Return an array of items in the set
@@ -119,33 +140,44 @@ exports.setLoanData = function(req, res) {
 exports.setLoanCreate = function(req, res) {
 	var response = {};
 
-	Service.createPatronLoans(req.body.patronID, req.body.setID, req.body.patronName).then(data => {
-		response['id'] = data.loanID;
-		res.send(JSON.stringify(response));
+	if(!req.body.patronID || !req.body.setID || !req.body.patronName) {
+		res.sendStatus(400);
+	}
+	else {
+		// TODO: sanitize
 
-	}).catch(error => {
-		console.log(error);
-		response['error'] = "Could not create user loan";
-		res.status(200);
-		res.send(JSON.stringify(response));
-	});
-	// response['error'] = "Could not create user loan";
-	// 	res.status(200);
-	// 	res.send(JSON.stringify(response));
+		Service.createPatronLoans(req.body.patronID, req.body.setID, req.body.patronName).then(data => {
+			response['id'] = data.loanID;
+			res.send(JSON.stringify(response));
+
+		}).catch(error => {
+			console.log(error);
+			response['error'] = "Could not create user loan";
+			res.status(200);
+			res.send(JSON.stringify(response));
+		});
+	}
 }
 
 exports.setLoanRemove = function(req, res) {
 	var response = {};
 
-	Service.deletePatronLoans(req.body.setID).then(data => {
-			console.log("TEST deletePatronLoans done: rx: ", data);
-		res.send(JSON.stringify(response));
+	if(!req.body.setID) {
+		res.sendStatus(400);
+	}
+	else {
+		// TODO sanitization (alphanumeric)
 
-	}).catch(error => {
-		console.log(error);
-		response['error'] = "Server error: Could not remove user loan";
-		res.status(200);
-		res.send(JSON.stringify(response));
-	});
+		Service.deletePatronLoans(req.body.setID).then(data => {
+				console.log("TEST deletePatronLoans done: rx: ", data);
+			res.send(JSON.stringify(response));
+
+		}).catch(error => {
+			console.log(error);
+			response['error'] = "Server error: Could not remove user loan";
+			res.status(200);
+			res.send(JSON.stringify(response));
+		});
+	}
 }
 

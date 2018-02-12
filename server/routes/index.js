@@ -27,4 +27,9 @@ module.exports = function (app) {
 
 	require('../modules/set/Routes.js')(app, settings);
 	require('../modules/patron/Routes.js')(app, settings);
+
+	app.post('/test', function(req, res) {
+		console.log("TEST: ", req.body);
+		res.send(200);
+	});
 };
