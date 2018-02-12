@@ -4,6 +4,13 @@ var async = require('async'),
     Service = require('./Service'),
     Model = require('./Model');
 
+/*
+ * Depreciated
+ */
+exports.fetchSet = function(req, res) {
+	res.sendStatus(410);
+}
+
 exports.setAll = function(req, res) {
 	var response = {};
 
@@ -25,25 +32,30 @@ exports.setAll = function(req, res) {
 exports.setCreate = function(req, res) {
 	var response = {};
 
-	var set = {
-		title: req.body.title,
-		creator: req.body.creator,
-		period: req.body.period
+	if(!req.body.title || !req.body.creator || !req.body.period) {
+		res.sendStatus(400);
 	}
-
-	// Get all sets from the database
-	Model.addSet(set, function(err, id) {
-			
-		if(err) {
-			response['error'] = err;
-			res.status(200);
-		}
-		else {
-			response['id'] = id;
+	else {
+		var set = {
+			title: req.body.title,
+			creator: req.body.creator,
+			period: req.body.period
 		}
 
-		res.send(JSON.stringify(response));
-	});
+		// Get all sets from the database
+		Model.addSet(set, function(err, id) {
+				
+			if(err) {
+				response['error'] = err;
+				res.status(200);
+			}
+			else {
+				response['id'] = id;
+			}
+
+			res.send(JSON.stringify(response));
+		});
+	}
 }
 
 exports.setUpdate = function(req, res) {

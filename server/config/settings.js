@@ -1,5 +1,6 @@
 module.exports = {
 	baseUrl : process.env.APP_HOST + ":" + process.env.APP_PORT,
 	environment :  process.env.NODE_ENV,
-	alma_api_key: process.env.ALMA_API_KEY
+	alma_api_key: process.env.ALMA_API_KEY,
+	client_header: process.env.CLIENT_HEADER
 }

@@ -12,7 +12,7 @@ export class Configuration {
 		this.serverUrl = "http://localhost:9001";
 
 		// App settings
-		this.clientIDHeader = "abc-client";
+		this.clientIDHeader = "abc_client";
 		this.mainContentDiv = "content";
 
 		// Runtime objects (Do not change these values)
