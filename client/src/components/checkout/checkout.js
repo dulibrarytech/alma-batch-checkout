@@ -29,7 +29,6 @@ export class Checkout {
     // Initialize elements
     document.getElementById("borrower-id-clear").style.display = "none";
     document.getElementById("borrower-id-input").focus();
-    document.getElementById("loan-details-form").style.display = "none";
 
     this.setButtonVisibility(-1);
 
@@ -40,6 +39,7 @@ export class Checkout {
     // Populate the set list table
     this.loadSets();
     this.setSelectedPeriodValues();
+    this.showLoanDataDialog(false);
   }
 
   activate(params, navigationInstruction) {
@@ -88,7 +88,6 @@ export class Checkout {
 
   // Get the set list from the server, populate list
   loadSets() {
-    document.getElementById("loan-details-form").style.display = "none";
     this.utils.doAjax('/set/all', 'get', null, null).then(response => {
 
         if(response.error) {
@@ -137,18 +136,18 @@ export class Checkout {
     this.activeSet.loan = null;
     this.refreshSetState();
 
-    // Init and show loan options dialog
-    document.getElementById("loan-details-form").style.display = "block";
-    // this.setSelectedPeriodValues();
-
     // If on loan, get the loan data
     if(this.activeSet.status == "On Loan") {
       this.getLoanData();
+      this.showLoanDataDialog(false);
+    }
+    else if(this.activeBorrower.id) {
+      this.showLoanDataDialog(true);
     }
   }
 
   setSelectedPeriodValues() {
-      console.log("TEST SELSET setPeriodDays:", this.setPeriodDays);
+
     // Set default hour value in dropdown
     var hourOptions = document.getElementById("hour-select").childNodes;
     for(var index of hourOptions) {
@@ -234,6 +233,8 @@ export class Checkout {
   submitBorrowerID() {
 
     var borrowerID;
+    this.showLoanDataDialog(false);
+
     // Validate form
     if(this.borrowerID == "") {
       console.log("Please enter a DUID");
@@ -278,6 +279,10 @@ export class Checkout {
             this.activeBorrower.lname = response.data.lname;
             this.activeBorrowerDisplay = response.data.lname + ", " + response.data.fname;
 
+            if(this.activeSet.setID && this.activeSet.status == "Available") {
+              this.showLoanDataDialog(true);
+            }
+
             document.getElementById("borrower-id-input").style.color = "green";
             console.log("Set color:", document.getElementById("borrower-id-input").style.color);
 
@@ -289,12 +294,22 @@ export class Checkout {
     }
   }
 
+  showLoanDataDialog(show) {
+    if(show) {
+      document.getElementById("loan-details-form").style.display = "block";
+    }
+    else {
+      document.getElementById("loan-details-form").style.display = "none";
+    }
+  }
+
   clearActiveBorrower() {
     document.getElementById("borrower-id-input").style.color = "black";
     this.resetActiveBorrower();
     this.borrowerID = "";
     this.refreshSetState();
     this.refreshPatronFormState();
+    this.showLoanDataDialog(false);
   }
 
   checkInSet() {
@@ -309,14 +324,15 @@ export class Checkout {
         this.loadSets();
         this.refreshSetState();
 
-        if(this.activeSet.setID) {
-          document.getElementById("loan-details-form").style.display = "block";
+        if(!this.activeBorrower.id) {
+          this.showLoanDataDialog(false);
         }
       }
     });
   }
 
   checkOutSet() {
+    this.showLoanDataDialog(false);
     if(this.activeBorrower.id) {
 
       var selectedDays = document.getElementById("day-select").value,
@@ -337,8 +353,8 @@ export class Checkout {
           this.loadSets();
           this.refreshSetState();
 
-          if(this.activeSet.loan) {
-            document.getElementById("loan-details-form").style.display = "block";
+          if(this.activeBorrower.id && this.activeSet.setID) {
+           
           }
         }
       });

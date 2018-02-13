@@ -28,7 +28,6 @@ module.exports = function (app) {
 	require('../modules/patron/Routes.js')(app, settings);
 
 	app.post('/test', function(req, res) {
-		console.log("TEST: ", req.body);
 		res.send(200);
 	});
 };

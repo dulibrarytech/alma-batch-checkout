@@ -31,15 +31,15 @@ exports.createPatronLoans = function(patronID, setID, patronName, period, callba
 			}
 			else {
 
-				// for(var i=0; i<items.length; i++) {
-				// 	console.log("Alma checkout of item (barcode " + items[i] + ")");
-				// 	Alma.checkoutItem(patronID, items[i], function(err, response) {
-				// 		if(err) {
-				// 			console.log("Error: ", err);
-				// 			reject(err.toString());
-				// 		}
-				// 	});
-				// }
+				for(var i=0; i<items.length; i++) {
+					console.log("Alma checkout of item (barcode " + items[i] + ")");
+					Alma.checkoutItem(patronID, items[i], function(err, response) {
+						if(err) {
+							console.log("Error: ", err);
+							reject(err.toString());
+						}
+					});
+				}
 
 				Model.addLoan(patronID, setID, patronName, period, function(err, loanID) {
 					if(err) {
