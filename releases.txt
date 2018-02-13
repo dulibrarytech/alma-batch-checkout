@@ -9,3 +9,5 @@ Release Notes
 
 0.2.2	2-12-18		Add client form validation on all inputs
 
+1.1.0   2-13-18		Add option to set loan period length, added loan data dialog box and view logic
+
