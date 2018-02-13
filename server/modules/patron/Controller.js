@@ -1,6 +1,7 @@
 'use strict';
 
 var async = require('async'),
+	Sanitizor = require('../../libs/Sanitize'),
     Service = require('./Service');
 
 exports.patronData = function(req, res) {
@@ -14,7 +15,8 @@ exports.patronData = function(req, res) {
 		res.sendStatus(400);
 	}
 	else {
-		Service.getPatronData(req.query.patronID).then(data => {
+
+		Service.getPatronData( Sanitizor.sanitize(req.query.patronID) ).then(data => {
 			if(data === false) {
 				response.error = "Can't get patron data";
 				res.setStatus(200);

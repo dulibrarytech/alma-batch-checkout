@@ -31,22 +31,17 @@ exports.setAll = function(req, res) {
 }
 
 exports.setCreate = function(req, res) {
-	var response = {};
+	var response = {}, 
+		set = {};
 
 	if(!req.body.title) {
 		res.sendStatus(400);
 	}
 	else {
-		
-		// TODO add sanitization
-		var set = {
-			title: req.body.title,
-			creator: req.body.creator,
-			period: req.body.period
-		}
 
-		// var set = {};
-		// set['title'] = Sanitizor.checkInput(req.body.title);
+		set['title'] = Sanitizor.checkInput(req.body.title);
+		set['creator'] = Sanitizor.checkInput(req.body.creator);
+		set['period'] = Sanitizor.checkInput(req.body.period);
 
 		// Get all sets from the database
 		Model.addSet(set, function(err, id) {
@@ -67,13 +62,19 @@ exports.setCreate = function(req, res) {
 exports.setUpdate = function(req, res) {
 	var response = {};
 
-	if(!req.body.setID || !req.body.data) {
+	if(!req.body.setID || (!req.body.data.title && !req.body.data.items)) {
 		res.sendStatus(400);
 	}
 	else {
-		// TODO add sanitization
+		var	id = Sanitizor.checkInput(req.body.setID);
+		
+		var data = req.body.data;
+		data.title = Sanitizor.checkInput(req.body.data.title);
+		for(var index in data.items) {
+			data.items[index] = Sanitizor.checkInput(data.items[index]);
+		}
 
-		Model.updateSet(req.body.setID, req.body.data, function(err) {
+		Model.updateSet(id, data, function(err) {
 			if(err) {
 				response['error'] = err;
 				res.status(200);
@@ -90,7 +91,6 @@ exports.setRemove = function(req, res) {
 		res.sendStatus(400);
 	}
 	else {
-		// TODO add sanitization (only alphanumeric)
 
 		Model.deleteSet(req.body.setID, function(err) {
 			if(err) {
@@ -144,9 +144,12 @@ exports.setLoanCreate = function(req, res) {
 		res.sendStatus(400);
 	}
 	else {
-		// TODO: sanitize
 
-		Service.createPatronLoans(req.body.patronID, req.body.setID, req.body.patronName).then(data => {
+		var pid = Sanitizor.checkInput(req.body.patronID),
+			sid = Sanitizor.checkInput(req.body.setID),
+			name = Sanitizor.checkInput(req.body.patronName);
+
+		Service.createPatronLoans(pid, sid, name).then(data => {
 			response['id'] = data.loanID;
 			res.send(JSON.stringify(response));
 
@@ -166,8 +169,6 @@ exports.setLoanRemove = function(req, res) {
 		res.sendStatus(400);
 	}
 	else {
-		// TODO sanitization (alphanumeric)
-
 		Service.deletePatronLoans(req.body.setID).then(data => {
 				console.log("TEST deletePatronLoans done: rx: ", data);
 			res.send(JSON.stringify(response));
