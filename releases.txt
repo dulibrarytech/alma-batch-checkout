@@ -1,6 +1,7 @@
 Release Notes
 
 0.1.x 				Beta release, minimal functionality: CRUD on sets and set items, select patron, check out and check in sets
+1.1.x 				Beta release live deploy
 
 0.1.0	1-29-18		Initial 1.x release
 
