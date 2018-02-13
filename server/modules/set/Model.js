@@ -92,7 +92,7 @@ exports.getLoanBySetId = function(setID, callback) {
 
 // Add the loan doc
 exports.addLoan = function(patronID, setID, patronName, period, callback) {
-        console.log("TEST add loan model");
+
         try {
                 getSet(setID, function(err, set) {
                         if(err) {

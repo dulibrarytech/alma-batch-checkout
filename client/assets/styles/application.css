@@ -160,9 +160,14 @@ span.form-add-new-link {
 	margin-right: 2px;
 }
 
-div#borrower-form {
-	height: 105px;
+div#borrower-form > .form-window {
+	height: 110px;
+	padding-top: 2em
 } 
+
+div#loan-details-form {
+	margin-top: 2em;
+}
 
 div.form-window {
 	padding: 1.5em;
@@ -173,6 +178,14 @@ div#borrower-form input {
 	width: 75%;
 	display: initial;
 	/*margin-bottom: 1.5em;*/
+}
+
+.form-group > select {
+	margin-bottom: 1em;
+}
+
+div#loan-details-form .form-group > select {
+	width: 30%;
 }
 
 div#borrower-form form div.form-group {

@@ -22,9 +22,15 @@ export class Configuration {
 		};
 
 		this.settings = {
+
 			devUserID: "872895198",
 			maxBarcodeLength: 30,
-			maxPatronIDLength: 10
+			maxPatronIDLength: 10,
+
+			defaultLoanPeriod: {
+				hours: 0,
+				days: 2
+			}
 		}
 	}
 }

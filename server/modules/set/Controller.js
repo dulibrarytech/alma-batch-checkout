@@ -139,7 +139,7 @@ exports.setLoanData = function(req, res) {
 
 exports.setLoanCreate = function(req, res) {
 	var response = {};
-
+		        console.log("TEST add loan model: period inn:", req.body.loanPeriod);
 	if(!req.body.patronID || !req.body.setID || !req.body.patronName || !req.body.loanPeriod) {
 		res.sendStatus(400);
 	}

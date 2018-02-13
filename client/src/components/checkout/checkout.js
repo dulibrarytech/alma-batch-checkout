@@ -18,12 +18,18 @@ export class Checkout {
     this.activeBorrower = {};
     this.activeBorrowerDisplay = "";
     this.borrowerID = "";
+
+    this.hours = 24;
+    this.days = 31;
+    this.setPeriodHours = this.config.settings.defaultLoanPeriod.hours;
+    this.setPeriodDays = this.config.settings.defaultLoanPeriod.days;
   }
 
   attached() {
     // Initialize elements
     document.getElementById("borrower-id-clear").style.display = "none";
     document.getElementById("borrower-id-input").focus();
+    document.getElementById("loan-details-form").style.display = "none";
 
     this.setButtonVisibility(-1);
 
@@ -33,15 +39,12 @@ export class Checkout {
 
     // Populate the set list table
     this.loadSets();
+    this.setSelectedPeriodValues();
   }
 
   activate(params, navigationInstruction) {
       if(navigationInstruction.route == "") {
         this.router.navigate("checkout");
-
-        // this.utils.doAjax('/error', 'get', null, null).then(response => {
-        //   console.log("Access forbidden");
-        // });
       }
   }
 
@@ -85,6 +88,7 @@ export class Checkout {
 
   // Get the set list from the server, populate list
   loadSets() {
+    document.getElementById("loan-details-form").style.display = "none";
     this.utils.doAjax('/set/all', 'get', null, null).then(response => {
 
         if(response.error) {
@@ -109,6 +113,7 @@ export class Checkout {
 
   // Click on a row in the set list table.  Set as active set, but do not select the set.
   onSelectSetRow(index) {
+
     // Unselect all rows
     var rows = document.getElementsByClassName("set-row");
     for(var row of rows) {
@@ -132,9 +137,36 @@ export class Checkout {
     this.activeSet.loan = null;
     this.refreshSetState();
 
+    // Init and show loan options dialog
+    document.getElementById("loan-details-form").style.display = "block";
+    // this.setSelectedPeriodValues();
+
     // If on loan, get the loan data
     if(this.activeSet.status == "On Loan") {
       this.getLoanData();
+    }
+  }
+
+  setSelectedPeriodValues() {
+      console.log("TEST SELSET setPeriodDays:", this.setPeriodDays);
+    // Set default hour value in dropdown
+    var hourOptions = document.getElementById("hour-select").childNodes;
+    for(var index of hourOptions) {
+      if(index.tagName == 'OPTION' || index.tagName == 'option') {
+        if(index.value == this.setPeriodHours) {
+          index.setAttribute("selected", "selected");
+        }
+      }
+    }
+
+    // Set default hour value in dropdown
+    var dayOptions = document.getElementById("day-select").childNodes;
+    for(var index of dayOptions) {
+      if(index.tagName == 'OPTION' || index.tagName == 'option') {
+        if(index.value == this.setPeriodDays) {
+          index.setAttribute("selected", "selected");
+        }
+      }
     }
   }
 
@@ -282,8 +314,11 @@ export class Checkout {
 
   checkOutSet() {
     if(this.activeBorrower.id) {
-      var name = this.activeBorrower.fname + " " + this.activeBorrower.lname;
-      this.utils.doAjax('/set/loan', 'post', {patronID: this.activeBorrower.id, setID: this.activeSet.setID, patronName: name}, null).then(response => {
+
+      var name = this.activeBorrower.fname + " " + this.activeBorrower.lname,    
+        period = (parseInt(this.setPeriodDays) * 24) + parseInt(this.setPeriodHours); // period = total hours
+
+      this.utils.doAjax('/set/loan', 'post', {patronID: this.activeBorrower.id, setID: this.activeSet.setID, patronName: name, loanPeriod: period.toString()}, null).then(response => {
         
         if(response.error) {
           console.log("Error: ", response.error);
@@ -294,6 +329,10 @@ export class Checkout {
           this.activeSet.status = "On Loan";
           this.loadSets();
           this.refreshSetState();
+
+          if(this.activeSet.loan) {
+            document.getElementById("loan-details-form").style.display = "block";
+          }
         }
       });
     }

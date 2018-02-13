@@ -30,19 +30,42 @@
 				</div>
 			</div>
 			<div class="col-md-5">
-				<div class="ui-section-label">
-					<label>Select a Patron:</label>
+				<div id="borrower-form">
+					<div class="ui-section-label">
+						<label>Select a Patron:</label>
+					</div>
+					<div class="ui-section form-window">
+						<form>
+							<div class="form-group">
+			    				<input type="text" class="form-control" id="borrower-id-input" value.bind="borrowerID" click.trigger="onClickBorrowerIDInput()" placeholder="Enter DUID">
+			    				<button id="borrower-id-submit" class="btn btn-primary" click.trigger="submitBorrowerID()">Enter</button>
+			    				<button id="borrower-id-clear" class="btn btn-primary" click.trigger="clearActiveBorrower()">Clear</button>
+			    				<!-- <span id="borrower-name">${activeBorrower.lname}<span if.bind="activeBorrower.id">,&nbsp</span>${activeBorrower.fname}</span>  -->
+			    				<span id="borrower-name">${activeBorrowerDisplay}</span> 
+							</div>
+						</form>
+					</div>
 				</div>
-				<div id="borrower-form" class="ui-section form-window">
-					<form>
-						<div class="form-group">
-		    				<input type="text" class="form-control" id="borrower-id-input" value.bind="borrowerID" click.trigger="onClickBorrowerIDInput()" placeholder="Enter DUID">
-		    				<button id="borrower-id-submit" class="btn btn-primary" click.trigger="submitBorrowerID()">Enter</button>
-		    				<button id="borrower-id-clear" class="btn btn-primary" click.trigger="clearActiveBorrower()">Clear</button>
-		    				<!-- <span id="borrower-name">${activeBorrower.lname}<span if.bind="activeBorrower.id">,&nbsp</span>${activeBorrower.fname}</span>  -->
-		    				<span id="borrower-name">${activeBorrowerDisplay}</span> 
-						</div>
-					</form>
+				<div id="loan-details-form">
+					<div class="ui-section-label">
+						<label>Loan Period:</label>
+					</div>
+					<div class="ui-section form-window">
+						<form role="form">
+							<div class="form-group">
+							  <label for="sel1">Days:</label>
+
+							  <select class="form-control" id="day-select">
+							    <option repeat.for="day of days">${day}</option>
+							  </select>
+
+							  <label for="sel1">Hours:</label>
+							  <select class="form-control" id="hour-select">
+							    <option repeat.for="hour of hours">${hour}</option>
+							  </select>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
