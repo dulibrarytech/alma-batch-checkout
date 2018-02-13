@@ -308,6 +308,10 @@ export class Checkout {
         this.activeSet.status = "Available";
         this.loadSets();
         this.refreshSetState();
+
+        if(this.activeSet.setID) {
+          document.getElementById("loan-details-form").style.display = "block";
+        }
       }
     });
   }
@@ -315,8 +319,11 @@ export class Checkout {
   checkOutSet() {
     if(this.activeBorrower.id) {
 
+      var selectedDays = document.getElementById("day-select").value,
+          selectedHours = document.getElementById("hour-select").value;
+
       var name = this.activeBorrower.fname + " " + this.activeBorrower.lname,    
-        period = (parseInt(this.setPeriodDays) * 24) + parseInt(this.setPeriodHours); // period = total hours
+        period = (parseInt(selectedDays) * 24) + parseInt(selectedHours); // period = total hours
 
       this.utils.doAjax('/set/loan', 'post', {patronID: this.activeBorrower.id, setID: this.activeSet.setID, patronName: name, loanPeriod: period.toString()}, null).then(response => {
         
