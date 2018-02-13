@@ -37,6 +37,10 @@ header#du-header {
 
 /* Main body styles */
 
+.fa-home, .fa-book {
+	color: #404040;
+}
+
 nav#navbar {
 	background-color: #e5e3e1;
     height: 50px;

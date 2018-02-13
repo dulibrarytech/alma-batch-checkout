@@ -99,9 +99,10 @@ exports.addLoan = function(patronID, setID, patronName, callback) {
                                 console.log("Error: ", err);
                         }
                         else {
-                                var date = new Date();
+                                var date = new Date(), dateStr = "";
                                 var hours = set.data.period * (60*60*1000);
                                 date.setTime(date.getTime() + hours);
+                                //dateStr = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear() + " " + (date.getHours()+1) + ":" + (date.getMinutes()+1);
                                 
                                 var doc = {
                                         setID: setID,

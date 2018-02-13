@@ -14,7 +14,11 @@
 		<nav id="navbar" class="container">
 	        <ul>
 	            <li repeat.for = "row of router.navigation">
-	                <a href.bind = "row.href">${row.title}</a>
+	                <a href.bind="row.href" id="menulink-${row.order}">
+	        			<i if.bind="row.title == 'Home'" class="fa fa-home" aria-hidden="true"></i>
+	        			<i if.bind="row.title == 'Manage'" class="fa fa-book" aria-hidden="true"></i>
+
+	        	&nbsp${row.title}</a></span>
 	            </li>
 	        </ul>
 	    </nav>

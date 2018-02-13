@@ -145,6 +145,10 @@ export class Checkout {
       }
       else {
         this.activeSet.loan = response.data;
+
+        // Prettify date
+        var dateLen = response.data.due.length;
+        this.activeSet.loan.due = this.activeSet.loan.due.substring(0, (dateLen-15));
       }
     });
   }
