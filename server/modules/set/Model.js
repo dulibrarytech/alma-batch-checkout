@@ -91,7 +91,7 @@ exports.getLoanBySetId = function(setID, callback) {
 }
 
 // Add the loan doc
-exports.addLoan = function(patronID, setID, patronName, callback) {
+exports.addLoan = function(patronID, setID, patronName, period, callback) {
         console.log("TEST add loan model");
         try {
                 getSet(setID, function(err, set) {
@@ -100,9 +100,9 @@ exports.addLoan = function(patronID, setID, patronName, callback) {
                         }
                         else {
                                 var date = new Date(), dateStr = "";
-                                var hours = set.data.period * (60*60*1000);
+                                // var hours = set.data.period * (60*60*1000);
+                                var hours = period * (60*60*1000);
                                 date.setTime(date.getTime() + hours);
-                                //dateStr = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear() + " " + (date.getHours()+1) + ":" + (date.getMinutes()+1);
                                 
                                 var doc = {
                                         setID: setID,

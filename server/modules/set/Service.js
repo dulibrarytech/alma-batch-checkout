@@ -20,7 +20,7 @@ exports.createSetDataList = function(sets) {
 	return list;
 };
 
-exports.createPatronLoans = function(patronID, setID, patronName, callback) {
+exports.createPatronLoans = function(patronID, setID, patronName, period, callback) {
 	var data = [];
 	return new Promise(function(fulfill, reject) {
 
@@ -41,7 +41,7 @@ exports.createPatronLoans = function(patronID, setID, patronName, callback) {
 				// 	});
 				// }
 
-				Model.addLoan(patronID, setID, patronName, function(err, loanID) {
+				Model.addLoan(patronID, setID, patronName, period, function(err, loanID) {
 					if(err) {
 						reject(err.toString());
 					}

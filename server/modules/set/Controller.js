@@ -140,16 +140,17 @@ exports.setLoanData = function(req, res) {
 exports.setLoanCreate = function(req, res) {
 	var response = {};
 
-	if(!req.body.patronID || !req.body.setID || !req.body.patronName) {
+	if(!req.body.patronID || !req.body.setID || !req.body.patronName || !req.body.loanPeriod) {
 		res.sendStatus(400);
 	}
 	else {
 
 		var pid = Sanitizor.checkInput(req.body.patronID),
 			sid = Sanitizor.checkInput(req.body.setID),
-			name = Sanitizor.checkInput(req.body.patronName);
+			name = Sanitizor.checkInput(req.body.patronName),
+			hrs = Sanitizor.checkInput(req.body.loanPeriod);
 
-		Service.createPatronLoans(pid, sid, name).then(data => {
+		Service.createPatronLoans(pid, sid, name, hrs).then(data => {
 			response['id'] = data.loanID;
 			res.send(JSON.stringify(response));
 
