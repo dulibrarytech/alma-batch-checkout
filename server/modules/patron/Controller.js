@@ -16,7 +16,7 @@ exports.patronData = function(req, res) {
 	}
 	else {
 
-		Service.getPatronData( Sanitizor.sanitize(req.query.patronID) ).then(data => {
+		Service.getPatronData( Sanitizor.checkInput(req.query.patronID) ).then(data => {
 			if(data === false) {
 				response.error = "Can't get patron data";
 				res.setStatus(200);

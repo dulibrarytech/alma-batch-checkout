@@ -199,9 +199,10 @@ export class Admin {
 
   // TODO move To view helper
   validateAlphanumeric(string) {
-    var valid = true;
+    var valid = true,
+        temp = string.replace(/\s/g,''); // Allow spaces in the string
 
-    if( /[^a-zA-Z0-9]/.test( string )) {
+    if( /[^a-zA-Z0-9]/.test( temp )) {
       valid = false;
     }
 
