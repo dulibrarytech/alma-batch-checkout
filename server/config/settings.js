@@ -8,5 +8,5 @@ module.exports = {
 
 	// Application settings from admin
 	//alma_api_key: "l7xx8c4c8578e6cc4dcc809e2443672b0e42"
-	enable_alma_connection: false
+	enable_alma_connection: true
 }

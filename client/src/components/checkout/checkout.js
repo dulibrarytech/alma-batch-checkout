@@ -248,6 +248,7 @@ export class Checkout {
       console.log("Invalid ID format, please enter a valid DUID");
       this.activeBorrowerDisplay = "Invalid ID format, please enter a valid DUID";
     }
+    
     else if(this.config.runtimeEnv == "development") {
       // Set the DEV SESSION active borrower
       this.activeBorrower.id = this.config.settings.devUserID;
@@ -326,6 +327,9 @@ export class Checkout {
 
         if(!this.activeBorrower.id) {
           this.showLoanDataDialog(false);
+        }
+        else {
+          this.showLoanDataDialog(true);
         }
       }
     });
