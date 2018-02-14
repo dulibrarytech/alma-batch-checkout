@@ -13,8 +13,10 @@ database.connect(function(db) {
 exports.fetchAllSets = function(callback) {
 	var sets = [];
 	try {
-		var cursor = collection.find({});
+		var cursor = collection.find({}).sort({'data.title': 1});
+
                 cursor.each(function(err, set) {
+                        console.log("Sorted set", set);
                 	if(err) {
                 		callback(err, null);
                 	}
@@ -92,7 +94,7 @@ exports.getLoanBySetId = function(setID, callback) {
 
 // Add the loan doc
 exports.addLoan = function(patronID, setID, patronName, period, callback) {
-
+            console.log("TEST model gets period hours:", period);
         try {
                 getSet(setID, function(err, set) {
                         if(err) {
@@ -103,7 +105,6 @@ exports.addLoan = function(patronID, setID, patronName, period, callback) {
                                 // var hours = set.data.period * (60*60*1000);
                                 var hours = period * (60*60*1000);
                                 date.setTime(date.getTime() + hours);
-                                
                                 var doc = {
                                         setID: setID,
                                         userID: patronID,
