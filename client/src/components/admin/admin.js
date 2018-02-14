@@ -202,7 +202,8 @@ export class Admin {
     var valid = true,
         temp = string.replace(/\s/g,''); // Allow spaces in the string
 
-    if( /[^a-zA-Z0-9]/.test( temp )) {
+    // Allowed characters in name
+    if( /[^a-zA-Z0-9+-]/.test( temp )) {
       valid = false;
     }
 
@@ -211,19 +212,25 @@ export class Admin {
 
   // TODO move To view helper
   validateInputValue(value, length, element) {
-    var isValid = true;
+    var isValid = true, msg;
 
     if(value == "") {
       isValid = false;
-      console.log(element, "fails validation: empty string");
+      msg = element + " fails validation: empty string";
+      console.log(msg);
+      this.utils.sendMessage("Invalid characters in name");
     }
     else if(value.length > length) {
       isValid = false;
-      console.log(element, "fails validation: max length of " + length + " exceeded");
+      msg = element + " fails validation: max length of " + length + " exceeded";
+      console.log(msg);
+      this.utils.sendMessage("Invalid characters in name");
     }
     else if(this.validateAlphanumeric(value) == false) {
       isValid = false;
-      console.log(element, "fails validation: value entered is not alphanumeric");
+      msg = element + " fails validation: value entered is not alphanumeric";
+      console.log(msg);
+      this.utils.sendMessage("Invalid characters in name");
     }
 
     return isValid;

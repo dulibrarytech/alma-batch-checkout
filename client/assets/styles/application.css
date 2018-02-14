@@ -35,6 +35,15 @@ header#du-header {
 	background-color: #8b2332;
 }
 
+#app-title {
+	color: #e5e3e1;
+    font-weight: bold;
+    font-size: 17px;
+    position: relative;
+    top: 6px;
+    left: 20px;
+}
+
 /* Main body styles */
 
 .fa-home, .fa-book {
@@ -62,8 +71,8 @@ nav#navbar ul li a {
 	font-size: 16px;
 }
 
-nav#navbar ul li a:selected {
-	
+nav#navbar ul li a:focus {
+	text-decoration: none;
 }
 
 nav#navbar ul li a:hover {

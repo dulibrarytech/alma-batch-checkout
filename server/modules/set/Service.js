@@ -1,6 +1,7 @@
 'use strict'
 
 var Alma = require('../../libs/Alma.js'),
+	settings = require('../../config/settings'),
     Model = require('./Model');
 
 exports.createSetDataList = function(sets) {
@@ -31,14 +32,16 @@ exports.createPatronLoans = function(patronID, setID, patronName, period, callba
 			}
 			else {
 
-				for(var i=0; i<items.length; i++) {
-					console.log("Alma checkout of item (barcode " + items[i] + ")");
-					Alma.checkoutItem(patronID, items[i], function(err, response) {
-						if(err) {
-							console.log("Error: ", err);
-							reject(err.toString());
-						}
-					});
+				if(settings.enable_alma_connection) {
+					for(var i=0; i<items.length; i++) {
+						console.log("Alma checkout of item (barcode " + items[i] + ")");
+						Alma.checkoutItem(patronID, items[i], function(err, response) {
+							if(err) {
+								console.log("Error: ", err);
+								reject(err.toString());
+							}
+						});
+					}
 				}
 
 				Model.addLoan(patronID, setID, patronName, period, function(err, loanID) {
@@ -65,14 +68,16 @@ exports.deletePatronLoans = function(setID, callback) {
 			}
 			else {
 
-				for(var i=0; i<items.length; i++) {
-					console.log("Alma checkin of item (barcode " + items[i] + ")");
-					Alma.checkinItem(items[i], function(err, response) {
-						if(err) {
-							console.log("Error: ", err);
-							reject(err.toString());
-						}
-					});
+				if(settings.enable_alma_connection) {
+					for(var i=0; i<items.length; i++) {
+						console.log("Alma checkin of item (barcode " + items[i] + ")");
+						Alma.checkinItem(items[i], function(err, response) {
+							if(err) {
+								console.log("Error: ", err);
+								reject(err.toString());
+							}
+						});
+					}
 				}
 
 				Model.deleteLoan(setID, function(err) {

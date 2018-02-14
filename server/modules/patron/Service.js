@@ -6,6 +6,7 @@ exports.getPatronData = function(patronID) {
 
 	var data = [];
 	return new Promise(function(fulfill, reject) {
+		
 		Alma.getUserData(patronID, function(err, response) {
 			if(err) {
 				console.log("Error retrieving user data from Alma: ", err);
