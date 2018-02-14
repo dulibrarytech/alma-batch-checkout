@@ -32,6 +32,10 @@ exports.createPatronLoans = function(patronID, setID, patronName, period, callba
 			}
 			else {
 
+				var date = new Date(), dateStr = "";
+                var hours = period * (60*60*1000);
+                date.setTime(date.getTime() + hours);
+
 				if(settings.enable_alma_connection) {
 					for(var i=0; i<items.length; i++) {
 						console.log("Alma checkout of item (barcode " + items[i] + ")");
@@ -40,11 +44,20 @@ exports.createPatronLoans = function(patronID, setID, patronName, period, callba
 								console.log("Error: ", err);
 								reject(err.toString());
 							}
+							else {
+								var loanData = JSON.parse(response);
+								Alma.changeLoanDueDate(patronID, loanData.loan_id, date, function(err, response) {
+									if(err) {
+										console.log("Error: ", err);
+										reject(err.toString());
+									}
+								});
+							}
 						});
 					}
 				}
 
-				Model.addLoan(patronID, setID, patronName, period, function(err, loanID) {
+				Model.addLoan(patronID, setID, patronName, date, function(err, loanID) {
 					if(err) {
 						reject(err.toString());
 					}

@@ -120,6 +120,32 @@ exports.checkinItem = function(barcode, callback) {
 	}
 }
 
+exports.changeLoanDueDate = function(userID, loanID, dueDate, callback) {
+
+	var endpoint = "users/" + userID + "/loans/" + loanID,
+		body = {
+			"circ_desk": {
+	            "value": circDesk,
+	            "desc": "Main"
+	        },
+	        "library": {
+	            "value": library,
+	            "desc": "Main"
+	        },
+	        "due_date": dueDate
+		};
+
+		almaRequest(endpoint, "PUT", body, function(err, response) {
+			if(err) {
+				console.log("Error: Could not set loan due date");
+				callback(err, null);
+			}
+			else {
+				callback(null, response);
+			}
+		});
+}
+
 var almaRequest = function(endpoint, method, data, callback) {
  	var dataString,
   	  	apikey = 'apikey ' + settings.alma_api_key;
@@ -160,7 +186,7 @@ var almaRequest = function(endpoint, method, data, callback) {
 						console.log("Alma error message: ", error.errorMessage);
 						errorStr += (" " + error.errorMessage + " ");
 					}
-					console.log("ERRORSTR:", errorStr);
+					console.log("ERROR:", errorStr);
 					callback(errorStr, null);
 				}
 				else {
