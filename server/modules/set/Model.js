@@ -93,24 +93,20 @@ exports.getLoanBySetId = function(setID, callback) {
 }
 
 // Add the loan doc
-exports.addLoan = function(patronID, setID, patronName, period, callback) {
-            console.log("TEST model gets period hours:", period);
+exports.addLoan = function(patronID, setID, patronName, dateObject, callback) {
         try {
                 getSet(setID, function(err, set) {
                         if(err) {
                                 console.log("Error: ", err);
                         }
                         else {
-                                var date = new Date(), dateStr = "";
-                                // var hours = set.data.period * (60*60*1000);
-                                var hours = period * (60*60*1000);
-                                date.setTime(date.getTime() + hours);
+                                
                                 var doc = {
                                         setID: setID,
                                         userID: patronID,
                                         userName: patronName,
-                                        due: date
-                                }
+                                        due: dateObject
+                                    };
 
                                 loanCollection.insertOne(doc).then(data => {
                                         setStatus(true, setID, function(err, data) {
