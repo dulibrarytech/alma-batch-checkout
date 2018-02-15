@@ -1,21 +1,21 @@
 {
-  "name": "aurelia-starter-node",
-  "version": "1.0.0",
-  "description": "Aurelia and Node.js side-by-side.",
+  "name": "Alma Batch Checkout",
+  "version": "see rerleases.txt",
+  "description": "Create batch sets of items to be checked out/in in one operation",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Vheissu/aurelia-starter-node.git"
+    "url": "https://jrynhart@bitbucket.org/jrynhart/alma-batch-checkout.git"
   },
-  "author": "Dwayne Charrington <dwaynecharrington@gmail.com> (http://ilikekillnerds.com)",
+  "author": "Jeff Rynhart (jeff.rynhart@du.edu)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Vheissu/aurelia-starter-node/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/Vheissu/aurelia-starter-node#readme",
+  "homepage": "",
   "devDependencies": {
     "aurelia-bundler": "^0.3.0",
     "aurelia-tools": "^0.1.18",
