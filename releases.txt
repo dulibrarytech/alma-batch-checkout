@@ -13,3 +13,5 @@ Release Notes
 
 1.2.0	2-14-18		Add functionality to set loan due date in Alma; Add additional chars to allowed chars for set name
 
+1.2.1 	2-21-18		Add gulp deploy procedures, sort sets in display
+
