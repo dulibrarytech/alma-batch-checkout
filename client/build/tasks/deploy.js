@@ -17,35 +17,35 @@ gulp.task('deploy-all', function(callback) {
 });
 
 gulp.task('deploy-app', function () {
-    return gulp.src('./client/src/*.js')
+    return gulp.src('./src/*.js')
         .pipe(uglify())
         // .pipe(js_obfuscator({}, ["**/jquery-*.js"]))
         .pipe(gulp.dest('./dist/src/'))
-        .pipe(gulp.dest('./client/src/'))
+        .pipe(gulp.dest('./src/'))
 });
 
 gulp.task('deploy-utils', function () {
-    return gulp.src('./client/src/utils/*.js')
+    return gulp.src('./src/utils/*.js')
         .pipe(uglify())
         // .pipe(js_obfuscator({}, ["**/jquery-*.js"]))
         .pipe(gulp.dest('./dist/src/utils/'))
-        .pipe(gulp.dest('./client/src/utils/'))
+        .pipe(gulp.dest('./src/utils/'))
 });
 
 gulp.task("deploy-admin", function () {
-    return gulp.src("./client/src/components/admin/*.js")
+    return gulp.src("./src/components/admin/*.js")
         .pipe(uglify())
         // .pipe(obfuscate(/* options */))
         // .pipe(rename("bundle.min.js"))
         .pipe(gulp.dest("./dist/src/components/admin/"))
-        .pipe(gulp.dest('./client/src/components/admin/'));
+        .pipe(gulp.dest('./src/components/admin/'));
 });
 
 gulp.task("deploy-checkout", function () {
-    return gulp.src("./client/src/components/checkout/*.js")
+    return gulp.src("./src/components/checkout/*.js")
         .pipe(uglify())
         // .pipe(obfuscate(/* options */))
         // .pipe(rename("bundle.min.js"))
         .pipe(gulp.dest("./dist/src/components/checkout/"))
-        .pipe(gulp.dest('./client/src/components/checkout/'));
+        .pipe(gulp.dest('./src/components/checkout/'));
 });
