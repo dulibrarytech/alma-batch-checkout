@@ -106,35 +106,45 @@ exports.setRemove = function(req, res) {
 exports.setItems = function(req, res) {
 	var response = {};
 
-	// Get all sets from the database
-	Model.getSetItems(req.query.setID, function(err, sets) {
-		if(err) {
-			response['error'] = err;
-			res.status(200);
-		}
-		else {
-			response['items'] = sets;
-		}
+	if(!req.query.setID) {
+		res.sendStatus(400);
+	}
+	else {
+		// Get all sets from the database
+		Model.getSetItems(req.query.setID, function(err, sets) {
+			if(err) {
+				response['error'] = err;
+				res.status(200);
+			}
+			else {
+				response['items'] = sets;
+			}
 
-		res.send(JSON.stringify(response));
-	});
+			res.send(JSON.stringify(response));
+		});
+	}
 }
 
 exports.setLoanData = function(req, res) {
 	var response = {};
 
-	Model.getLoanBySetId(req.query.setID, function(err, loan) {
-		if(err) {
-			response['error'] = err;
-			res.status(200);
-		}
-		else {
-			response['data'] = loan;
-			response.data.due = response.data.due.toString();
+	if(!req.query.setID) {
+		res.sendStatus(400);
+	}
+	else {
+		Model.getLoanBySetId(req.query.setID, function(err, loan) {
+			if(err) {
+				response['error'] = err;
+				res.status(200);
+			}
+			else {
+				response['data'] = loan;
+				response.data.due = response.data.due.toString();
 
-			res.send(JSON.stringify(response));
-		}
-	});
+				res.send(JSON.stringify(response));
+			}
+		});
+	}
 }
 
 exports.setLoanCreate = function(req, res) {
