@@ -16,7 +16,6 @@ exports.fetchAllSets = function(callback) {
 		var cursor = collection.find({}).sort({'data.title': 1});
 
                 cursor.each(function(err, set) {
-                        console.log("Sorted set", set);
                 	if(err) {
                 		callback(err, null);
                 	}

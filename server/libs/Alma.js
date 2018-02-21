@@ -8,8 +8,10 @@ var settings = require("../config/settings");
 var host = "https://api-na.hosted.exlibrisgroup.com",
 	path = "/almaws/v1/";
 
-var library = "p",
-	circDesk = "DEFAULT_CIRC_DESK";
+// Alma item object params
+var library = "ml",
+	circDesk = "DEFAULT_CIRC_DESK",
+	desc = "Music";
 
 // Get all required user data
 exports.getUserData = function(userID, callback) {
@@ -55,11 +57,11 @@ exports.checkoutItem = function(userID, barcode, callback) {
 				var body = {
 					"circ_desk": {
 		                "value": circDesk,
-		                "desc": "Main"
+		                "desc": desc
 		            },
 		            "library": {
 		                "value": library,
-		                "desc": "Main"
+		                "desc": desc
 		            }
 				};
 
