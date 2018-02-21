@@ -1,6 +1,6 @@
 {
-  "name": "Alma Batch Checkout",
-  "version": "1.0.0",
+  "name": "alma batch checkout",
+  "version": "",
   "description": "",
   "main": "abc-app.js",
   "scripts": {

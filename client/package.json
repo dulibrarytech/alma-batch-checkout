@@ -1,6 +1,6 @@
 {
-  "name": "Alma Batch Checkout",
-  "version": "see rerleases.txt",
+  "name": "alma batch checkout",
+  "version": "",
   "description": "Create batch sets of items to be checked out/in in one operation",
   "main": "app.js",
   "scripts": {
