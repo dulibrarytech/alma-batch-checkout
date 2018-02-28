@@ -2,10 +2,16 @@
 
 import {SystemUtils} from '../../utils/SystemUtils.js';
 import {Configuration} from '../../../config/Configuration.js';
+import {Router} from 'aurelia-router';
 
 export class Admin {
   
-  constructor(systemUtils, configuration) {
+  constructor(systemUtils, configuration, router) {
+
+    if(!configuration.session.data) {
+      router.navigate("login");
+    }
+
     this.utils = systemUtils;
     this.settings = configuration.settings;
 
@@ -272,4 +278,4 @@ export class Admin {
   }
 }
 
-Admin.inject = [SystemUtils, Configuration];
+Admin.inject = [SystemUtils, Configuration, Router];

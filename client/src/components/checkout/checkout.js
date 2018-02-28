@@ -8,6 +8,10 @@ export class Checkout {
   
   constructor(systemUtils, configuration, router) {
 
+    if(!configuration.session.data) {
+      router.navigate("login");
+    }
+
     this.utils = systemUtils;
     this.config = configuration;
     this.router = router;
