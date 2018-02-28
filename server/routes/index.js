@@ -3,6 +3,7 @@
 module.exports = function (app) {
 
 	require('../test/Routes.js')(app);
+	var auth = require('../modules/auth/Service.js');
 	var settings = require('../config/settings.js');
 
 	var checkHeader = function(req, res, next) {
@@ -26,8 +27,16 @@ module.exports = function (app) {
 	// Protected routes
 	app.use(checkHeader);
 
+	// Secured routes
+	if(settings.environment != 'development') {
+		// app.use(auth.validateToken);
+		console.log("TEST auth: ", auth);
+	}
+
+	// Server modules
 	require('../modules/set/Routes.js')(app, settings);
 	require('../modules/patron/Routes.js')(app, settings);
+	require('../modules/auth/Routes.js')(app, settings);
 
 	app.post('/test', function(req, res) {
 		res.send(200);

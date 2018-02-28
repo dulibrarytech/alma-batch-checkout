@@ -14,15 +14,40 @@ export class Login {
   }
 
   attached() {
-    console.log("Login attached()");
-
     if(this.config.session.data) {
-        console.log("TEST login: session data present, redirecting to checkout...");
         this.router.navigate("/checkout");
     }
-    else {
-        console.log("TEST no session.  Login here...");
+  }
+
+  login() {
+
+    var data = {
+      username: this.userName,
+      password: this.passWord
     }
+  
+    this.utils.doAjax('[URL]', 'post', data, null).then(response => {
+      //this.utils.stopSpinner();
+
+        // Check the response params
+        if(typeof response == 'undefined' || typeof response.token == 'undefined' || typeof response.sessionData == 'undefined') {
+          console.log("Server authentication error");
+        }
+        else if(response.token == null) {
+            console.log("Invalid username or password");
+            // clear login form
+            document.getElementById('username-input').value = "";
+            document.getElementById('password-input').value = "";
+            this.utils.sendMessage("Invalid DUID or password");
+        }
+        else {
+          console.log(response.sessionData.username + " logged in successfully");
+          this.config.session.data = response.sessionData;
+          this.config.session.token = response.token;
+
+          this.router.navigate("/");
+        }
+    });
   }
 }
 
