@@ -46,6 +46,20 @@ header#du-header {
 
 /* Main body styles */
 
+#login {
+    margin: auto;
+    margin-top: 5%;
+    width: 40%;
+}
+
+#login-form {
+	padding: 1.5em;
+}
+
+#login-form button {
+	margin-top: 1em;
+}
+
 .fa-home, .fa-book {
 	color: #404040;
 }
@@ -126,7 +140,7 @@ div#content {
     height: 750px;
 }
 
-div.ui-section {
+.ui-section {
 	border-bottom-style: solid;
 	border-left-style: solid;
 	border-right-style: solid;
@@ -137,7 +151,7 @@ div.ui-section {
     background-color: white;
 }
 
-div.ui-section-label {
+.ui-section-label {
     background-color: #e5e3e1;
     padding: 1em;
     border-top-left-radius: 4px;

@@ -1,5 +1,23 @@
 <template>
 	<div id="content" class="container">
-		LOGIN PAGE
+		<section class="au-animate">
+
+		   	<div id="login">
+				<div class="ui-section-label">
+					<label>Login</label>
+				</div>
+			    <form role="form" submit.delegate="login()" id="login-form" class="login ui-section">
+
+			      <div class="form-group">
+			        <label>DUID</label>
+			        <input type="text" value.bind="userName" class="form-control" placeholder="Username" style="margin-bottom: 1.5em" id="username-input">
+			        <label>Password</label>
+			        <input type="password" value.bind="passWord" class="form-control" placeholder="Password" id="password-input">
+			      </div>
+			      <button type="submit" class="btn btn-primary">Login</button>
+			      <span class="message" style="margin-left: 3em"></span>
+			    </form>
+		    </div>
+		</section>
 	</div>
 </template>
