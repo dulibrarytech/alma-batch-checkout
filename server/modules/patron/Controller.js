@@ -6,15 +6,15 @@ var async = require('async'),
 
 exports.patronData = function(req, res) {
 
-	var id = req.query.patronID;
-	var response = {
-		error: null
-	};
-
 	if(!req.query.patronID) {
 		res.sendStatus(400);
 	}
 	else {
+
+		var id = req.query.patronID;
+		var response = {
+			error: null
+		};
 
 		Service.getPatronData( Sanitizor.checkInput(req.query.patronID) ).then(data => {
 			if(data === false) {
