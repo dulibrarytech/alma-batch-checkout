@@ -1,8 +1,8 @@
 'use strict';
 
-var Model = require('./Model'),
+var Sanitizor = require('../../libs/Sanitize'),
+	Model = require('./Model'),
     Service = require('./Service'),
-    settings = require("../../config/settings"),
 
     jwt = require("jsonwebtoken");
 
@@ -13,33 +13,35 @@ exports.authenticate = function(req, res) {
 	}
 	else {
 
+		var response = {
+			data: null,
+			token: null
+		};
+
+		var username = Sanitizor.checkInput(req.body.username),
+			password = Sanitizor.checkInput(req.body.password);
+
 		// Validate DU LDAP credentials
 		Service.validateLdapBind(username, password).then(data => {
 			if(data === false) {
 				response['error'] = "Authentication error";
-				res.setStatus(200);
+				//res.setStatus(200);
 			}
 			else {
 				// Validate ABC user
-				Model.authenticateUser(username, function(err, response) {
+				Model.authenticateUser(username, function(err, data) {
 					if(err) {
 						response['error'] = err;
-						res.status(200);
+						//res.status(200);
 					}
-					else {
-						if(response.auth === true) {
-							response['data'] = null;
-						}
-						else {
-							// Get token
-							response['token'] = 
+					else if(data.auth === true) {
+						// Get token
+						response['token'] = Service.createToken(data.user);
 
-							// Get user data
-							response['data'] = response.user;
-
-							res.send(JSON.stringify(response));
-						}
+						// Get user data
+						response['data'] = data.user;
 					}
+					res.send(JSON.stringify(response));
 				})
 			}
 		}).catch(error => {
@@ -51,41 +53,26 @@ exports.authenticate = function(req, res) {
 	}
 }
 
-exports.createToken = function(userData) {
-    return jwt.sign(userData, settings.secret, {
-      expiresIn: 10000 
-    });
-};
-
-exports.validateToken = function(req, res) {
+exports.validateRequestToken = function(req, res, next) {
+		console.log("TEST validating token");
 	// check header or url parameters or post parameters for token
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	// var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	// 	console.log("TEST validateRequestToken() service: token rxd: ", token);
 
-	// decode token
-	if (token) {
+	// if (token) {
 
-		// verifies secret and checks exp
-		jwt.verify(token, settings.secret, function(err, decoded) {      
-			if (err) {
-				console.log("Invalid token");
-				return res.sendStatus(403);
-			} else {
+	// 	Service.validateToken(token).then(data => {
+	// 			console.log("TEST validateRequestToken() service: token validated: ", data.decoded);
+	// 		next();
 
-				// if everything is good, save to request for use in other routes
-				req.decoded = decoded;    
+	// 	}).catch(error => {
+	// 		console.log(error);
+	// 	});
 
-				// TODO refresh token, then re-store in header:
-				// delete decoded.iat;
-				// delete decoded.exp;
-				//req.headers['x-access-token'] = createToken(decoded);
+	// } else {
+	// 	console.log("No token present"); // DEV
+	// 	return res.sendStatus(403);
 
-				next();
-			}
-		});
-
-	} else {
-		console.log("No token present"); // DEV
-		return res.sendStatus(403);
-
-	}
+	// }
+	next();
 }

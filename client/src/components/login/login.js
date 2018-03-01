@@ -26,9 +26,9 @@ export class Login {
       password: this.passWord
     }
   
-    this.utils.doAjax('[URL]', 'post', data, null).then(response => {
+    this.utils.doAjax('/auth/authenticate', 'post', data, null).then(response => {
       //this.utils.stopSpinner();
-
+          console.log("TEST client login() rx: ", response);
         // Check the response params
         if(typeof response == 'undefined' || typeof response.token == 'undefined' || typeof response.sessionData == 'undefined') {
           console.log("Server authentication error");

@@ -3,7 +3,7 @@
 module.exports = function (app) {
 
 	require('../test/Routes.js')(app);
-	var auth = require('../modules/auth/Service.js');
+	var auth = require('../modules/auth/Controller.js');
 	var settings = require('../config/settings.js');
 
 	var checkHeader = function(req, res, next) {
@@ -29,8 +29,7 @@ module.exports = function (app) {
 
 	// Secured routes
 	if(settings.environment != 'development') {
-		// app.use(auth.validateToken);
-		console.log("TEST auth: ", auth);
+		app.use(auth.validateRequestToken);
 	}
 
 	// Server modules

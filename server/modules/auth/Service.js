@@ -1,42 +1,39 @@
 'use strict';
 
-var jwt = require("jsonwebtoken");
+var jwt = require("jsonwebtoken"),
+	settings = require("../../config/settings");
 
 exports.createToken = function(userData) {
+		console.log("TEST jwt data in:", userData);
     return jwt.sign(userData, settings.secret, {
       expiresIn: 10000 
     });
 };
 
-exports.validateToken = function(req, res) {
-	// check header or url parameters or post parameters for token
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+exports.validateToken = function(token) {
 
-	// decode token
-	if (token) {
-
-		// verifies secret and checks exp
+	return new Promise(function(fulfill, reject) {
+		// verify secret and check expiry (ABC: no expire)
 		jwt.verify(token, settings.secret, function(err, decoded) {      
 			if (err) {
 				console.log("Invalid token");
-				return res.sendStatus(403);
+				reject(false);
 			} else {
-
+				var data = {
+					decoded: decoded
+				}
 				// if everything is good, save to request for use in other routes
 				req.decoded = decoded;    
+					console.log("TEST validateToken() service: token validated : ", req.decoded);
 
-				// TODO refresh token, then re-store in header:
-				// delete decoded.iat;
-				// delete decoded.exp;
-				//req.headers['x-access-token'] = createToken(decoded);
-
-				next();
+				fulfill(data);
 			}
 		});
+	});
+}
 
-	} else {
-		console.log("No token present"); // DEV
-		return res.sendStatus(403);
-
-	}
+exports.validateLdapBind = function() {
+	return new Promise(function(fulfill, reject) {
+		fulfill(true);
+	});
 }

@@ -21,4 +21,4 @@ exports.checkInput = function(value) {
 	}
 
 	return sanitized;
-};
+}

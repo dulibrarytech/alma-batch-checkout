@@ -29,6 +29,19 @@ db.createCollection( "abcdb_loan",
    }
 )
 
+db.createCollection( "abcdb_user",
+   {
+      validator: { $and:
+         [
+            { "fname" : { $type: "string" } },
+            { "lname" : { $type: "string" } },
+            { "DUID" : { $type: "string" } } // DUID
+         ]
+      },
+      validationAction: "error"
+   }
+)
+
 
 
 
