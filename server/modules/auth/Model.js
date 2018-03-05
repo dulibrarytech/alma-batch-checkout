@@ -12,17 +12,13 @@ exports.authenticateUser = function(userID, callback) {
 		user: {}
 	};
 	try {
-
 		var cursor = collection.find({DUID:userID});
-
                 cursor.each(function(err, response) {
                 	if(err) {
                 		callback(err, null);
                 	}
                 	else if(response) {
-
             			data.auth = true;
-
             			data.user['firstname'] = response.fname;
             			data.user['lastname'] = response.lname;
                 	}

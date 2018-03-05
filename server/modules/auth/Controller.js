@@ -1,6 +1,8 @@
 'use strict';
 
 var Sanitizor = require('../../libs/Sanitize'),
+	Token = require('../../libs/Token'),
+
 	Model = require('./Model'),
     Service = require('./Service'),
 
@@ -26,6 +28,7 @@ exports.authenticate = function(req, res) {
 			if(data === false) {
 				response['error'] = "Authentication error";
 				//res.setStatus(200);
+				res.send(JSON.stringify(response));
 			}
 			else {
 				// Validate ABC user
@@ -36,7 +39,7 @@ exports.authenticate = function(req, res) {
 					}
 					else if(data.auth === true) {
 						// Get token
-						response['token'] = Service.createToken(data.user);
+						response['token'] = Token.createToken(data.user);
 
 						// Get user data
 						response['data'] = data.user;
@@ -51,28 +54,4 @@ exports.authenticate = function(req, res) {
 			res.send(JSON.stringify(response));
 		});
 	}
-}
-
-exports.validateRequestToken = function(req, res, next) {
-		console.log("TEST validating token");
-	// check header or url parameters or post parameters for token
-	// var token = req.body.token || req.query.token || req.headers['x-access-token'];
-	// 	console.log("TEST validateRequestToken() service: token rxd: ", token);
-
-	// if (token) {
-
-	// 	Service.validateToken(token).then(data => {
-	// 			console.log("TEST validateRequestToken() service: token validated: ", data.decoded);
-	// 		next();
-
-	// 	}).catch(error => {
-	// 		console.log(error);
-	// 	});
-
-	// } else {
-	// 	console.log("No token present"); // DEV
-	// 	return res.sendStatus(403);
-
-	// }
-	next();
 }

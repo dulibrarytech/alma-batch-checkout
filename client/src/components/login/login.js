@@ -30,7 +30,7 @@ export class Login {
       //this.utils.stopSpinner();
           console.log("TEST client login() rx: ", response);
         // Check the response params
-        if(typeof response == 'undefined' || typeof response.token == 'undefined' || typeof response.sessionData == 'undefined') {
+        if(typeof response == 'undefined' || typeof response.token == 'undefined' || typeof response.data == 'undefined') {
           console.log("Server authentication error");
         }
         else if(response.token == null) {
@@ -41,8 +41,8 @@ export class Login {
             this.utils.sendMessage("Invalid DUID or password");
         }
         else {
-          console.log(response.sessionData.username + " logged in successfully");
-          this.config.session.data = response.sessionData;
+          console.log(response.data.lastname + " " + response.data.lastname + " logged in successfully");
+          this.config.session.data = response.data;
           this.config.session.token = response.token;
 
           this.router.navigate("/");

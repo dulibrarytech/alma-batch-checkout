@@ -24,18 +24,13 @@ module.exports = function (app) {
 	    res.render('index.html');
 	});
 
-	// Protected routes
+	// Client verify
 	app.use(checkHeader);
 
-	// Secured routes
-	if(settings.environment != 'development') {
-		app.use(auth.validateRequestToken);
-	}
-
 	// Server modules
+	require('../modules/auth/Routes.js')(app, settings);
 	require('../modules/set/Routes.js')(app, settings);
 	require('../modules/patron/Routes.js')(app, settings);
-	require('../modules/auth/Routes.js')(app, settings);
 
 	app.post('/test', function(req, res) {
 		res.send(200);
