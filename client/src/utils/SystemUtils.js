@@ -84,6 +84,7 @@ export class SystemUtils {
 	}
 
 	sendMessage(message) {
+		console.log(message);
 
 		// Class message spans
 		var elts = document.getElementsByClassName('message');

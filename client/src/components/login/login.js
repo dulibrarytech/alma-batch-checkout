@@ -28,13 +28,11 @@ export class Login {
   
     this.utils.doAjax('/auth/authenticate', 'post', data, null).then(response => {
       //this.utils.stopSpinner();
-          console.log("TEST client login() rx: ", response);
         // Check the response params
         if(typeof response == 'undefined' || typeof response.token == 'undefined' || typeof response.data == 'undefined') {
           console.log("Server authentication error");
         }
         else if(response.token == null) {
-            console.log("Invalid username or password");
             // clear login form
             document.getElementById('username-input').value = "";
             document.getElementById('password-input').value = "";
@@ -44,7 +42,6 @@ export class Login {
           console.log(response.data.lastname + " " + response.data.lastname + " logged in successfully");
           this.config.session.data = response.data;
           this.config.session.token = response.token;
-
           this.router.navigate("/");
         }
     });

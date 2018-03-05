@@ -147,7 +147,6 @@ export class Admin {
           console.log("Server error:", response.error);
         }
         else {
-          console.log("Set updated");
           this.utils.sendMessage("Set updated");
           this.loadSets();
         }
