@@ -50,7 +50,7 @@ export class Checkout {
   activate(params, navigationInstruction) {
       //   console.log("TEST activate: sess data: ", configuration.session.data);
       // if(configuration.session.data && navigationInstruction.route == "") {
-      //     console.log("TEST redirecting to login");
+      //     console.log("TEST updating url");
       //   this.router.navigate("checkout");
       // }
   }

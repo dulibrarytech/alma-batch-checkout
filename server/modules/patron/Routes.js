@@ -9,7 +9,6 @@ module.exports = function (app, settings) {
 
 		Token.validateToken(req, function(token) {
 			if(token) {
-					console.log("Token ok:", token);
 				next();
 			}
 			else {
@@ -23,14 +22,3 @@ module.exports = function (app, settings) {
 		controller.patronData(req, res);
 	});
 }
-
-// app.use(function(req, res, next) {
-// 	console.log("Middleware");
-// 	next();
-// });
-
-// module.exports = function (app) {
-// 	app.get('/patron/data', function(req, res) {
-// 		controller.patronData(req, res);
-// 	});
-// }
