@@ -7,8 +7,9 @@ import {Router} from 'aurelia-router';
 export class Checkout {
   
   constructor(systemUtils, configuration, router) {
-
+      console.log("TEST constructor: sess data: ", configuration.session.data);
     if(!configuration.session.data) {
+        console.log("TEST redirecting to login");
       router.navigate("login");
     }
 
@@ -47,9 +48,11 @@ export class Checkout {
   }
 
   activate(params, navigationInstruction) {
-      if(navigationInstruction.route == "") {
-        this.router.navigate("checkout");
-      }
+      //   console.log("TEST activate: sess data: ", configuration.session.data);
+      // if(configuration.session.data && navigationInstruction.route == "") {
+      //     console.log("TEST redirecting to login");
+      //   this.router.navigate("checkout");
+      // }
   }
 
   setButtonVisibility(state) {

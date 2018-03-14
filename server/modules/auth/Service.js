@@ -12,6 +12,7 @@ exports.validateLdapBind = function(username, password) {
 		else {
 
 			try { 
+					console.log("TEST LDAP u/p:", username, password);
 				// Validate LDAP via auth-service api
 				var url = settings.LDAPAuthService;
 
