@@ -7,12 +7,12 @@ import {Router} from 'aurelia-router';
 export class Admin {
   
   constructor(systemUtils, configuration, router) {
-
     if(!configuration.session.data) {
       router.navigate("login");
     }
 
     this.utils = systemUtils;
+    this.config = configuration;
     this.settings = configuration.settings;
 
     this.setList = [];
@@ -24,13 +24,19 @@ export class Admin {
     this.setName = "";
   }
 
-  attached() {
-  	this.loadSets();
-  	this.showSetWindow(false);
+  canActivate() {
+    if(!this.config.session.data) {
+      return false;
+    }
   }
 
   activate(params, navigationInstruction) {
-      //console.log("TEST", navigationInstruction);
+
+  }
+
+  attached() {
+  	this.loadSets();
+  	this.showSetWindow(false);
   }
 
   editSet(index) {

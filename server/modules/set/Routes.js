@@ -1,8 +1,23 @@
 'use strict'
 
-var controller = require("./Controller");
+var Token = require('../../libs/Token'),
+	controller = require("./Controller");
 
 module.exports = function (app) {
+
+	app.use(function(req, res, next) {
+
+		Token.validateToken(req, function(token) {
+			if(token) {
+					console.log("Token ok: ", token);
+				next();
+			}
+			else {
+				console.log("No request token present");
+				res.sendStatus(403);
+			}
+		});
+	});
 
 	app.post('/set', function(req, res) {
 		controller.setCreate(req, res);

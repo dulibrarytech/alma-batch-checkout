@@ -7,13 +7,16 @@ import {Router} from 'aurelia-router';
 export class Login {
   
   constructor(systemUtils, configuration, router) {
-
     this.utils = systemUtils;
     this.config = configuration;
     this.router = router;
   }
 
   attached() {
+
+  }
+
+  canActivate() {
     if(this.config.session.data) {
         this.router.navigate("/checkout");
     }

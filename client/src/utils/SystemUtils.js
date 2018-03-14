@@ -72,7 +72,10 @@ export class SystemUtils {
         .then(response => {
         	this.stopSpinner();
         	return response;
-        });
+        }).catch(error => {
+				console.log(error);
+				return error;
+			});
 	}
 
 	startSpinner() {

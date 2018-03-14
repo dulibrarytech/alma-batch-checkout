@@ -7,9 +7,7 @@ import {Router} from 'aurelia-router';
 export class Checkout {
   
   constructor(systemUtils, configuration, router) {
-      console.log("TEST constructor: sess data: ", configuration.session.data);
     if(!configuration.session.data) {
-        console.log("TEST redirecting to login");
       router.navigate("login");
     }
 
@@ -30,7 +28,18 @@ export class Checkout {
     this.setPeriodDays = this.config.settings.defaultLoanPeriod.days;
   }
 
+  canActivate() {
+    if(!this.config.session.data) {
+      return false;
+    }
+  }
+
+  activate(params, navigationInstruction) {
+
+  }
+
   attached() {
+
     // Initialize elements
     document.getElementById("borrower-id-clear").style.display = "none";
     document.getElementById("borrower-id-input").focus();
@@ -45,14 +54,6 @@ export class Checkout {
     this.loadSets();
     this.setSelectedPeriodValues();
     this.showLoanDataDialog(false);
-  }
-
-  activate(params, navigationInstruction) {
-      //   console.log("TEST activate: sess data: ", configuration.session.data);
-      // if(configuration.session.data && navigationInstruction.route == "") {
-      //     console.log("TEST updating url");
-      //   this.router.navigate("checkout");
-      // }
   }
 
   setButtonVisibility(state) {
