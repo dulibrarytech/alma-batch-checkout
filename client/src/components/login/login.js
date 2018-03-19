@@ -42,7 +42,7 @@ export class Login {
             this.utils.sendMessage("Invalid DUID or password");
         }
         else {
-            console.log(response.data.firstname + " " + response.data.lastname + " logged in successfully");
+          console.log(response.data.firstname + " " + response.data.lastname + " logged in at " + new Date());
           this.config.session.data = response.data;
           this.config.session.token = response.token;
           this.router.navigate("checkout");

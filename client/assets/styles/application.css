@@ -60,7 +60,7 @@ header#du-header {
 	margin-top: 1em;
 }
 
-.fa-home, .fa-book {
+.fa {
 	color: #404040;
 }
 
@@ -75,7 +75,7 @@ nav#navbar ul {
 }
 
 nav#navbar ul li {
-	padding-top: 1em;
+	padding-top: 15px;
 	list-style: none;
 	padding-right: 2em;
 }
