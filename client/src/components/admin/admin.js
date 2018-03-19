@@ -11,9 +11,13 @@ export class Admin {
       router.navigate("login");
     }
 
+    this.router = router;
     this.utils = systemUtils;
     this.config = configuration;
     this.settings = configuration.settings;
+
+    this.username = "";
+    this.activeSession = false;
 
     this.setList = [];
     this.activeSet = {};
@@ -31,12 +35,26 @@ export class Admin {
   }
 
   activate(params, navigationInstruction) {
-
+    if(this.config.session.token) {
+      this.activeSession = true;
+      this.username = this.config.session.data.firstname + " " + this.config.session.data.lastname;
+    }
+    else {
+      this.activeSession = false;
+      this.username = "";
+    }
   }
 
   attached() {
   	this.loadSets();
   	this.showSetWindow(false);
+  }
+
+  logout() {
+    this.username = "";
+    this.utils.logout();
+    this.activeSession = false;
+    this.router.navigate("login");
   }
 
   editSet(index) {
