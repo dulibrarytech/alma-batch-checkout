@@ -6,13 +6,12 @@ var settings = require("../../config/settings"),
 exports.validateLdapBind = function(username, password) {
 	return new Promise(function(fulfill, reject) {
 		if(settings.runtime_env == "development") {
-			console.log("Dev mode skips LDAP: ", new Date());
+			console.log("Dev mode login skips LDAP: ", new Date());
 			fulfill(true);
 		}
 		else {
 
 			try { 
-					console.log("TEST LDAP u/p:", username, password);
 				// Validate LDAP via auth-service api
 				var url = settings.LDAPAuthService;
 
@@ -29,7 +28,6 @@ exports.validateLdapBind = function(username, password) {
 			    }; 
 
 				request(data, function(err,httpResponse,body) {
-	    				console.log("TEST LDAP resp:", httpResponse, body);
 					if(err) {
 						console.log(err);
 						fulfill(false);

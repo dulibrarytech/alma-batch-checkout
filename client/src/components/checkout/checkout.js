@@ -15,6 +15,9 @@ export class Checkout {
     this.config = configuration;
     this.router = router;
 
+    this.username = "";
+    this.activeSession = false;
+
     this.setList = [];
     this.activeSet = {};
     this.selectedSets = [];
@@ -29,13 +32,20 @@ export class Checkout {
   }
 
   canActivate() {
-    if(!this.config.session.data) {
+    if(!this.config.session.token) {
       return false;
     }
   }
 
   activate(params, navigationInstruction) {
-
+    if(this.config.session.token) {
+      this.activeSession = true;
+      this.username = this.config.session.data.firstname + " " + this.config.session.data.lastname;
+    }
+    else {
+      this.activeSession = false;
+      this.username = "";
+    }
   }
 
   attached() {
@@ -54,6 +64,13 @@ export class Checkout {
     this.loadSets();
     this.setSelectedPeriodValues();
     this.showLoanDataDialog(false);
+  }
+
+  logout() {
+    this.username = "";
+    this.utils.logout();
+    this.activeSession = false;
+    this.router.navigate("login");
   }
 
   setButtonVisibility(state) {

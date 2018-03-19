@@ -1,5 +1,12 @@
 <template>
 	<div id="content" class="container">
+		<div id="user-logout" class="row">
+			<div if.bind="activeSession" class="col-md-12">
+				<div style="float: right; margin-bottom: 0.7em; margin-top: 0.8em; margin-right: 1em">
+					<span id="user-string">Welcome, ${username}</span><span><a click.delegate="logout()" style="cursor: pointer; margin-left: 0.3em">Logout</a></span>
+				</div>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-md-7">
 				<div class="ui-section-label">

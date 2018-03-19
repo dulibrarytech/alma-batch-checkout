@@ -27,8 +27,6 @@ exports.validateToken = function(req, callback) {
 			}
 			// if everything is good, save to request for use in other routes
 			req.decoded = decoded;    
-				console.log("TEST validateToken() service: token validated : ", req.decoded);
-
 			callback(data);
 		}
 	});

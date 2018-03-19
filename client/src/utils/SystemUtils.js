@@ -109,9 +109,8 @@ export class SystemUtils {
 	}
 
 	logout() {
-        this.config.session.data = {};
-        this.config.session.token = "";
-        document.location.reload();
+        this.config.session.data = null;
+        this.config.session.token = null;
     }
 }
 

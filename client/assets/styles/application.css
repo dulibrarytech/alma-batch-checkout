@@ -48,7 +48,7 @@ header#du-header {
 
 #login {
     margin: auto;
-    margin-top: 5%;
+    margin-top: 12%;
     width: 40%;
 }
 
@@ -133,10 +133,14 @@ div#main {
 	margin: 5.5em auto 1em auto;
 }
 
+div#user-logout {
+	margin-bottom: 5em;
+}
+
 div#content {
     background-color: #f7f7f7;
    /* min-height: 600px;*/
-    padding: 5.5em 3em 3em 3em;
+    padding: 0.5em 3em 3em 3em;
     height: 750px;
 }
 

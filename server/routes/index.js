@@ -19,8 +19,6 @@ module.exports = function (app) {
 
     // Open routes
     app.get('/', function(req, res) {
-    		console.log("ACCESS Root access from host:", req.headers.host);
-    		console.log("ACCESS User Agent:", req.headers['user-agent']);
 	    res.render('index.html');
 	});
 
