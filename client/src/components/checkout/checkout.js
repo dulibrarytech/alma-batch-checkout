@@ -277,13 +277,11 @@ export class Checkout {
     else if(this.config.runtimeEnv == "development") {
       // Set the DEV SESSION active borrower
       this.activeBorrower.id = this.config.settings.devUserID;
-      console.log("Dev user loaded, ID ", this.activeBorrower.id);
       this.activeBorrower.fname = "DEV";
       this.activeBorrower.lname = "USER";
       this.activeBorrowerDisplay = this.activeBorrower.fname + ", " + this.activeBorrower.lname;
 
       document.getElementById("borrower-id-input").style.color = "green";
-      console.log("Set color:", document.getElementById("borrower-id-input").style.color);
 
       // Update buttons
       this.refreshSetState();
@@ -310,7 +308,6 @@ export class Checkout {
             }
 
             document.getElementById("borrower-id-input").style.color = "green";
-            console.log("Set color:", document.getElementById("borrower-id-input").style.color);
 
             // Update buttons
             this.refreshSetState();

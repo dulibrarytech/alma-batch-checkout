@@ -20,6 +20,7 @@ export class Admin {
     this.activeSession = false;
 
     this.setList = [];
+    this.userList = [];
     this.activeSet = {};
     this.activeBarcode = "";
 
@@ -47,7 +48,9 @@ export class Admin {
 
   attached() {
   	this.loadSets();
-  	this.showSetWindow(false);
+    this.loadUsers();
+    this.showSetWindow(false);
+    this.showUserWindow(false);
   }
 
   logout() {
@@ -98,7 +101,25 @@ export class Admin {
               createDate: response.sets[index].date.substring(0,10),
               setID: response.sets[index].id,
               loanPeriod: response.sets[index].loanPeriod,
-              status: response.sets[index].status == "ON_LOAN" ? "On Loan" : "Available",
+              status: response.sets[index].status == "ON_LOAN" ? "On Loan" : "Available"
+            });
+          }
+        }
+    });
+  }
+
+  loadUsers() {
+    this.utils.doAjax('/user/all', 'get', null, null).then(response => {
+
+        if(response.error) {
+          console.log("Server error:", response.error);
+        }
+        else {
+          this.userList = [];
+          for(var index of response.users) {
+            this.userList.push({
+              name: index.name,
+              id: index.duid
             });
           }
         }
@@ -128,6 +149,10 @@ export class Admin {
         document.getElementById("new-set-section").style.display = "none";
         break;
     }
+  }
+
+  showUserWindow(show) {
+
   }
 
   createSet() {

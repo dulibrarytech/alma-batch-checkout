@@ -134,14 +134,15 @@ div#main {
 }
 
 div#user-logout {
-	margin-bottom: 5em;
+	margin-bottom: 3em;
 }
 
 div#content {
     background-color: #f7f7f7;
    /* min-height: 600px;*/
     padding: 0.5em 3em 3em 3em;
-    height: 750px;
+    /*height: 750px;*/
+    height: auto;
 }
 
 .ui-section {
@@ -277,6 +278,10 @@ div#add-item {
 div#loan-data label {
 	width: 80px;
 	margin-left: 1em;
+}
+
+div#user-list {
+	margin-top: 3em;
 }
 
 

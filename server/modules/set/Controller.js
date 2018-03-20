@@ -159,7 +159,7 @@ exports.setLoanCreate = function(req, res) {
 			name = Sanitizor.checkInput(req.body.patronName),
 			hrs = Sanitizor.checkInput(req.body.loanPeriod);
 			
-		Service.createPatronLoans(pid, sid, name, hrs).then(data => {
+		Service.createSetLoans(pid, sid, name, hrs).then(data => {
 			response['id'] = data.loanID;
 			res.send(JSON.stringify(response));
 
@@ -179,7 +179,7 @@ exports.setLoanRemove = function(req, res) {
 		res.sendStatus(400);
 	}
 	else {
-		Service.deletePatronLoans(req.body.setID).then(data => {
+		Service.deleteSetLoans(req.body.setID).then(data => {
 			res.send(JSON.stringify(response));
 
 		}).catch(error => {
