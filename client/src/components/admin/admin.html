@@ -39,7 +39,7 @@
 							<tr><th width="40%">Name</th><th width="40%">DUID</th><th width="20%"></th></tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="i of userList.length" id="user-row-${i+1}" class="user-row"><td class="filterable-cell" width="40%">${userList[i].name}</td><td class="filterable-cell" width="40%">${userList[i].id}</td><td class="filterable-cell" width="20%" style="text-align: right; padding-right: 2em"><button class="btn-xs btn-primary" click.delegate="editSet(i)">Edit</button>
+							<tr repeat.for="i of userList.length" id="user-row-${i+1}" class="user-row"><td class="filterable-cell" width="40%">${userList[i].name}</td><td class="filterable-cell" width="40%">${userList[i].DUID}</td><td class="filterable-cell" width="20%" style="text-align: right; padding-right: 2em"><button class="btn-xs btn-primary" click.delegate="editUser(i)">Edit</button>
 							<!-- <button class="btn-xs btn-danger" click.delegate="removeSet(i)">Remove</button> --></td>
 							</tr>
 						</tbody>

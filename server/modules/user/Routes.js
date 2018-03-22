@@ -1,0 +1,41 @@
+'use strict'
+
+var Token = require('../../libs/Token'),
+	controller = require("./Controller");
+
+module.exports = function (app) {
+
+	app.use(function(req, res, next) {
+
+		Token.validateToken(req, function(token) {
+			if(token) {
+					console.log("Token ok: ", token);
+				next();
+			}
+			else {
+				console.log("No request token present");
+				res.sendStatus(403);
+			}
+		});
+	});
+
+	app.post('/user', function(req, res) {
+		controller.userCreate(req, res);
+	});
+
+	app.get('/user', function(req, res) {
+		controller.fetchUser(req, res);
+	});
+
+	app.put('/user', function(req, res) {
+		controller.userUpdate(req, res);
+	});
+
+	app.delete('/user', function(req, res) {
+		controller.userRemove(req, res);
+	});
+
+	app.get('/user/all', function(req, res) {
+		controller.userAll(req, res);
+	});
+}

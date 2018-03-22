@@ -45,6 +45,7 @@ export class Login {
           console.log(response.data.firstname + " " + response.data.lastname + " logged in at " + new Date());
           this.config.session.data = response.data;
           this.config.session.token = response.token;
+            console.log(response.token);
           this.router.navigate("checkout");
         }
     });

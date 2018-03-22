@@ -116,10 +116,13 @@ export class Admin {
         }
         else {
           this.userList = [];
+          var fullname;
           for(var index of response.users) {
+            fullname = index.lastname + ", " + index.firstname; 
             this.userList.push({
-              name: index.name,
-              id: index.duid
+              userID: index.id,
+              name: fullname,
+              DUID: index.DUID
             });
           }
         }
