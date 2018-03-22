@@ -110,7 +110,7 @@
 					</div>
 				</div>
 			</div>
-<!-- 			<div class="col-md-5">
+			<div class="col-md-5">
 				<div id="edit-user-section">
 					<div class="ui-section-label">
 						<label>Edit Users:</label>
@@ -120,60 +120,41 @@
 
 							<div class="form-group">
 								<label>Name:</label>
-								<input class="form-control" type="text" value.bind="activeSet.name"/>
-							</div>
-
-							<div class="form-group">
-								<label>Items:</label>
-								<div id="set-item-list" class="form-group">
-									<table class="table table-striped">
-										<tr repeat.for="index of activeSet.items.length" id="set-item-${index+1}" class="set-item" click.delegate="selectSetItem(index)"><td width="85%">${activeSet.items[index]}</td><td width="15%"><button class="btn btn-xs btn-primary" click.delegate="removeBarcode(index)">Remove</button></td></tr>
-									</table>
-								</div>
-							</div>
-
-							<div id="add-item" class="form-group">
-								<label>Add item:</label>
-								<div>
-									<form role="form" submit.delegate="addBarcode()">
-										<input id="add-barcode" class="form-control" type="text" value.bind="barcode" style="float: left; width: 60%"/>
-										<button class="btn btn-primary" type="submit" click.delegate="addBarcode()" style="float: right">Add</button>
-									</form>
-								</div>
+								<input class="form-control" type="text" value.bind="activeUser.name"/>
 							</div>
 
 							<span class="message"></span>
 							<div class="popup-window-buttons">
-			    				<button id="borrower-id-submit" class="btn btn-primary" click.delegate="updateSet()">Save</button>
-			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="showSetWindow(false)">Close</button>
-			    				<button id="remove-set-button" class="btn btn-danger" style="float: right" click.delegate="confirmRemoveSet()">Remove This Set</button> 
-			    				<button id="remove-set-button-confirm" class="btn btn-danger" style="float: right; display: none" click.delegate="removeSet()">Click To Confirm</button> 
+			    				<button class="btn btn-primary" click.delegate="updateUser()">Save</button>
+			    				<button class="btn btn-primary" click.delegate="showUserWindow(false)">Close</button>
+			    				<button class="btn btn-danger" style="float: right" click.delegate="confirmRemoveUser()">Remove This User</button> 
+			    				<button class="btn btn-danger" style="float: right; display: none" click.delegate="removeUser()">Click To Confirm</button> 
 							</div>
 						</form>
 					</div>
 				</div>
 
-				<div id="new-set-section">
+				<div id="new-user-section">
 					<div class="ui-section-label">
-						<label>Create New Set:</label>
+						<label>Add User:</label>
 					</div>
 					<div class="ui-section form-window">
 						<form>
 
 							<div class="form-group">
 								<label>Name:</label>
-								<input class="form-control" type="text" value.bind="setName"/>
+								<input class="form-control" type="text" value.bind="userName"/>
 							</div>
 
 							<span class="message"></span>
 							<div class="popup-window-buttons">
-			    				<button id="borrower-id-submit" class="btn btn-primary" click.delegate="createSet()">Create</button>
-			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="showSetWindow(false)">Close</button>
+			    				<button class="btn btn-primary" click.delegate="createUser()">Create</button>
+			    				<button class="btn btn-primary" click.delegate="showUserWindow(false)">Close</button>
 							</div>
 						</form>
 					</div>
 				</div>
-			</div> -->
+			</div>
 		</div>
 	</div>
 

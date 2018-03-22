@@ -22,6 +22,7 @@ export class Admin {
     this.setList = [];
     this.userList = [];
     this.activeSet = {};
+    this.activeUser = {};
     this.activeBarcode = "";
 
     // Dialog variables
@@ -156,6 +157,23 @@ export class Admin {
 
   showUserWindow(show) {
 
+    switch(show) {
+      case "edit":
+        document.getElementById("edit-user-section").style.display = "block";
+        document.getElementById("new-user-section").style.display = "none";
+        break;
+      case "new":
+        this.resetActiveSet();
+        document.getElementById("edit-user-section").style.display = "none";
+        document.getElementById("new-user-section").style.display = "block";
+        break;
+      case false:
+      default:
+        this.resetActiveSet();
+        document.getElementById("edit-user-section").style.display = "none";
+        document.getElementById("new-user-section").style.display = "none";
+        break;
+    }
   }
 
   createSet() {
@@ -252,6 +270,26 @@ export class Admin {
       items: []
     };
     this.setName = ""; // new set
+  }
+
+  resetActiveUser() {
+    this.activeUser = {
+      userID: null,
+      name: "",
+      duid: ""
+    };
+  }
+
+  editUser(index) {
+
+    this.utils.clearMessages();
+
+    // Store active set
+    this.activeUser.userID = this.userList[index].userID || null;
+    this.activeUser.name = this.userList[index].name || "";
+    this.activeUser.DUID = this.userList[index].DUID || "";
+      console.log("TEST active user was set:", this.activeUser);
+    this.showUserWindow("edit");
   }
 
   // TODO move To view helper
