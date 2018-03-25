@@ -7,7 +7,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div id="set-row" class="row">
 			<div class="col-md-7">
 				<div class="ui-section-label">
 					<label>Sets:</label>
@@ -85,8 +85,8 @@
 
 							<span class="message"></span>
 							<div class="popup-window-buttons">
-			    				<button class="btn btn-primary" click.delegate="createSet()">Create</button>
-			    				<button class="btn btn-primary" click.delegate="showSetWindow(false)">Close</button>
+			    				<button class="btn btn-primary" click.trigger="createSet()">Create</button>
+			    				<button class="btn btn-primary" click.trigger="showSetWindow(false)">Close</button>
 							</div>
 						</form>
 					</div>
@@ -95,8 +95,8 @@
 		</div>
 
 
-		<div class="row">
-			<div id="user-list" class="col-md-7">
+		<div id="user-row" class="row">
+			<div class="col-md-7">
 				<div class="ui-section-label">
 					<label>Users:</label>
 					<!-- <button id="create-set-button" class="btn-xs btn-primary" click.delegate="showSetWindow('new')">Add Set</button> -->

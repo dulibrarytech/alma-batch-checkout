@@ -177,14 +177,12 @@ export class Admin {
   }
 
   createSet() {
-
     if(this.validateCreateSetForm()) {
       var body = {
         title: this.setName,
         creator: "",
         period: 48
       }
-
       this.utils.doAjax('/set', 'post', body, null).then(response => {
         if(response.error) {
           console.log("Server error:", response.error);
@@ -196,6 +194,9 @@ export class Admin {
           this.loadSets();
         }
       });
+    }
+    else {
+      console.log("Invalid form entry");
     }
   }
 
@@ -307,6 +308,7 @@ export class Admin {
 
   // TODO move To view helper
   validateInputValue(value, length, element) {
+      console.log("TEST val input()");
     var isValid = true, msg;
 
     if(value == "") {
@@ -327,7 +329,7 @@ export class Admin {
       console.log(msg);
       this.utils.sendMessage("Invalid characters in name");
     }
-
+      console.log("TEST returning ", isValid);
     return isValid;
   }
 
