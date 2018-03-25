@@ -27,25 +27,7 @@
 					</table>
 				</div>
 			</div>
-			<div id="user-list" class="col-md-7">
-				<div class="ui-section-label">
-					<label>Users:</label>
-					<!-- <button id="create-set-button" class="btn-xs btn-primary" click.delegate="showSetWindow('new')">Add Set</button> -->
-					<span class="form-add-new-link form-link" click.delegate="showUserWindow('new')"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp&nbspAdd User</span>
-				</div>
-				<div class="ui-section">
-					<table id="user-table" class="table table-striped ui-section scroll">
-						<thead>
-							<tr><th width="40%">Name</th><th width="40%">DUID</th><th width="20%"></th></tr>
-						</thead>
-						<tbody>
-							<tr repeat.for="i of userList.length" id="user-row-${i+1}" class="user-row"><td class="filterable-cell" width="40%">${userList[i].name}</td><td class="filterable-cell" width="40%">${userList[i].DUID}</td><td class="filterable-cell" width="20%" style="text-align: right; padding-right: 2em"><button class="btn-xs btn-primary" click.delegate="editUser(i)">Edit</button>
-							<!-- <button class="btn-xs btn-danger" click.delegate="removeSet(i)">Remove</button> --></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
+
 			<div class="col-md-5">
 				<div id="edit-set-section">
 					<div class="ui-section-label">
@@ -80,10 +62,10 @@
 
 							<span class="message"></span>
 							<div class="popup-window-buttons">
-			    				<button id="borrower-id-submit" class="btn btn-primary" click.delegate="updateSet()">Save</button>
-			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="showSetWindow(false)">Close</button>
-			    				<button id="remove-set-button" class="btn btn-danger" style="float: right" click.delegate="confirmRemoveSet()">Remove This Set</button> 
-			    				<button id="remove-set-button-confirm" class="btn btn-danger" style="float: right; display: none" click.delegate="removeSet()">Click To Confirm</button> 
+			    				<button class="btn btn-primary" click.delegate="updateSet()">Save</button>
+			    				<button class="btn btn-primary" click.delegate="showSetWindow(false)">Close</button>
+			    				<button class="btn btn-danger" style="float: right" click.delegate="confirmRemoveSet()">Remove This Set</button> 
+			    				<button class="btn btn-danger" style="float: right; display: none" click.delegate="removeSet()">Click To Confirm</button> 
 							</div>
 						</form>
 					</div>
@@ -103,14 +85,40 @@
 
 							<span class="message"></span>
 							<div class="popup-window-buttons">
-			    				<button id="borrower-id-submit" class="btn btn-primary" click.delegate="createSet()">Create</button>
-			    				<button id="borrower-id-clear" class="btn btn-primary" click.delegate="showSetWindow(false)">Close</button>
+			    				<button class="btn btn-primary" click.delegate="createSet()">Create</button>
+			    				<button class="btn btn-primary" click.delegate="showSetWindow(false)">Close</button>
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
+		</div>
+
+
+		<div class="row">
+			<div id="user-list" class="col-md-7">
+				<div class="ui-section-label">
+					<label>Users:</label>
+					<!-- <button id="create-set-button" class="btn-xs btn-primary" click.delegate="showSetWindow('new')">Add Set</button> -->
+					<span class="form-add-new-link form-link" click.delegate="showUserWindow('new')"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp&nbspAdd User</span>
+				</div>
+				<div class="ui-section">
+					<table id="user-table" class="table table-striped ui-section scroll">
+						<thead>
+							<tr><th width="40%">Name</th><th width="40%">DUID</th><th width="20%"></th></tr>
+						</thead>
+						<tbody>
+							<tr repeat.for="i of userList.length" id="user-row-${i+1}" class="user-row"><td class="filterable-cell" width="40%">${userList[i].name}</td><td class="filterable-cell" width="40%">${userList[i].DUID}</td><td class="filterable-cell" width="20%" style="text-align: right; padding-right: 2em"><button class="btn-xs btn-primary" click.delegate="editUser(i)">Edit</button>
+							<!-- <button class="btn-xs btn-danger" click.delegate="removeSet(i)">Remove</button> --></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 			<div class="col-md-5">
+
+<!-- 			</div>
+			<div class="col-md-5"> -->
 				<div id="edit-user-section">
 					<div class="ui-section-label">
 						<label>Edit Users:</label>
