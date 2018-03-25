@@ -51,6 +51,7 @@ exports.addUser = function(data, callback) {
 }
 
 exports.updateUser = function(userID, data, callback) {
+
     try {
        collection.updateOne(
           { _id : ObjectId(userID) },

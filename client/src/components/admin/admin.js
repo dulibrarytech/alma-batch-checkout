@@ -28,6 +28,8 @@ export class Admin {
     // Dialog variables
     this.barcode = "";
     this.setName = "";
+
+    this.user = {};
   }
 
   canActivate() {
@@ -52,6 +54,13 @@ export class Admin {
     this.loadUsers();
     this.showSetWindow(false);
     this.showUserWindow(false);
+
+    this.user = {
+      firstname: "",
+      lastname: "",
+      duid: "",
+      role: ""
+    }
   }
 
   logout() {
@@ -273,13 +282,7 @@ export class Admin {
     this.setName = ""; // new set
   }
 
-  resetActiveUser() {
-    this.activeUser = {
-      userID: null,
-      name: "",
-      duid: ""
-    };
-  }
+  // ---------------------------------------------------------------------------------
 
   editUser(index) {
 
@@ -289,8 +292,51 @@ export class Admin {
     this.activeUser.userID = this.userList[index].userID || null;
     this.activeUser.name = this.userList[index].name || "";
     this.activeUser.DUID = this.userList[index].DUID || "";
-      console.log("TEST active user was set:", this.activeUser);
+
     this.showUserWindow("edit");
+  }
+
+  createUser() {
+    if(this.validateAddUserForm()) {
+      var body = {
+        
+      }
+      this.utils.doAjax('/user', 'post', body, null).then(response => {
+        if(response.error) {
+          console.log("Server error:", response.error);
+        }
+        else {
+          console.log("User added: ", response.id);
+          this.utils.sendMessage("User added");
+
+          this.user.firstname = "";
+          this.user.lastname = "";
+          this.user.duid = "";
+          this.user.role = "2";
+          this.loadUsers();
+        }
+      });
+    }
+    else {
+      console.log("Invalid form entry");
+    }
+  }
+
+  
+
+  resetActiveUser() {
+    this.activeUser = {
+      userID: null,
+      name: "",
+      duid: ""
+    };
+
+    this.user = {
+      firstname: "",
+      lastname: "",
+      duid: "",
+      role: ""
+    }
   }
 
   // TODO move To view helper
@@ -308,28 +354,28 @@ export class Admin {
 
   // TODO move To view helper
   validateInputValue(value, length, element) {
-      console.log("TEST val input()");
+
     var isValid = true, msg;
 
     if(value == "") {
       isValid = false;
       msg = element + " fails validation: empty string";
       console.log(msg);
-      this.utils.sendMessage("Invalid characters in name");
+      this.utils.sendMessage("Invalid characters entered: " + element);
     }
     else if(value.length > length) {
       isValid = false;
       msg = element + " fails validation: max length of " + length + " exceeded";
       console.log(msg);
-      this.utils.sendMessage("Invalid characters in name");
+      this.utils.sendMessage("Invalid characters entered: " + element);
     }
     else if(this.validateAlphanumeric(value) == false) {
       isValid = false;
       msg = element + " fails validation: value entered is not alphanumeric";
       console.log(msg);
-      this.utils.sendMessage("Invalid characters in name");
+      this.utils.sendMessage("Invalid characters entered: " + element);
     }
-      console.log("TEST returning ", isValid);
+
     return isValid;
   }
 
@@ -343,6 +389,12 @@ export class Admin {
 
   validateBarcode() {
     return this.validateInputValue(this.barcode, this.settings.maxBarcodeLength, "Barcode");
+  }
+
+  validateAddUserForm() {
+    return this.validateInputValue(this.user.firstname, 50, "Firstname") && 
+            this.validateInputValue(this.user.lastname, 50, "Lastname") &&
+            this.validateInputValue(this.user.duid, 50, "DUID");
   }
 
   addBarcode() {

@@ -23,10 +23,6 @@ module.exports = function (app) {
 		controller.userCreate(req, res);
 	});
 
-	app.get('/user', function(req, res) {
-		controller.fetchUser(req, res);
-	});
-
 	app.put('/user', function(req, res) {
 		controller.userUpdate(req, res);
 	});

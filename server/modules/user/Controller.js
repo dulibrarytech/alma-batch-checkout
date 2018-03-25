@@ -34,29 +34,39 @@ exports.userCreate = function(req, res) {
 	var response = {}, 
 		user = {};
 
-	if(!req.body.name) {
-		res.sendStatus(400);
+	if(!req.body.duid || !req.body.firstname || !req.body.lastname) {
+		res.setStatus(400);
+		response['error'] = "Server error";
+		res.send();
 	}
 	else {
-		user['fname'] = Sanitizor.checkInput(req.body.firstname);
-		user['lname'] = Sanitizor.checkInput(req.body.lastname);
-		user['DUID'] = Sanitizor.checkInput(req.body.duid);
-		//user['role'] = Sanitizor.checkInput(req.body.role);
-		user['role'] = "2";	// No superadmin or admin user at this point.  All users have equal privileges
 
-		// Get all sets from the database
-		Model.addUser(set, function(err, id) {
-				
-			if(err) {
-				response['error'] = err;
-				res.status(200);
-			}
-			else {
-				response['id'] = id;
-			}
+		try {
+			user['fname'] = Sanitizor.checkInput(req.body.firstname);
+			user['lname'] = Sanitizor.checkInput(req.body.lastname);
+			user['DUID'] = Sanitizor.checkInput(req.body.duid);
+			//user['role'] = Sanitizor.checkInput(req.body.role);
+			user['role'] = "2";	// No superadmin or admin user at this point.  All users have equal privileges
 
-			res.send(JSON.stringify(response));
-		});
+			// Get all sets from the database
+			Model.addUser(user, function(err, id) {
+					
+				if(err) {
+					response['error'] = err;
+					res.status(200);
+				}
+				else {
+					response['id'] = id;
+				}
+
+				res.send(JSON.stringify(response));
+			});
+		}
+		catch (e) {
+			res.setStatus(500);
+			response['error'] = e;
+			res.send();
+		}
 	}
 }
 
@@ -64,31 +74,43 @@ exports.userUpdate = function(req, res) {
 	var response = {};
 
 	if(!req.body.userID) {
-		res.sendStatus(400);
+		res.setStatus(400);
+		response['error'] = "Server error";
+		res.send();
 	}
 	else {
 		var	id = Sanitizor.checkInput(req.body.userID);
 		
-		var data = req.body.data;
-		data.firstname = Sanitizor.checkInput(req.body.data.firstname);
-		data.lastname = Sanitizor.checkInput(req.body.data.lastname);
-		data.duid = Sanitizor.checkInput(req.body.data.duid);
+		try {
+			var data = {};
+			data['fname'] = Sanitizor.checkInput(req.body.data.firstname);
+			data['lname'] = Sanitizor.checkInput(req.body.data.lastname);
+			data['DUID'] = Sanitizor.checkInput(req.body.data.duid);
+			data['role'] = Sanitizor.checkInput(req.body.data.role) || "2";	
 
-		Model.updateUser(id, data, function(err) {
-			if(err) {
-				response['error'] = err;
-				res.status(200);
-			}
-			res.send(JSON.stringify(response));
-		});
-	}
+			Model.updateUser(id, data, function(err) {
+				if(err) {
+					response['error'] = err;
+					res.status(200);
+				}
+				res.send(JSON.stringify(response));
+			});
+		}
+		catch (e) {
+			res.setStatus(500);
+			response['error'] = e;
+			res.send();
+		}
+ 	}
 }
 
 exports.userRemove = function(req, res) {
 	var response = {};
 
-	if(!req.body.setID) {
-		res.sendStatus(400);
+	if(!req.body.userID) {
+		res.setStatus(400);
+		response['error'] = "Server error";
+		res.send();
 	}
 	else {
 
