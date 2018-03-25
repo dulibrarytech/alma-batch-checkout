@@ -35,7 +35,8 @@ db.createCollection( "abcdb_user",
          [
             { "fname" : { $type: "string" } },
             { "lname" : { $type: "string" } },
-            { "DUID" : { $type: "string" } } // DUID
+            { "DUID" : { $type: "string" } },
+            { "role" : { $type: "string" } }
          ]
       },
       validationAction: "error"
