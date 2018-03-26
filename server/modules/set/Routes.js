@@ -9,7 +9,6 @@ module.exports = function (app) {
 
 		Token.validateToken(req, function(token) {
 			if(token) {
-					console.log("Token ok: ", token);
 				next();
 			}
 			else {

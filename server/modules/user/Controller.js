@@ -33,7 +33,7 @@ exports.userAll = function(req, res) {
 exports.userCreate = function(req, res) {
 	var response = {}, 
 		user = {};
-		console.log("TEST body into controller:", req.body);
+
 	if(!req.body.duid || !req.body.firstname || !req.body.lastname) {
 		res.status(400);
 		response['error'] = "Server error";
