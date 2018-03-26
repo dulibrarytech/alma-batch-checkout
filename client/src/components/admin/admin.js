@@ -132,7 +132,9 @@ export class Admin {
             this.userList.push({
               userID: index.id,
               name: fullname,
-              DUID: index.DUID
+              DUID: index.DUID,
+              firstname: index.firstname,
+              lastname: index.lastname
             });
           }
         }
@@ -292,6 +294,9 @@ export class Admin {
     this.activeUser.userID = this.userList[index].userID || null;
     this.activeUser.name = this.userList[index].name || "";
     this.activeUser.DUID = this.userList[index].DUID || "";
+    this.user.firstname = this.userList[index].firstname || "";
+    this.user.lastname = this.userList[index].lastname || "";
+    this.user.duid = this.userList[index].DUID || "";
 
     this.showUserWindow("edit");
   }
@@ -323,7 +328,42 @@ export class Admin {
     }
   }
 
-  
+  updateUser(userID) {
+    if(this.validateAddUserForm()) {
+      if(typeof userID == 'undefined') {
+        userID = this.activeUser.userID;
+      }
+
+      var body = {
+        userID: userID, 
+        data: {}
+      }
+      body.data['firstname'] = this.user.firstname;
+      body.data['lastname'] = this.user.lastname;
+      body.data['duid'] = this.user.duid;
+      //body.data['role'] = this.activeUser.role;
+
+      this.utils.doAjax('/user', 'put', body, null).then(response => {
+        if(response.error) {
+          console.log("Server error:", response.error);
+        }
+        else {
+          this.utils.sendMessage("User updated");
+          this.loadUsers();
+        }
+      });
+    }
+  }
+
+  confirmRemoveSet(setID) {
+    document.getElementById("remove-set-button").style.display = "none";
+    document.getElementById("remove-set-button-confirm").style.display = "block";
+
+    setTimeout(function() { 
+      document.getElementById("remove-set-button").style.display = "block";
+      document.getElementById("remove-set-button-confirm").style.display = "none";
+    }, 3000);
+  }
 
   confirmRemoveUser(userID) {
     document.getElementById("remove-user-button").style.display = "none";

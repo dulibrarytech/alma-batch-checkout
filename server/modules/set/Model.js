@@ -172,11 +172,9 @@ exports.addSet = function(data, callback) {
         data: setData,
         status: "AVAILABLE",
         loanID: "",
-        items: "",
-        group: ""   // Not in use 
+        items: ""
+        //group: ""   // Not in use 
     }
-
-    console.log("Inserting set:", doc);
 
     try {
         collection.insertOne(doc).then(data => {
