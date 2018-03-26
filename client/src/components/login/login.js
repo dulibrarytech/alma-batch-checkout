@@ -53,8 +53,7 @@ export class Login {
   }
 
   validateLoginForm() {
-    return this.validateInputValue(this.userName, 20, "User name") && 
-          this.validateInputValue(this.passWord, 20, "Password");
+    return this.validateInputValue(this.userName, 20, "User name");
   }
 
   // TODO move To view helper
