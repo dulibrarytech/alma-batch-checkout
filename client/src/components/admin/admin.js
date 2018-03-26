@@ -174,13 +174,13 @@ export class Admin {
         document.getElementById("new-user-section").style.display = "none";
         break;
       case "new":
-        this.resetActiveSet();
+        this.resetActiveUser();
         document.getElementById("edit-user-section").style.display = "none";
         document.getElementById("new-user-section").style.display = "block";
         break;
       case false:
       default:
-        this.resetActiveSet();
+        this.resetActiveUser();
         document.getElementById("edit-user-section").style.display = "none";
         document.getElementById("new-user-section").style.display = "none";
         break;
