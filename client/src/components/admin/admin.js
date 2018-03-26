@@ -299,14 +299,15 @@ export class Admin {
   createUser() {
     if(this.validateAddUserForm()) {
       var body = {
-        
+        firstname: this.user.firstname,
+        lastname: this.user.lastname,
+        duid: this.user.duid
       }
       this.utils.doAjax('/user', 'post', body, null).then(response => {
         if(response.error) {
           console.log("Server error:", response.error);
         }
         else {
-          console.log("User added: ", response.id);
           this.utils.sendMessage("User added");
 
           this.user.firstname = "";
@@ -323,6 +324,37 @@ export class Admin {
   }
 
   
+
+  confirmRemoveUser(userID) {
+    document.getElementById("remove-user-button").style.display = "none";
+    document.getElementById("remove-user-button-confirm").style.display = "block";
+
+    setTimeout(function() { 
+      document.getElementById("remove-user-button").style.display = "block";
+      document.getElementById("remove-user-button-confirm").style.display = "none";
+    }, 3000);
+  }
+
+  removeUser(userID) {
+    if(typeof userID == 'undefined') {
+      userID = this.activeUser.userID || "";
+    }
+
+    document.getElementById("remove-user-button").style.display = "block";
+    document.getElementById("remove-user-button-confirm").style.display = "none";
+
+    this.utils.doAjax('/user', 'delete', {userID: userID}, null).then(response => {
+      if(response.error) {
+        console.log("Server error:", response.error);
+      }
+      else {
+        console.log("User deleted");
+        //this.utils.sendMessage("Set updated");
+        this.showUserWindow(false);
+        this.loadUsers();
+      }
+    });
+  }
 
   resetActiveUser() {
     this.activeUser = {
@@ -361,13 +393,13 @@ export class Admin {
       isValid = false;
       msg = element + " fails validation: empty string";
       console.log(msg);
-      this.utils.sendMessage("Invalid characters entered: " + element);
+      this.utils.sendMessage("Please enter a value: " + element);
     }
     else if(value.length > length) {
       isValid = false;
       msg = element + " fails validation: max length of " + length + " exceeded";
       console.log(msg);
-      this.utils.sendMessage("Invalid characters entered: " + element);
+      this.utils.sendMessage("Maximum input length (" + length + ") exceeded: " + element);
     }
     else if(this.validateAlphanumeric(value) == false) {
       isValid = false;

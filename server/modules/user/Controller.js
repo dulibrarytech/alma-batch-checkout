@@ -33,9 +33,9 @@ exports.userAll = function(req, res) {
 exports.userCreate = function(req, res) {
 	var response = {}, 
 		user = {};
-
+		console.log("TEST body into controller:", req.body);
 	if(!req.body.duid || !req.body.firstname || !req.body.lastname) {
-		res.setStatus(400);
+		res.status(400);
 		response['error'] = "Server error";
 		res.send();
 	}
@@ -63,7 +63,7 @@ exports.userCreate = function(req, res) {
 			});
 		}
 		catch (e) {
-			res.setStatus(500);
+			res.status(500);
 			response['error'] = e;
 			res.send();
 		}
@@ -74,7 +74,7 @@ exports.userUpdate = function(req, res) {
 	var response = {};
 
 	if(!req.body.userID) {
-		res.setStatus(400);
+		res.status(400);
 		response['error'] = "Server error";
 		res.send();
 	}
@@ -97,7 +97,7 @@ exports.userUpdate = function(req, res) {
 			});
 		}
 		catch (e) {
-			res.setStatus(500);
+			res.status(500);
 			response['error'] = e;
 			res.send();
 		}
@@ -108,7 +108,7 @@ exports.userRemove = function(req, res) {
 	var response = {};
 
 	if(!req.body.userID) {
-		res.setStatus(400);
+		res.status(400);
 		response['error'] = "Server error";
 		res.send();
 	}

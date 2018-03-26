@@ -64,8 +64,8 @@
 							<div class="popup-window-buttons">
 			    				<button class="btn btn-primary" click.delegate="updateSet()">Save</button>
 			    				<button class="btn btn-primary" click.delegate="showSetWindow(false)">Close</button>
-			    				<button class="btn btn-danger" style="float: right" click.delegate="confirmRemoveSet()">Remove This Set</button> 
-			    				<button class="btn btn-danger" style="float: right; display: none" click.delegate="removeSet()">Click To Confirm</button> 
+			    				<button id="remove-set-button" class="btn btn-danger" style="float: right" click.delegate="confirmRemoveSet()">Remove This Set</button> 
+			    				<button id="remove-set-button-confirm" class="btn btn-danger" style="float: right; display: none" click.delegate="removeSet()">Click To Confirm</button> 
 							</div>
 						</form>
 					</div>
@@ -135,8 +135,8 @@
 							<div class="popup-window-buttons">
 			    				<button class="btn btn-primary" click.delegate="updateUser()">Save</button>
 			    				<button class="btn btn-primary" click.delegate="showUserWindow(false)">Close</button>
-			    				<button class="btn btn-danger" style="float: right" click.delegate="confirmRemoveUser()">Remove This User</button> 
-			    				<button class="btn btn-danger" style="float: right; display: none" click.delegate="removeUser()">Click To Confirm</button> 
+			    				<button id="remove-user-button" class="btn btn-danger" style="float: right" click.delegate="confirmRemoveUser()">Remove This User</button> 
+			    				<button id="remove-user-button-confirm" class="btn btn-danger" style="float: right; display: none" click.delegate="removeUser()">Click To Confirm</button> 
 							</div>
 						</form>
 					</div>
