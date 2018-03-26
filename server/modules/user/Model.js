@@ -12,7 +12,7 @@ database.connect(function(db) {
 exports.getUserList = function(callback) {
         var sets = [];
         try {
-                var cursor = collection.find({}).sort({'lname': 1});
+                var cursor = collection.find({ "role": { $not: /1/ } }).sort({'lname': 1});
 
                 cursor.each(function(err, set) {
                         if(err) {

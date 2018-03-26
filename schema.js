@@ -7,8 +7,8 @@ db.createCollection( "abcdb_set",
             { "data.createDate" : { $type: "date" } },
             { "data.period" : { $type: "number" } },
             { "status" : { $in: ["AVAILABLE", "ON_LOAN"] } },
-            { "items" : { $type: "string" } },
-            { "group" : { $type: "string" } }
+            { "items" : { $type: "string" } }
+            // { "group" : { $type: "string" } }
          ]
       },
       validationAction: "error"
