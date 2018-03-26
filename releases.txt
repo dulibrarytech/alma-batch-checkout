@@ -2,6 +2,7 @@ Release Notes
 
 0.1.x 				Beta release, minimal functionality: CRUD on sets and set items, select patron, check out and check in sets
 1.1.x 				Beta release live deploy
+2.1.x				Authentication module; user database and management
 
 0.1.0	1-29-18		Initial 1.x release
 
@@ -14,4 +15,6 @@ Release Notes
 1.2.0	2-14-18		Add functionality to set loan due date in Alma; Add additional chars to allowed chars for set name
 
 1.2.1 	2-21-18		Add gulp deploy procedures, sort sets in display
+
+2.1.0	3-26-18		Add authentication for all users, add user management functions to admin page
 
