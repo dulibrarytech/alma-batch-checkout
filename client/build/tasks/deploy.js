@@ -11,7 +11,7 @@ gulp.task('default', function () {
 gulp.task('deploy-all', function(callback) {
   return runSequence(
     'deploy-app',
-    ['deploy-utils', 'deploy-admin', 'deploy-checkout'],
+    ['deploy-utils', 'deploy-admin', 'deploy-checkout', 'deploy-login'],
     callback
   );
 });
@@ -49,3 +49,13 @@ gulp.task("deploy-checkout", function () {
         .pipe(gulp.dest("./dist/src/components/checkout/"))
         .pipe(gulp.dest('./src/components/checkout/'));
 });
+
+gulp.task("deploy-login", function () {
+    return gulp.src("./src/components/login/*.js")
+        //.pipe(uglify())
+        .pipe(js_obfuscator({}, ["./src/components/login/*.js"]))
+        // .pipe(obfuscate(/* options */))
+        // .pipe(rename("bundle.min.js"))
+        .pipe(gulp.dest("./dist/src/components/login/"))
+        .pipe(gulp.dest('./src/components/login/'));
+})

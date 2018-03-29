@@ -10,10 +10,17 @@ gulp.task('default', function () {
 
 gulp.task('minify-all', function(callback) {
   return runSequence(
-    'minify-utils',
-    ['minify-admin', 'minify-checkout'],
+    'minify-app',
+    ['minify-utils', 'minify-admin', 'minify-checkout', 'minify-login'],
     callback
   );
+});
+
+gulp.task('minify-app', function () {
+    return gulp.src('./src/*.js')
+        .pipe(uglify())
+        // .pipe(js_obfuscator({}, ["**/jquery-*.js"]))
+        .pipe(gulp.dest('./dist/src/'))
 });
 
 gulp.task('minify-utils', function () {
@@ -38,6 +45,15 @@ gulp.task("minify-checkout", function () {
         // .pipe(rename("bundle.min.js"))
         .pipe(gulp.dest("./dist/src/components/checkout/"));
 });
+
+gulp.task("minify-login", function () {
+    return gulp.src("./client/src/components/login/*.js")
+        .pipe(uglify())
+        // .pipe(obfuscate(/* options */))
+        // .pipe(rename("bundle.min.js"))
+        .pipe(gulp.dest("./dist/src/components/login/"));
+});
+
 
 
 
