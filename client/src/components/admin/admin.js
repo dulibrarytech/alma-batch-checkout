@@ -7,29 +7,40 @@ import {Router} from 'aurelia-router';
 export class Admin {
   
   constructor(systemUtils, configuration, router) {
+    
+  	// Route to login module if no session present
     if(!configuration.session.data) {
       router.navigate("login");
     }
 
+    // Pointers
     this.router = router;
     this.utils = systemUtils;
     this.config = configuration;
     this.settings = configuration.settings;
 
+    // Session data
     this.username = "";
     this.activeSession = false;
 
+    // Interactive lists
     this.setList = [];
     this.userList = [];
+
+    // Cache data for currently selected objects
+    this.activeBarcode = "";
     this.activeSet = {};
     this.activeUser = {};
-    this.activeBarcode = "";
 
-    // Dialog variables
+    // Form values
     this.barcode = "";
     this.setName = "";
-
-    this.user = {};
+    this.user = {
+      firstname: "",
+      lastname: "",
+      duid: "",
+      role: ""
+    }
   }
 
   canActivate() {
@@ -54,13 +65,6 @@ export class Admin {
     this.loadUsers();
     this.showSetWindow(false);
     this.showUserWindow(false);
-
-    this.user = {
-      firstname: "",
-      lastname: "",
-      duid: "",
-      role: ""
-    }
   }
 
   logout() {
@@ -71,7 +75,6 @@ export class Admin {
   }
 
   editSet(index) {
-
     this.utils.clearMessages();
 
     // Store active set
@@ -95,10 +98,8 @@ export class Admin {
     this.showSetWindow("edit");
   }
 
-  // Get the set list from the server, populate list
   loadSets() {
     this.utils.doAjax('/set/all', 'get', null, null).then(response => {
-
         if(response.error) {
           console.log("Server error:", response.error);
         }
@@ -120,7 +121,6 @@ export class Admin {
 
   loadUsers() {
     this.utils.doAjax('/user/all', 'get', null, null).then(response => {
-
         if(response.error) {
           console.log("Server error:", response.error);
         }
@@ -142,10 +142,10 @@ export class Admin {
   }
 
   /* 
+   * Set window logic
    * ["edit" | "new" | false]
    */
   showSetWindow(show) {
-
     switch(show) {
       case "edit":
         document.getElementById("edit-set-section").style.display = "block";
@@ -166,8 +166,11 @@ export class Admin {
     }
   }
 
+  /* 
+   * User window logic
+   * ["edit" | "new" | false]
+   */
   showUserWindow(show) {
-
     switch(show) {
       case "edit":
         document.getElementById("edit-user-section").style.display = "block";
@@ -270,21 +273,6 @@ export class Admin {
       }
     });
   }
-
-  resetActiveSet() {
-    this.activeSet = {
-      name: "",
-      creator: "",
-      createDate: "",
-      setID: null,
-      loanPeriod: "",
-      status: "",
-      items: []
-    };
-    this.setName = ""; // new set
-  }
-
-  // ---------------------------------------------------------------------------------
 
   editUser(index) {
 
@@ -396,6 +384,19 @@ export class Admin {
     });
   }
 
+  resetActiveSet() {
+    this.activeSet = {
+      name: "",
+      creator: "",
+      createDate: "",
+      setID: null,
+      loanPeriod: "",
+      status: "",
+      items: []
+    };
+    this.setName = ""; // new set
+  }
+
   resetActiveUser() {
     this.activeUser = {
       userID: null,
@@ -483,6 +484,7 @@ export class Admin {
 
   selectSetItem(index) {
     if(this.activeSet.setID) {
+      // TODO Implement onselect row here
       //this.activeBarcode = this.activeSet.items[index];
     }
   }

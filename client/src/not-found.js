@@ -1,16 +1,1 @@
-'use strict'
-
-import {Router} from 'aurelia-router';
-
-export class NotFound {
-
-  constructor(router) {
-    router.navigate("login");
-  }
-
-  canActivate() {
-  	return false;
-  }
-}
-
-NotFound.inject = [Router];
+"use strict";import{Router}from"aurelia-router";export class NotFound{constructor(t){t.navigate("login")}canActivate(){return!1}};NotFound.inject=[Router];

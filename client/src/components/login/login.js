@@ -10,11 +10,13 @@ export class Login {
     this.utils = systemUtils;
     this.config = configuration;
     this.router = router;
+
+    this.userName = "";
+    this.passWord = "";
   }
 
   attached() {
-    this.userName = "";
-    this.passWord = "";
+    
   }
 
   canActivate() {
@@ -30,8 +32,6 @@ export class Login {
         password: this.passWord
       }
       this.utils.doAjax('/auth/authenticate', 'post', data, null).then(response => {
-        //this.utils.stopSpinner();
-          // Check the response params
           if(typeof response == 'undefined' || typeof response.token == 'undefined' || typeof response.data == 'undefined') {
             console.log("Server authentication error");
           }
@@ -42,10 +42,9 @@ export class Login {
               this.utils.sendMessage("Invalid DUID or password");
           }
           else {
-            console.log(response.data.firstname + " " + response.data.lastname + " logged in at " + new Date());
+            console.log(response.data.firstname + " " + response.data.lastname + " login success");
             this.config.session.data = response.data;
             this.config.session.token = response.token;
-              console.log(response.token);
             this.router.navigate("checkout");
           }
       });

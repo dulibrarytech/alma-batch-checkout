@@ -111,10 +111,8 @@ export class Checkout {
     this.activeBorrowerDisplay = "No patron selected.";
   }
 
-  // Get the set list from the server, populate list
   loadSets() {
     this.utils.doAjax('/set/all', 'get', null, null).then(response => {
-
         if(response.error) {
           console.log("Server error:", response.error);
         }
@@ -159,6 +157,7 @@ export class Checkout {
     this.activeSet.loanPeriod = this.setList[index].loanPeriod;
     this.activeSet.status = this.setList[index].status;
     this.activeSet.loan = null;
+
     this.refreshSetState();
 
     // If on loan, get the loan data
@@ -359,8 +358,8 @@ export class Checkout {
 
   checkOutSet() {
     this.showLoanDataDialog(false);
-    if(this.activeBorrower.id) {
 
+    if(this.activeBorrower.id) {
       var selectedDays = document.getElementById("day-select").value,
           selectedHours = document.getElementById("hour-select").value;
 
