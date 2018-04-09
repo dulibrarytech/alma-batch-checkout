@@ -51,11 +51,11 @@ gulp.task("deploy-checkout", function () {
 });
 
 gulp.task("deploy-login", function () {
-    return gulp.src("./src/components/login/*.js")
+    return gulp.src("src/components/login/*.js")
         //.pipe(uglify())
         .pipe(js_obfuscator({}, ["./src/components/login/*.js"]))
         // .pipe(obfuscate(/* options */))
         // .pipe(rename("bundle.min.js"))
-        .pipe(gulp.dest("./dist/src/components/login/"))
-        .pipe(gulp.dest('./src/components/login/'));
+        .pipe(gulp.dest("dist/src/components/login/"))
+        .pipe(gulp.dest('src/components/login/'));
 })

@@ -47,11 +47,11 @@ gulp.task("minify-checkout", function () {
 });
 
 gulp.task("minify-login", function () {
-    return gulp.src("./client/src/components/login/*.js")
+    return gulp.src("src/components/login/*.js")
         .pipe(uglify())
-        // .pipe(obfuscate(/* options */))
+        // .pipe(js_obfuscator({}))
         // .pipe(rename("bundle.min.js"))
-        .pipe(gulp.dest("./dist/src/components/login/"));
+        .pipe(gulp.dest("dist/src/components/login/"));
 });
 
 
