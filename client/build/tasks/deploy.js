@@ -59,3 +59,13 @@ gulp.task("deploy-login", function () {
         .pipe(gulp.dest("dist/src/components/login/"))
         .pipe(gulp.dest('src/components/login/'));
 })
+
+gulp.task("deploy-configuration", function () {
+    return gulp.src("./config/Configuration.js")
+        //.pipe(uglify())
+        .pipe(js_obfuscator({}, ["./config/Configuration.js"]))
+        // .pipe(obfuscate(/* options */))
+        // .pipe(rename("bundle.min.js"))
+        .pipe(gulp.dest("dist/config/"))
+        .pipe(gulp.dest('config/'));
+})
