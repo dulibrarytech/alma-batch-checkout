@@ -2,7 +2,7 @@
 
 Create batch sets of items to be checked out and in using one operation.
 
-## Installing
+## Build
 First cd into the ``client`` folder and run the usual commands to install the front-end tooling and dependencies:
 
 - npm install
@@ -27,5 +27,5 @@ ALMA_API_KEY=
 LDAP_SERVICE=
 JWT_SECRET=
 
-## Running
+## Start app
 To run, go into ``server`` and type ``node server.js`` it will run on port 9000 by default. Then visit: ``http://localhost:9000`` to see the app running. (default server)

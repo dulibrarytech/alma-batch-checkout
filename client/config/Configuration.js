@@ -12,10 +12,10 @@ export class Configuration {
 		this.serverUrl = "";
 
 		// App settings
-		this.clientIDHeader = "";
+		this.clientIDHeader = "abc_client";
 		this.mainContentDiv = "main";
 
-		// Runtime objects (Do not change these values)
+		// TODO move this out of settings
 		this.session = {
 			data: null,
 			token: null
