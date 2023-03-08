@@ -15,10 +15,6 @@ export class Login {
     this.passWord = "";
   }
 
-  attached() {
-    
-  }
-
   canActivate() {
     if(this.config.session.data) {
         this.router.navigate("/checkout");

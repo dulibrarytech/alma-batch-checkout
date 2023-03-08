@@ -7,12 +7,6 @@ import {Router} from 'aurelia-router';
 export class Admin {
   
   constructor(systemUtils, configuration, router) {
-    
-  	// Route to login module if no session present
-    if(!configuration.session.data) {
-      router.navigate("login");
-    }
-
     // Pointers
     this.router = router;
     this.utils = systemUtils;
@@ -45,6 +39,7 @@ export class Admin {
 
   canActivate() {
     if(!this.config.session.data) {
+      window.location.replace(`${this.config.ssoUrl}?app_url=${this.config.ssoResponseUrl}`);
       return false;
     }
   }

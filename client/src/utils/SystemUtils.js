@@ -111,6 +111,7 @@ export class SystemUtils {
 	logout() {
         this.config.session.data = null;
         this.config.session.token = null;
+		window.location.replace(this.config.ssoLogoutUrl);
     }
 }
 

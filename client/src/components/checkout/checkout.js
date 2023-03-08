@@ -7,10 +7,6 @@ import {Router} from 'aurelia-router';
 export class Checkout {
   
   constructor(systemUtils, configuration, router) {
-    if(!configuration.session.data) {
-      router.navigate("login");
-    }
-
     this.utils = systemUtils;
     this.config = configuration;
     this.router = router;
@@ -33,6 +29,7 @@ export class Checkout {
 
   canActivate() {
     if(!this.config.session.token) {
+      window.location.replace(`${this.config.ssoUrl}?app_url=${this.config.ssoResponseUrl}`);
       return false;
     }
   }

@@ -8,9 +8,6 @@ export class Configuration {
 
 		this.runtimeEnv = "production";
 
-		// Service URL, no trailing slash
-		this.serverUrl = "";
-
 		// App settings
 		this.clientIDHeader = "abc_client";
 		this.mainContentDiv = "main";
@@ -32,5 +29,11 @@ export class Configuration {
 				days: 2
 			}
 		}
+
+		// Custom settings
+		this.serverUrl = "http://localhost:9010"; // no trailing slash
+		this.ssoUrl = "https://authproxy.du.edu/secure";
+		this.ssoResponseUrl = "http://localhost:9010/auth/sso";
+		this.ssoLogoutUrl = "https://login.du.edu/_layouts/pg/signout.aspx";
 	}
 }

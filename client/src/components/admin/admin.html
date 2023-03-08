@@ -3,7 +3,7 @@
 		<div id="user-logout" class="row">
 			<div if.bind="activeSession" class="col-md-12">
 				<div style="float: right; margin-bottom: 0.7em; margin-top: 0.8em; margin-right: 1em">
-					<span><a click.delegate="logout()" style="cursor: pointer; margin-left: 0.3em"><i class='fas fa-user' aria-hidden='true' style='margin-right: 5px; color: green'></i>&nbspLogout</a></span>
+					<span><i class='fas fa-user' aria-hidden='true' style='margin-right: 5px; color: green'></i>${username}<a click.delegate="logout()" style="cursor: pointer; margin-left: 0.3em">&nbspLogout</a></span>
 				</div>
 			</div>
 		</div>

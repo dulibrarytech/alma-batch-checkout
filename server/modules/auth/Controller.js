@@ -74,3 +74,29 @@ exports.authenticate = function(req, res) {
 		}
 	}
 }
+
+exports.authenticateSSO = function(req, res) {
+	let username = req.body.employeeID || "";
+  	let host = req.body.HTTP_HOST || ""; 
+
+	try {
+		if(host = settings.ssoHost) {
+			Model.authenticateUser(username, function(err, data) {
+				if(err) {
+					console.error(err);
+					res.send(500);
+				}
+				else if(data.auth === true) {
+					let token = Token.createToken(data.user);
+					let ssoClientLoginUrl = `${settings.ssoClientLoginUrl}?token=${token}`;
+					res.redirect(ssoClientLoginUrl);
+				}
+			});
+		}
+		else res.send(401);
+	}
+	catch (err) {
+		console.error(err);
+		res.send(500);
+	}
+}

@@ -7,6 +7,8 @@ module.exports = {
 	client_header: 		process.env.CLIENT_HEADER,
 	LDAPAuthService: 	process.env.LDAP_SERVICE,
 	secret: 			process.env.JWT_SECRET,
+	ssoHost:			process.env.SSO_HOST,
+	ssoClientLoginUrl:	process.env.SSO_CLIENT_LOGIN_URL,
 
 	// Application settings from admin
 	enable_alma_connection: true

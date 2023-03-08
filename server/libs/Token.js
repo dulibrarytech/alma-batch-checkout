@@ -10,7 +10,6 @@ exports.createToken = function(data) {
 };
 
 exports.validateToken = function(req, callback) {
-
 	if(! req.headers['x-access-token']) {
 		console.log("No token present");
 		callback(false);
