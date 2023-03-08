@@ -31,9 +31,9 @@ export class Configuration {
 		}
 
 		// Custom settings
-		this.serverUrl = "http://localhost:9010"; // no trailing slash
-		this.ssoUrl = "https://authproxy.du.edu/secure";
-		this.ssoResponseUrl = "http://localhost:9010/auth/sso";
-		this.ssoLogoutUrl = "https://login.du.edu/_layouts/pg/signout.aspx";
+		this.serverUrl = ""; // no trailing slash
+		this.ssoUrl = "";
+		this.ssoResponseUrl = "";
+		this.ssoLogoutUrl = "";
 	}
 }
