@@ -13,13 +13,13 @@ export class Login {
     this.router = router;
   }
 
-  canActivate(qparams, two, three, four) {
+  canActivate(qparams) {
     this.loginSSO(qparams.token);
   }
 
   loginSSO(token = null) {
-    let userData = JWTDecode.jwtDecode(token) || {};
     if(token) {
+        let userData = JWTDecode.jwtDecode(token) || {};
         this.config.session.data = userData;
         this.config.session.token = token;
         this.router.navigate("/checkout");

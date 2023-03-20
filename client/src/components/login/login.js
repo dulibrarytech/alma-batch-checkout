@@ -19,6 +19,9 @@ export class Login {
     if(this.config.session.data) {
         this.router.navigate("/checkout");
     }
+    else {
+      window.location.replace(`${this.config.ssoUrl}?app_url=${this.config.ssoResponseUrl}`);
+    }
   }
 
   login() {

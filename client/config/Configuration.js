@@ -31,9 +31,9 @@ export class Configuration {
 		}
 
 		// Custom settings
-		this.serverUrl = ""; // no trailing slash
+		this.serverUrl = "http://localhost:9010"; // no trailing slash
 		this.ssoUrl = "";
-		this.ssoResponseUrl = "";
+		this.ssoResponseUrl = "http://localhost:9010/auth/sso";
 		this.ssoLogoutUrl = "";
 	}
 }

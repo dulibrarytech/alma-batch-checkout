@@ -67,7 +67,7 @@ export class Checkout {
     this.username = "";
     this.utils.logout();
     this.activeSession = false;
-    this.router.navigate("login");
+    window.location.replace(this.config.ssoLogoutUrl);
   }
 
   setButtonVisibility(state) {

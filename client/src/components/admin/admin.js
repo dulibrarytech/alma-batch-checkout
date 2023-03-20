@@ -66,7 +66,7 @@ export class Admin {
     this.username = "";
     this.utils.logout();
     this.activeSession = false;
-    this.router.navigate("login");
+    window.location.replace(this.config.ssoLogoutUrl);
   }
 
   editSet(index) {
