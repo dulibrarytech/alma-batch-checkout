@@ -19,14 +19,15 @@ export class Login {
 
   loginSSO(token = null) {
     if(token) {
-        let userData = JWTDecode.jwtDecode(token) || {};
-        this.config.session.data = userData;
-        this.config.session.token = token;
-        this.router.navigate("/checkout");
+      this.utils.doAjax('/auth/validate', 'post', {token}, null).then(response => {
+        if(response.isValid) {
+          let userData = response.data || JWTDecode.jwtDecode(token) || {};
+          this.config.session.data = userData;
+          this.config.session.token = token;
+        }
+      });
     }
-    else {
-        console.error("Token not found or invalid");
-    }
+    this.router.navigate("/checkout");
   }
 }
 

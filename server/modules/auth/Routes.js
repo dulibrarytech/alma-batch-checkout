@@ -10,4 +10,8 @@ module.exports = function (app) {
 	app.post('/auth/sso', function(req, res) {
 		controller.authenticateSSO(req, res);
 	});
+
+	app.post('/auth/validate', function(req, res) {
+		controller.validateToken(req, res);
+	});
 }

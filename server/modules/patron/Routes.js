@@ -1,6 +1,6 @@
 'use strict'
 
-var Token = require('../../libs/Token'),
+var Token = require('../../middlewares/Token'),
     controller = require("./Controller");
 
 module.exports = function (app, settings) {

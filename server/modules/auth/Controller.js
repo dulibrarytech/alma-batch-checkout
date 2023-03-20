@@ -87,7 +87,7 @@ exports.authenticateSSO = function(req, res) {
 					res.send(500);
 				}
 				else if(data.auth === true) {
-					let token = Token.createToken(data.user);
+					let token = Token.createToken({...data.user, });
 					let ssoClientLoginUrl = `${settings.ssoClientLoginUrl}?token=${token}`;
 					res.redirect(ssoClientLoginUrl);
 				}
@@ -99,4 +99,13 @@ exports.authenticateSSO = function(req, res) {
 		console.error(err);
 		res.send(500);
 	}
+}
+
+exports.validateToken = function(req, res) {
+	let isValid = false;
+	let token = req.body.token || null;
+	let data = Token.validateToken(token);
+
+	if(data) isValid = true;
+	res.send({isValid, data})
 }

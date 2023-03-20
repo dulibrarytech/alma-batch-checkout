@@ -34,10 +34,11 @@ export class Checkout {
     }
   }
 
-  activate(params, navigationInstruction) {
-    if(this.config.session.token) {
+  activate() {
+    if(this.config.session.token && this.config.session.data) {
       this.activeSession = true;
-      this.username = this.config.session.data.firstname + " " + this.config.session.data.lastname;
+      let {firstname, lastname} = this.config.session.data;
+      this.username = `${firstname} ${lastname}`;
     }
     else {
       this.activeSession = false;
