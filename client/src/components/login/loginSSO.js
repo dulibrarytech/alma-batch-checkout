@@ -19,15 +19,16 @@ export class Login {
 
   loginSSO(token = null) {
     if(token) {
-      this.utils.doAjax('/auth/validate', 'post', {token}, null).then(response => {
+      this.utils.doAjax('auth/validate', 'post', {token}, null).then(response => {
         if(response.isValid) {
           let userData = response.data || JWTDecode.jwtDecode(token) || {};
           this.config.session.data = userData;
           this.config.session.token = token;
         }
+        this.router.navigate("/checkout");
       });
     }
-    this.router.navigate("/checkout");
+    else this.router.navigate("/checkout");
   }
 }
 
