@@ -1,6 +1,6 @@
 {
   "name": "alma batch checkout (client)",
-  "version": "2.1",
+  "version": "2.2.0",
   "description": "Create and manage sets of items in Alma to be checked in/out in one operation",
   "main": "app.js",
   "scripts": {
