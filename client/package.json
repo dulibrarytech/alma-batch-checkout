@@ -1,7 +1,7 @@
 {
-  "name": "alma batch checkout",
-  "version": "",
-  "description": "Create batch sets of items to be checked out/in in one operation",
+  "name": "alma batch checkout (client)",
+  "version": "2.1",
+  "description": "Create and manage sets of items in Alma to be checked in/out in one operation",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

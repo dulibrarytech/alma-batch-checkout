@@ -1,7 +1,7 @@
 {
-  "name": "alma batch checkout",
-  "version": "",
-  "description": "",
+  "name": "alma batch checkout (server)",
+  "version": "2.1",
+  "description": "Create and manage sets of items in Alma to be checked in/out in one operation",
   "main": "abc-app.js",
   "scripts": {
     "test": "gulp test",
