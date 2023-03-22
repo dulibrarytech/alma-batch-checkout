@@ -12,7 +12,6 @@ export class SystemUtils {
     	this.config = config;
 
 		if(typeof httpClient != 'undefined') {
-			var token = config.session.token;
 			httpClient.configure(config => {
 	            config
 	                .withBaseUrl(this.config.serverUrl)

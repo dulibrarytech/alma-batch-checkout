@@ -16,7 +16,7 @@ export class Login {
   }
 
   canActivate() {
-    if(this.config.session.data) {
+    if(this.config.session.token) {
         this.router.navigate("/checkout");
     }
     else {
