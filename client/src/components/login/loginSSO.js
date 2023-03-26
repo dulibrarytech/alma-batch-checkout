@@ -24,9 +24,9 @@ export class Login {
           let userData = response.data || JWTDecode.jwtDecode(token) || {};
           this.config.session.data = userData;
           this.config.session.token = token;
-          this.router.navigate("checkout");
         }
-        else console.error("Invalid auth token. Chenk SSO provider response")
+        else console.error("Invalid auth token. Chenk SSO provider response");
+        this.router.navigate("checkout");
       });
     }
     else this.router.navigate("checkout");
