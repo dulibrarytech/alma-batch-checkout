@@ -77,14 +77,14 @@ exports.authenticate = function(req, res) {
 
 exports.authenticateSSO = function(req, res) {
 	let username = req.body.employeeID || "";
-  	let host = req.body.HTTP_HOST || ""; 
+  	let host = req.body.HTTP_HOST || null; 
 
 	try {
-		if(host = settings.ssoHost) {
+		if(host && host == settings.ssoHost) {
 			Model.authenticateUser(username, function(err, data) {
 				if(err) {
 					console.error(err);
-					res.send(500);
+					res.sendStatus(500);
 				}
 				else if(data.auth === true) {
 					let token = Token.createToken({...data.user, });
@@ -97,7 +97,7 @@ exports.authenticateSSO = function(req, res) {
 	}
 	catch (err) {
 		console.error(err);
-		res.send(500);
+		res.sendStatus(500);
 	}
 }
 
