@@ -39,7 +39,7 @@ export class Admin {
 
   canActivate() {
     if(!this.config.session.data) {
-      window.location.replace(`${this.config.ssoUrl}?app_url=${this.config.ssoResponseUrl}`);
+      this.router.navigate("/login");
       return false;
     }
   }

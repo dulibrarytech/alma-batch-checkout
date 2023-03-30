@@ -20,7 +20,7 @@ export class Login {
         this.router.navigate("/checkout");
     }
     else {
-      window.location.replace(`${this.config.ssoUrl}?app_url=${this.config.ssoResponseUrl}`);
+      window.location.replace(`${this.config.ssoUrl}?app_url=${this.config.ssoResponseUrl || "null_sso_redirect_url"}`);
     }
   }
 

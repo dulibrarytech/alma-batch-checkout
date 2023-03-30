@@ -29,7 +29,7 @@ export class Checkout {
 
   canActivate() {
     if(!this.config.session.token) {
-      window.location.replace(`${this.config.ssoUrl}?app_url=${this.config.ssoResponseUrl}`);
+      this.router.navigate("/login");
       return false;
     }
   }
